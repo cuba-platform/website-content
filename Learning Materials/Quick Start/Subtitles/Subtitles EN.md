@@ -1,4 +1,4 @@
-## CUBA Platform Quick Start
+## Quick Start 
 
 Hi! Welcome to the CUBA Platform Quick Start Video.
   
