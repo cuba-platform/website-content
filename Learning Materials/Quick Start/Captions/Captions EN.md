@@ -1,6 +1,6 @@
-## Intro
+## CUBA Platform Quick Start
 
-Hi! Welcome to CUBA Platform Quick Start Video.
+Hi! Welcome to the CUBA Platform Quick Start Video.
   
 CUBA Platform is an open source framework based on the well-known Spring framework.
   
@@ -18,49 +18,55 @@ The video will be just enough for you to start developing with CUBA.
 
 For this video, in addition to the CUBA Platform framework we will use a plugin for IntelliJ Idea - CUBA Studio.
 
-Let’s create an empty CUBA project and name it SessionPlanner. We will use Java 8 as a default JDK. CUBA framework uses Gradle as a build tool.
+## Project Creation
 
-## Project
+Let’s create an empty CUBA project with the project namespace - planner. We will use Java 11 as the default JDK and the latest stable CUBA version.
 
-## Data Model
+We will use an in-memory database - HSQLDB. This should be enough for the quick start. You can select another database from the drop-down list. Leave database connection parameters unchanged.
+
+The project name will be Session Planner.
+
+After the first launch CUBA Studio offers you to apply a trial subscription to CUBA Studio Premium. It is free for 28 days and gives us some useful optional designers. Let’s apply it.
+
+On the left part of the screen you can see the CUBA Project navigation tree. In the center there is a Welcome page, you can use it for quick access to some CUBA functions, documentation, marketplace, and also versions and subscription information. 
+
+On the right side of the screen you can see the Gradle Tool window. CUBA framework uses Gradle to build and run the application.
+
+The standard IntelliJ’s build window is at the bottom. We can close some windows to get some space on the screen. The CUBA main menu provides quick access to the CUBA-specific features of the IDE.
+
+## Data Model Creation
 
 Now we will create JPA classes along with business rules like mandatory fields, unique fields and relations.
   
 The business domain model has only two classes (also called entities): Speaker and Session.
 
-First, we need to create the Speaker entity. It has three fields - first name (mandatory), last name (optional) and email (mandatory and unique). Let’s add validation for the email field. 
-  
-CUBA provides an ability to specify a proper entity display in the string format in the UI - “Instance Name”. For the speaker, we will select both first and last name.
+To simplify the development process we added a visual designer to CUBA Studio that makes JPA entities creation easier. Right click on the “Data Model” and select “New -> Entity”.
 
-If we have a look at the Java tab of the entity designer, we can see just a JPA-annotated java class. 
+First, we need to create the Speaker entity. It has three fields - first name which is mandatory, last name - optional, and email - mandatory and unique. Let’s add validation for the email field.  
 
-Let’s move further and create the Session entity and link it to our Speaker class. First, define the attribute Topic - a mandatory string. After that, we will add session start and session end date and time attributes. The session end will be a calculated value, being one hour from the start. 
-  
-Now we add a reference to the speaker. The relation is many-to-one, so, we’ll define an association field called speaker that references to the speaker class. 
-  
-For the reference field, let’s use the dropdown+lookup type. 
-  
-In addition to this, we create a description field that will contain a session description.
+CUBA provides an ability to specify a proper entity display in the string format in the UI - “Instance Name”. For the speaker, we will select both the first and the last names.
 
-## Adding calculated field
+Let’s have a closer look at the entity designer. Next to the designer tab we can see generated text - JPA-annotated java class. They are integrated, so you can change the text and see all the changes in the designer and vice versa. Also, you can see the DDL Preview and can create indexes if required.
 
-Now it is time to create a calculated attribute - session’s end date. 
-  
-In CUBA, you can add field calculation logic using entity’s lifecycle callbacks. You need to create a method and mark it with a proper java annotation. The method will be invoked automatically.
+For instance, we expect a lot of searches by last name. To make this search more efficient we can create an index for the last name field.
 
-Let’s add a method that will be invoked at the “PrePersist” lifecycle phase. 
-  
-Name the method “updateEndDate” and mark it with @PreUpdate annotation in addition to @PrePersist. 
-  
-We will create a separate method for the session end time calculation, to reuse it in the application later. 
-  
-In this method, we just add one hour to an input parameter.
-  
-And now let’s just add method invocation to the lifecycle method.
+Let’s move further and create the Session entity and link it to our Speaker class. First, define the attribute Topic - a mandatory string. After that, we will add the session start date and the time attribute. Add the duration of the session with validation. The session end date and time will be a calculated value, we’ll configure it a bit later. 
 
-Our domain model entities have been created. Now we need to generate scripts to create a database.
+Now we’ll add a mandatory reference to the speaker. The relation is many-to-one, so, we’ll define an association field called speaker that references the speaker class. 
+ 
+In addition to this, we’ll create a description field that will contain a session’s long description. For the instance name we will select a topic field instead of the description.
 
-## Creating User Interface
+## Creating Calculated Attribute
+
+Now, we need to create an auto calculated attribute for the session’s end date and time. First add the getter method and name it getEndDate. Mark the method with the @MetaProperty annotation. For the calculated attribute, we need to specify the fields to be loaded. In our case, these are startDate and duration. Then just add calculation logic. 
+
+Notice that Studio highlights the method because we need to specify a text label for the attribute. Let’s add it to the message bundle. 
+
+Now, go back to the designer and have a look. We see that the endDate field is added and it is read only and related attributes are specified.
+
+Our domain model has been created. Now, we can create a simple UI to perform CRUD operations over the tables in the database.
+
+## Generating CRUD Screens
 
 CUBA Studio contains a UI screen generation wizard that helps us to create basic, but useful UI screens:
 
@@ -69,159 +75,162 @@ CUBA Studio contains a UI screen generation wizard that helps us to create basic
 
 First, we will create screens to work with speakers. Since this entity is pretty simple, we can accept the default parameters for the screen creation.
 
-As you can see, each screen consists of two parts: a controller, written in java, which is responsible for internal screen logic and events handling and an XML layout that defines the screen appearance.
+As you can see, each screen consists of two parts: XML layout that defines the screen appearance with the preview feature, and a controller, written in java, which is responsible for internal screen logic and events handling.
 
-Please note “DATA” section in the XML - it defines how the data is fetched from the database.
+Let’s take a look at the structure of the screen’s layout: there are two main blocks. The first one defines the way we are working with data and the second block defines the  layout  that specifies the positions of the components on the screen.
 
-You can easily navigate between screens and linked entities with CUBA Studio.
-Now let’s create a browser and an editor for sessions.
+Now let’s create a browser and an editor for sessions. Here we need to stop for a while and explain some bits of CUBA.
 
-Here we need to stop for a while and explain some bits of CUBA.  Let’s talk about “Browse view” and “Edit view” fields.
-In CUBA Platform, Entity View specifies which fields will be fetched from the database. 
-  
-For the session entity, we will not expose its end date for editing, but leave it for viewing. Let’s get started.
+In the CUBA Platform, Entity View specifies which fields will be fetched from the database. You can define views in a separate file to use them in the different modules of your application, or create inline views while creating the screens.
 
-We will create a separate view for the “Session” entity to include a speaker reference for browser screen.
+So, let’s create an inline view. Just select the necessary data.
 
-While creating a view for a session editing, we will deliberately exclude the end date end from the view, so the screen generator will not create a widget for it.
+You can see that the corresponding fields are added to the screens.
 
-As you can see, there is no “End Date” field in the editor screen. Let’s update “description” field to use a multi-line editor.
+In addition, set the default duration value for the new session to one hour. To do this, go to the editor screen and subscribe to the event InitEntity and set this value in the code.
 
-And we are able to see the session’s end date in the browser screen.
+Now, we need to generate scripts to create the database.
+
+## Database Creation
+
+To generate scripts for the database creation, you need to select the CUBA - Generate Database Scripts menu.
+
+To apply those scripts and create the database, just click Create database. Aside from application tables, CUBA creates system tables where we store information about users, roles, tasks, and others.
+
+## Running the Application in Development Mode
 
 Now we can run the application in development mode from the IDE.
 
-## DB Creation Script Generation
+Just press “Run” in the IDE to start the application. You can see the application log in the studio’s “Run” window. After some time you can access the application using the browser. Let’s open the URL and log in to the application using  the username “admin”. The password is “admin” by default.
 
-By default, CUBA Studio uses HSQL database during the development stage.
+Let’s add some test data to the application: first, let’s add a couple of speakers.
 
-To generate scripts for the database creation, you need to select CUBA - Generate Database Scripts menu.
+As you can see, email validation works as expected. 
 
-To apply those scripts and create the database, just select CUBA - Create Database menu. Tables will be created for you. Apart from application tables, CUBA creates system tables where we store information about users, roles, tasks, etc.
+Now let’s add sessions for today and tomorrow. You can see that the endDate is calculated automatically.
 
-## First Application Run
+Generated screens are good for basic operations, but in the real world, the UI is usually more complex. Let’s add a calendar view to browse visits in addition to the grid view.
 
-Just press “Run” in the IDE to start the application. After some time you can access the application using the browser. Let’s open the URL and log into the application using “admin” username. The password is “admin” by default.
+## Customizing the User Interface
 
-Let’s add some test data to the application: first, a couple of speakers, then two sessions scheduled for the rest of the week.
+For the browser screen, we’ll add tab control, put a calendar on it and provide functionality to edit and reschedule sessions using this calendar.
 
-As you can see, email validation works as expected.
+Let’s wrap the sessions table into tab sheet in the sessions browser screen. Add one more tab page and put a calendar control on it.
 
-Now let’s add a couple of sessions for today and tomorrow.
+Expand the TabSheet element to the whole screen. Studio asks for an id. In CUBA, we need IDs to reference a screen element in the code.
 
-Generated screens are good for basic operations, but in the real world UI is usually more complex. Let’s add a calendar view to browse visits in addition to grid view.
+Also, let’s set id-s and captions for each tab.
 
-## Customizing Interface
+Update the calendar - assign a data container and expand it.
 
-For the browser screen, we’ll add tab control, put a calendar on it and provide a functionality to edit and reschedule sessions using this calendar.
-Let’s add tab control and two tab pages to the sessions browser screen.
-
-It is recommended to assign an id for each control, so we can reference to it.
-
-Now let’s set a caption for each tab.
-
-Let’s drag the sessions table control to the second tab and expand tab control to the whole screen by setting “Expand” property in the parent component.
-
-The next step - put a calendar control on the first tab, assign an id and expand it.
+Finally, expand the Session Table.
 
 In CUBA, UI components are bound to entities and their properties. 
-  
-We will bind the calendar to the data collection fetched in the screen and bind:
+
+We will bind the calendar to the data collection fetched in the screen. Use the search field to find properties and bind:
 
 * startDateProperty to a session’s start Date
 * endDateProperty to a session’s end Date
 * captionProperty to a session’s topic
 * And descriptionProperty to a session’s description
 
-In addition to the visual designer you can use the XML markup editor. Let’s make the calendar to show only working hours and add navigation buttons.
-We can reopen the form to see the changes - CUBA framework supports hot reload for screens. Now we can see sessions displayed on the calendar.
+Let’s make the calendar to show only working hours.
 
-Now let’s invoke session editor screen when we click on an event in the calendar.
+In addition to the visual designer, you can use the XML markup editor. Let’s add navigation buttons.
 
-## Using API
+We can reopen the form to see the changes - the CUBA framework supports hot reload for screens. Now we can see sessions displayed on the calendar.
 
-When we interact with the UI, events are generated. We can subscribe to those events to handle them. Let’s handle a click on a calendar’s entry. We need to invoke editor screen. For screen manipulations, CUBA provides a screen builder API that we will use. Let’s add ScreenBuilder class to the screen controller.
+## Using Screen API
 
-With ScreenBuilders API, invoking a screen becomes a chain of method calls. 
-  
-We need editor for the session class with this as a parent screen. Then we want to edit the session entity received within the event object. The screen will be opened in the dialog mode. 
-  
-When the editor is closed, we need to reload all data to the browser screen.
-  
-After that we should show the editor that we have just built.
+Now let’s invoke the session editor screen when we click on an event in the calendar. 
+
+When we interact with the UI, events are generated. We can subscribe to those events to handle them. Let’s handle a click on a calendar’s entry. 
+
+We need to invoke the editor screen to change the session’s properties. Let’s use the EditorScreenFacet. It is a non-visual component that provides an ability to pre-configure an editor screen.
+
+Put it under the window element in the Component Hierarchy window. And set the properties:
+
+* an ID
+* We need an editor for the session class. Set the Entity class - session and the corresponding data container. 
+* Screen class - SessionEdit.
+* Set the edit mode.
+* The screen will be opened in the dialog mode.
+
+Go back to the event handler.  Inject the EditorScreenFacet. Pass the session entity received within the event object for editing. After that, we should show the editor.
 
 Let’s reopen the screen and invoke the editor.
 
-As you can see, we need to refine session editor dialog to make it look better by adjusting its width and height.
+As you can see, we need to refine the session editor dialog to make it look better by adjusting its width and height. The simplest way to do this is set “auto” for both width and height.
 
 Let’s reopen the screen again and see the changes.
-
 Now it is time to add some business logic to our application.
 
-## Business Logic
+## Adding Business Logic
 
-In this section we will use CUBA Studio to create a service that implements business logic and use this service in a screen. It will be a service for session rescheduling that will check that one speaker doesn’t have two sessions at the same time.
+In this section, we will use CUBA Studio to create a service that implements business logic and use this service in a screen controller. It will be a service for session rescheduling that will ensure that one speaker doesn’t have more than two sessions in one day.
 
 Right-click on the service node in the CUBA project tree and create a SessionService interface and SessionServiceBean implementation. Create a method in the interface and implement it in the ServiceBean. 
-  
-The method will accept a session and a new session date and time. If we are able to reschedule the session, we save it with new start date and time and if not - just return false as the service execution result.
 
-We will use CUBA API for data access - DataManager class. Let’s add it into the service first and then use it in the method. 
-  
+The method will accept a session and a new session date and time. The service will return the updated Session instance. 
+
+First, calculate the start and end time of the day where the session is planned.
+
+We will use CUBA API for data access - the DataManager class. 
+
 With DataManager we create a JPQL query to check if there are any sessions scheduled for the speaker in a defined time span and add parameter values to it. 
-  
-Then we check the query result and, depending on it, we update the session with a new start date or just exit from the method with a corresponding result.
 
-## Using Service
+Then we check the query result and, depending on the result, we update the session with a new start date or just return the original session instance.
+
+## Using Service in Screens
 
 The service is ready, now let’s add it to the session browser screen. It will be invoked for the drag-and-drop event in the calendar. 
-  
-In the method that is subscribed to the drag-and-drop event we add some code to extract the session entity from the calendar event and then invoke the service to reschedule this session. 
-  
-If the session cannot be rescheduled, we show an on-screen notification using the notification API that we will add to the screen.
+
+In the method that is subscribed to the drag-and-drop event, we add some code to extract the session entity from the calendar event and pass it to the service to reschedule this session. After that, we just update this item in the browser’s data container.
 
 To have the new service redeployed, we need to restart the application. 
-  
-After restarting we can open sessions calendar - and voila! We have drag-and-drop rescheduling functionality for the calendar! Let’s see it if works. We can add an extra session and try to reschedule it.
 
-## Brand
+After restarting we can open the sessions calendar - and voila! We have drag-and-drop rescheduling functionality for the calendar! Let’s see how it works. Just add a couple of extra sessions and try to reschedule one of the sessions to the day that is already full.  
 
-In this section we will customize standard captions in the application, adding some branding.
+## Branding
 
-In CUBA, you can update resource files and override standard text. Let’s update text according to the application business domain - conference planning.
+In this section we will customize standard captions in the application, adding some branding.  
 
-With CUBA’s hot deploy feature, all we need is to log in to the application again to see the changes.
+In CUBA, you can update resource files and override the standard text. Let’s update the text according to the application business domain - conference planning.
 
-## Market place
+With CUBA’s hot deploy feature, all we need to do is to log in to the application again to see the changes.
+
+## Marketplace
 
 The framework comes with a marketplace that contains plenty of components, so you can easily add useful features like charts or maps support to the existing application.
 
-You can install those components right from the studio using the “Marketplace” menu.
+You can install those components right from the studio using the “Marketplace” menu. 
+
+Let’s add the Helium add-on. It’s a new visual theme that you can use instead of the standard themes. Just click install and apply the changes.
+
+Now we need to stop the application and apply the init scripts of the add-on.
+
+Run the application and go to the settings screen. You can find the added theme in the drop-down list. Select it and apply. Log in to the application again - theme is already applied. We can also open the theme settings screen and change settings with preview.
 
 ## Conclusion
 
-CUBA framework provides a lot of useful APIs to help you with creating a business applications quickly. This quickstart shows only the basics of the CUBA framework and CUBA Studio.
+The CUBA framework provides a lot of useful APIs to help you create business applications quickly. This quickstart shows only the basics of the CUBA framework and CUBA Studio. 
+
 You can find more examples and tutorials on our website: cuba-platform.com.
+
 Thank you for watching!
 
 # Application. Captions
 
 Quick start
+
 A full stack Java framework for business applications development
+
 Powered by
+
 Data model and database creation
+
 User interface development
+
 Business logic implementation
-Project creation
-Data model creation
-Creating calculated Attribute
-Database creation
-Generating CRUD Screens
-Running the application in development mode
-Customizing the user interface
-Using Screen API
-Adding Business Logic
-Adding Branding
-Marketplace
-Conclusion
+
 Thank you for watching
