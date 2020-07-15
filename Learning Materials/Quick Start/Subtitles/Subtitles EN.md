@@ -1,6 +1,6 @@
 ## Quick Start 
 
-Hi! Welcome to the CUBA Platform Quick Start Video.
+Hello! And welcome to the CUBA Platform Quick Start Video.
   
 CUBA Platform is an open source framework based on the well-known Spring framework.
   
@@ -28,7 +28,7 @@ The project name will be Session Planner.
 
 After the first launch CUBA Studio offers you to apply a trial subscription to CUBA Studio Premium. It is free for 28 days and gives us some useful optional designers. Let’s apply it.
 
-On the left part of the screen you can see the CUBA Project navigation tree. In the center there is a Welcome page, you can use it for quick access to some CUBA functions, documentation, marketplace, and also versions and subscription information. 
+On the left side of the screen you can see the CUBA Project navigation tree. In the center there is a Welcome page and you can use it for quick access to some CUBA functions, documentation, marketplace, and also versions and subscription information. 
 
 On the right side of the screen you can see the Gradle Tool window. CUBA framework uses Gradle to build and run the application.
 
@@ -50,7 +50,7 @@ Let’s have a closer look at the entity designer. Next to the designer tab we c
 
 For instance, we expect a lot of searches by last name. To make this search more efficient we can create an index for the last name field.
 
-Let’s move further and create the Session entity and link it to our Speaker class. First, define the attribute Topic - a mandatory string. After that, we will add the session start date and the time attribute. Add the duration of the session with validation. The session end date and time will be a calculated value, we’ll configure it a bit later. 
+Let’s move further and create the Session entity and link it to our Speaker class. First, define the attribute Topic - a mandatory string. After that, we will add the session start date and the time attribute. Add the duration of the session with validation. The session end date and time will be a calculated value that we’ll configure a bit later. 
 
 Now we’ll add a mandatory reference to the speaker. The relation is many-to-one, so, we’ll define an association field called speaker that references the speaker class. 
  
@@ -70,8 +70,8 @@ Our domain model has been created. Now, we can create a simple UI to perform CRU
 
 CUBA Studio contains a UI screen generation wizard that helps us to create basic, but useful UI screens:
 
-* Browser - to show the list of entities in a grid
-* Editor - to edit one entity instance using a form-like user interface
+* The Browser - to show the list of entities in a grid
+* And the Editor - to edit one entity instance using a form-like user interface
 
 First, we will create screens to work with speakers. Since this entity is pretty simple, we can accept the default parameters for the screen creation.
 
@@ -79,7 +79,7 @@ As you can see, each screen consists of two parts: XML layout that defines the s
 
 Let’s take a look at the structure of the screen’s layout: there are two main blocks. The first one defines the way we are working with data and the second block defines the  layout  that specifies the positions of the components on the screen.
 
-Now let’s create a browser and an editor for sessions. Here we need to stop for a while and explain some bits of CUBA.
+Now let’s create a browser and an editor for sessions. Here we need to pause for a moment and explain some elements of CUBA.
 
 In the CUBA Platform, Entity View specifies which fields will be fetched from the database. You can define views in a separate file to use them in the different modules of your application, or create inline views while creating the screens.
 
@@ -109,7 +109,7 @@ As you can see, email validation works as expected.
 
 Now let’s add sessions for today and tomorrow. You can see that the endDate is calculated automatically.
 
-Generated screens are good for basic operations, but in the real world, the UI is usually more complex. Let’s add a calendar view to browse visits in addition to the grid view.
+Generated screens are good for basic operations, but in the real world, the UI is usually more complex. Let’s add a calendar view to browse sessions in addition to the grid view.
 
 ## Customizing the User Interface
 
@@ -146,7 +146,7 @@ Now let’s invoke the session editor screen when we click on an event in the ca
 
 When we interact with the UI, events are generated. We can subscribe to those events to handle them. Let’s handle a click on a calendar’s entry. 
 
-We need to invoke the editor screen to change the session’s properties. Let’s use the EditorScreenFacet. It is a non-visual component that provides an ability to pre-configure an editor screen.
+We need to invoke the editor screen to change the session’s properties. Let’s use the EditorScreenFacet. It is a component that provides an ability to pre-configure an editor screen.
 
 Put it under the window element in the Component Hierarchy window. And set the properties:
 
@@ -209,7 +209,7 @@ Let’s add the Helium add-on. It’s a new visual theme that you can use instea
 
 Now we need to stop the application and apply the init scripts of the add-on.
 
-Run the application and go to the settings screen. You can find the added theme in the drop-down list. Select it and apply. Log in to the application again - theme is already applied. We can also open the theme settings screen and change settings with preview.
+Run the application and go to the settings screen. You can find the added theme in the drop-down list. Select it and apply. Log in to the application again - the theme is already applied. We can also open the theme settings screen and change settings with preview.
 
 ## Conclusion
 
