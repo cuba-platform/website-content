@@ -69,7 +69,7 @@ First, we need to create the Speaker entity. It has three fields - first name wh
 首先，我们需要创建 Speaker 实体，它有三个字段：first name（必须），last name（可选），以及 email（必须且唯一）。我们还要给 email 字段添加一个校验规则。
 
 CUBA provides an ability to specify a proper entity display in the string format in the UI - “Instance Name”. For the speaker, we will select both the first and the last names.
-CUBA 提供了一个功能，它可以将实体以字符串的形势展示在 UI 中 - “实体名称（Instance Name）”。对于 speaker，我们选择姓和名。
+CUBA 提供了一个功能，它可以将实体以字符串的形势展示在 UI 中 - “实例名称（Instance Name）”。对于 speaker，我们选择姓和名。
 
 Let’s have a closer look at the entity designer. Next to the designer tab we can see generated text - JPA-annotated java class. They are integrated, so you can change the text and see all the changes in the designer and vice versa. Also, you can see the DDL Preview and can create indexes if required.
 我们来详细了解下实体设计器。在Designer标签页旁边会看到生成的文本 - 一个使用了 JPA 注解的 Java 类。他们是集成的，所以你可以直接修改文本然后在Designer中看效果，反过来一样。你也能看到DDL预览，需要的话在其中创建索引。
@@ -78,13 +78,13 @@ For instance, we expect a lot of searches by last name. To make this search more
 假如我们预见会有很多对 “姓” 的搜索，为了使搜索更有效率，我们可以对 last name字段添加索引。
 
 Let’s move further and create the Session entity and link it to our Speaker class. First, define the attribute Topic - a mandatory string. After that, we will add the session start date and the time attribute. Add the duration of the session with validation. The session end date and time will be a calculated value, we’ll configure it a bit later. 
-接下来，我们创建 Session 实体，并将它与 Speaker 类关联。首先，定义一个 Topic 属性 - 必须的字符串类型； 然后，添加 session start - 会议开始时间属性，然后是 duration - 带有校验规则的持续时长属性。session end - 会议结束时间是一个计算值，我们待会儿再配置它。
+接下来，我们创建 Session 实体，并将它与 Speaker 类关联。首先，定义一个 Topic 属性 - 必须的字符串类型； 然后，添加 session start - 会议开始时间属性，然后是 duration - 带有校验规则的持续时长属性。session end - 会议结束时间是一个计算值，我们稍后会配置它。
 
 Now we’ll add a mandatory reference to the speaker. The relation is many-to-one, so, we’ll define an association field called speaker that references the speaker class. 
 现在，添加一个必须的对 speaker 的引用。关系为多对一，我们把关联字段命名为 speaker，关联 Speaker 类。
  
 In addition to this, we’ll create a description field that will contain a session’s long description. For the instance name we will select a topic field instead of the description.
-此外，我们再创建一个描述字段（description）用来做会议的长文字描述。对于实体名称（Instance Name），我们选择topic字段，而不是description字段。
+此外，我们再创建一个描述字段（description）用来做会议的长文字描述。对于实例名称（Instance Name），我们选择topic字段，而不是description字段。
 
 ## Creating Calculated Attribute
 ## 创建计算属性
@@ -224,7 +224,7 @@ When we interact with the UI, events are generated. We can subscribe to those ev
 当我们与 UI 交互时，会产生交互事件。我们可以订阅这些事件并进行处理。我们来处理一下日历条目的点击事件。
 
 We need to invoke the editor screen to change the session’s properties. Let’s use the EditorScreenFacet. It is a non-visual component that provides an ability to pre-configure an editor screen.
-我们需要使用编辑界面来修改session的属性。我们来用EditorScreenFacet， 这是一个非可视化组件，可以预先配置编辑界面。
+我们需要使用编辑界面来修改session的属性。我们来用EditorScreenFacet， 这是一个用来预先配置编辑界面的组件。
 
 Put it under the window element in the Component Hierarchy window. And set the properties:
 把它放在组件树窗口的window元素下，设置以下属性：
@@ -324,7 +324,7 @@ Now we need to stop the application and apply the init scripts of the add-on.
 现在我们停止程序，运行组件的init脚本。
 
 Run the application and go to the settings screen. You can find the added theme in the drop-down list. Select it and apply. Log in to the application again - theme is already applied. We can also open the theme settings screen and change settings with preview.
-运行程序，打开设置界面。你能在下拉框看到新添加的主题，选择它然后应用。重新登录系统 - 主题就会生效了。你也可以打开主题设置界面，修改它，并且预览你的改动。
+运行程序，打开设置界面。你能在下拉框看到新添加的主题，选择它然后应用。重新登录系统 - 新主题就生效了。你也可以打开主题设置界面，修改它，并且预览你的改动。
 
 ## Conclusion
 ## 总结
