@@ -322,9 +322,11 @@ You can see that the corresponding fields are added to the screens.
 
 ![](/images/learn/v14/qs-screen20.png)
 
-In addition, set the default duration value for the new session to one hour. To do this, go to the <b>Component Inspector</b> window and subscribe to the event ```InitEntity``` in the Handlers tab.  Then set this value in the code. 
+In addition, set the default duration value for the new session to one hour. To do this, go to the <b>Component Inspector</b> window and subscribe to the event ```InitEntity``` in the Handlers tab.   
 
 ![](/images/learn/v14/qs-screen21.png)
+
+Then set this value in the code.
 
 ```java
 @Subscribe
@@ -411,7 +413,7 @@ Put a calendar control on it.
 
 ![](/images/learn/v14/qs-screen31.png)
 
-Select the ```TabSheet``` element in the <b>Component Hierarchy</b> window and select expanded in the <b>Component Inspector</b>. Studio asks for an ID. In CUBA, we need IDs to reference a screen element in the code.
+Select the ```TabSheet``` element in the <b>Component Hierarchy</b> window and select ```expanded``` in the <b>Component Inspector</b>. Studio asks for an ID. In CUBA, we need IDs to reference a screen element in the code.
 
 ![](/images/learn/v14/qs-screen32.png)
 
