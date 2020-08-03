@@ -13,7 +13,7 @@
 <div class="timestamp-wrapper">
    <a id="stamp1" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">00:49</div>
+    <div class="video-time">00:48</div>
   </div></a>
 </div>
 
@@ -38,7 +38,7 @@
 <div class="timestamp-wrapper">
    <a id="stamp2" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">02:42</div>
+    <div class="video-time">02:29</div>
   </div></a>
 </div>
 
@@ -223,7 +223,7 @@
 <div class="timestamp-wrapper">
    <a id="stamp3" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">05:29</div>
+    <div class="video-time">05:01</div>
   </div></a>
 </div>
 
@@ -249,7 +249,7 @@ public LocalDateTime getEndDate() {
 <div class="timestamp-wrapper">
    <a id="stamp4" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">06:30</div>
+    <div class="video-time">06:00</div>
   </div></a>
 </div>
 
@@ -303,7 +303,7 @@ public LocalDateTime getEndDate() {
 <div class="timestamp-wrapper">
    <a id="stamp5" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">07:40</div>
+    <div class="video-time">07:11</div>
   </div></a>
 </div>
 
@@ -342,7 +342,7 @@ public void onInitEntity(InitEntityEvent<Session> event) {
 <div class="timestamp-wrapper">
    <a id="stamp6" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">09:24</div>
+    <div class="video-time">08:11</div>
   </div></a>
 </div>
 
@@ -365,7 +365,7 @@ CUBA Studio генерирует SQL-скрипты, необходимые дл
 <div class="timestamp-wrapper">
    <a id="stamp7" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">09:58</div>
+    <div class="video-time">08:39</div>
   </div></a>
 </div>
 
@@ -389,12 +389,12 @@ CUBA Studio генерирует SQL-скрипты, необходимые дл
 
 <div id="chapter8" class="section"></div>
 
-## Разработка пользовательского интерфейса
+## Изменение пользовательского интерфейса
 
 <div class="timestamp-wrapper">
    <a id="stamp8" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">11:29</div>
+    <div class="video-time">10:05</div>
   </div></a>
 </div>
 
@@ -458,7 +458,7 @@ CUBA Studio генерирует SQL-скрипты, необходимые дл
 <div class="timestamp-wrapper">
    <a id="stamp9" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">13:41</div>
+    <div class="video-time">12:10</div>
   </div></a>
 </div>
 
@@ -535,7 +535,7 @@ public void onSessionsCalendarCalendarEventClick(Calendar.CalendarEventClickEven
 <div class="timestamp-wrapper">
    <a id="stamp10" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">15:29</div>
+    <div class="video-time">13:47</div>
   </div></a>
 </div>
 
@@ -653,7 +653,7 @@ public void onSessionsCalendarCalendarEventMove(Calendar.CalendarEventMoveEvent<
 <div class="timestamp-wrapper">
    <a id="stamp11" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">18:27</div>
+    <div class="video-time">16:27</div>
   </div></a>
 </div>
 
@@ -688,7 +688,7 @@ menu-config.planner_Session.browse=Sessions
 <div class="timestamp-wrapper">
    <a id="stamp12" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">19:11</div>
+    <div class="video-time">16:58</div>
   </div></a>
 </div>
 
@@ -719,7 +719,7 @@ menu-config.planner_Session.browse=Sessions
 <div class="timestamp-wrapper">
    <a id="stamp13" class="timestamp-wrapper-buttons"><div class="timestamp">
     <img src="/images/learn/play.svg" class="delta">
-    <div class="video-time">19:27</div>
+    <div class="video-time">17:58</div>
   </div></a>
 </div>
 
