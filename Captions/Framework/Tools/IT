@@ -1,0 +1,41 @@
+Apprendimento rapido. Alta produttività. Meno attività ripetitive.
+Uno strumento di sviluppo rapido (RAD) che offre funzioni di generazione automatica del codice, designers visuali, suggerimenti contestuali e navigazione intelligente nel codice. Studio sfrutta la potenza di uno degli IDE Java più famosi al mondo, così da facilitare l'adozione da parte degli sviluppatori.
+Sviluppa soluzioni di livello enterprise con facilità e velocità!
+Installazione
+TABELLA COMPARATIVA
+GENERALE
+Indipendente dall'IDE
+Supporto di plugin personalizzati
+Configura un nuovo progetto
+Aggiornamento della versione del framework
+GENERAZIONE CODICE
+Script di build
+Modello Dati
+Reverse engineering del database
+Script DDL e versionamento del DB
+Schermate UI di backoffice
+Tema UI di backoffice
+Interfaccia cliente
+Servizi, listeners, gestori eventi
+Messaggi localizzati
+SVILUPPO
+Navigazione intuitiva
+Refactoring
+Inject in base al contesto
+Suggerimenti contestuali e auto-correzioni
+Hot (re)deploy
+DEPLOYMENT
+Tomcat, WAR, UberJar
+STRUMENTI DI SVILUPPO VISUALI
+Designer visuale del modello dati
+Designer visuale delle schermate (WYSIWYG)
+Editor dei temi UI
+Gli strumenti visuali sono disponibili con la sottoscrizione a pagamento di CUBA Studio
+NOTA
+Dopo aver installato CUBA Studio e aver creato un nuovo progetto, la piattaforma CUBA verrà scaricata in automatico. 
+Se volete aggiornare la versione di CUBA in un progetto, è sufficiente aprirlo in Studio e selezionare la nuova versione nella finestra Project Properties.
+Cosa fare dopo
+Segui la guida Quick Start per essere operativo in appena 30 minuti
+Scarica CUBA Studio
+Accetta la Licenza e Scarica
+Apri il testo della licenza in una nuova finestra
