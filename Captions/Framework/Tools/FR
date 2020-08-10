@@ -1,0 +1,41 @@
+Démarrage facile. Haute productivité. Moins de routine.
+Un outil complet de développement rapide d'applications offrant génération de code étendue, concepteurs visuels, invites intelligentes et navigation de code pratique. CUBA Studio tire parti de la puissance de l'IDE Java le plus populaire au monde, il sera donc déjà familier à de nombreux développeurs.
+Développez des solutions de niveau entreprise facilement et rapidement !
+Installation
+CARACTÉRISTIQUES
+GENERAL
+Indépendant de l'IDE
+Plugins personnalisés
+Configurer un nouveau projet
+Mise à niveau du framework
+GÉNÉRATION DE CODE
+Script de build
+Modèle de données
+Reverse engineering bases de données
+Scripts DDL et versioning DB
+Interface utilisateur backoffice
+Thème de l'interface utilisateur backoffice
+Interface utilisateur client
+Services, observateurs, gestionnaires d'événements
+Texte localisé
+DEVELOPPEMENT
+Navigation intuitive
+Refactoring
+Injection sensible au contexte
+Astuces et quick-fixes
+Déploiement à chaud
+DEPLOIEMENT
+Tomcat, WAR, UberJar
+DEVELOPPEMENT VISUEL
+Concepteur de modèles de données visuels
+Concepteur d'écrans WYSIWYG
+Éditeur de thème d'interface utilisateur
+Les outils visuels sont disponibles dans l'abonnement commercial de CUBA Studio
+REMARQUES
+Après avoir installé CUBA Studio et créé un nouveau projet, la plateforme CUBA sera téléchargée automatiquement. Si vous souhaitez migrer un projet vers une nouvelle version de plate-forme, ouvrez simplement le projet dans Studio et sélectionnez la nouvelle version sur la page Propriétés du projet.
+Et ensuite?
+Suivez le guide de démarrage rapide pour être opérationnel en 15 minutes.
+Télécharger CUBA Studio
+Acceptez la licence et téléchargez
+Ouvrir le texte de la licence dans une nouvelle fenêtre
+Ensuite

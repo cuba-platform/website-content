@@ -1,0 +1,24 @@
+CUBA unisce le tecnologie più diffuse per la JVM in una piattaforma potente, seguendo i moderni standard di sviluppo e rispondendo ai requisiti fondamentali delle applicazioni aziendali.
+Novità
+Tutte le versioni
+Basato sul framework Spring
+"CUBA adotta la maggior parte delle funzionalità offerte dal Framework Spring, in questo modo potrete fare affidamento sul suo ecosistema di librerie, e applicare da subito l'esperienza acquisita in precedenza con il framework. 
+E se non avete mai usato Spring, CUBA è la scelta ideale per facilitarne l'apprendimento."
+Basato sul framework Spring
+"CUBA adotta la maggior parte delle funzionalità offerte dal Framework Spring, in questo modo potrete fare affidamento sul suo ecosistema di librerie, e applicare da subito l'esperienza acquisita in precedenza con il framework. 
+E se non avete mai usato Spring, CUBA è la scelta ideale per facilitarne l'apprendimento."
+Modulare
+L'architettura unica del framework consente a qualunque applicazione CUBA di essere incorporata in un'altra applicazione CUBA. Questa caratteristica rende la modularizzazione praticamente automatica: dividete i vostri requisiti in un certo numero di moduli, sviluppateli separatamente e infine assemblateli in un prodotto completo.
+Scalabile
+Il framework è progettato per essere scalabile sia in verticale che in orizzontale. Permette diverse opzioni di deploy, in base al carico stimato e al tempo di fermo massimo tollerato.
+Compatibile
+Le applicazioni CUBA sono compatibili con i database (RDBMS) più diffusi e possono essere eseguite in qualunque servlet container Java. Possono essere distribuite come WAR, immagini Docker, UberJar o nei servizi cloud.
+INTERFACCIA DI BACKOFFICE
+Il modulo integrato per la creazione di UI consente di sviluppare rapidamente interfacce di backoffice o di amministrazione, in Java o qualunque altro linguaggio basato sulla JVM. Fornisce una ricca gamma di componenti UI legati in automatico ai dati, oltre a tutta l'infrastruttura necessaria alla manipolazione dei dati, la validazione, l'esecuzione della logica di busines, la localizzazione, la gestione della sessione utente, il controllo accessi e molto altro. 
+API REST
+Le API REST generate automaticamente supportano l'autenticazione, le operazioni CRUD, l'esecuzione di query personalizzate e l'invocazione della logica di business. Il modulo genera in automatico la documentazione Swagger, così da consentire l'integrazione con sistemi di terze parti o permettere il richiamo delle API da qualunque applicazione client.
+INTERFACCIA CLIENTE
+A differenza delle interfacce di backoffice, la UI per i clienti spesso necessita di essere compatibile con i dispositivi mobili, oltre ad avere requisiti di usabilità particolari e dover sopportare carichi potenzialmente elevati. Per questo CUBA fornisce un SDK per TypeScript e un generatore di codice per creare interfacce basate su React.js
+Funzionalità di livello enterprise
+Il framework è sponsorizzato da Haulmont, una software house specializzata in soluzioni enterprise con più di 10 anni di attività. CUBA è nato come strumento interno, e ora gioca un ruolo centrale nell'azienda ed è impiegato in oltre 500 soluzioni installate in tutto il mondo.
+POWERED BY
