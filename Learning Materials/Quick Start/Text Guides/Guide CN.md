@@ -322,9 +322,11 @@ CUBA Studio 带有 UI 界面生成向导，可以帮我们创建基本，但是�
 
 ![](/images/learn/v14/qs-screen20.png)
 
-然后，为新session设置默认的持续时间为1小时。方法是在 <b>Component Inspector</b> 窗口的 Handlers 标签页订阅 ```InitEntity``` 事件。然后在代码中设置它。
+然后，为新session设置默认的持续时间为1小时。方法是在 <b>Component Inspector</b> 窗口的 Handlers 标签页订阅 ```InitEntity``` 事件。
 
 ![](/images/learn/v14/qs-screen21.png)
+
+然后在代码中设置它。
 
 ```java
 @Subscribe
@@ -411,7 +413,7 @@ public void onInitEntity(InitEntityEvent<Session> event) {
 
 ![](/images/learn/v14/qs-screen31.png)
 
-在 <b>Component Hierarchy</b> 窗口选择 ```TabSheet``` 元素，然后在 <b>Component Inspector</b> 中选择 expanded。Studio会要求一个ID。在CUBA中，代码通过ID标记一个界面元素。
+在 <b>Component Hierarchy</b> 窗口选择 ```TabSheet``` 元素，然后在 <b>Component Inspector</b> 中选择 ```expanded``` 。Studio会要求一个ID。在CUBA中，代码通过ID标记一个界面元素。
 
 ![](/images/learn/v14/qs-screen32.png)
 
