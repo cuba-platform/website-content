@@ -1,0 +1,3 @@
+## Panoramica
+Un componente che aggiunge il supporto di colonne dinamiche (create dall'utente) per i componenti tabella.
+In pratica, fornisce un'azione personalizzata che si può aggiungere ai componenti della tabella, e associare a un pulsante (o a una voce di menu contestuale, o a qualsiasi cosa si voglia) che quando attivato visualizza una finestra di dialogo dove l'utente può aggiungere/modificare/rimuovere colonne dinamiche il cui valore è generato da uno script Groovy.

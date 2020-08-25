@@ -1,0 +1,8 @@
+## Panoramica
+Il Single-sign-on (SSO) per le applicazioni CUBA consente all'utente di accedere a più applicazioni in esecuzione inserendo un solo login e password una volta in una sessione del browser.
+Quando si utilizza l'SSO, ci sono due tipi di applicazioni:
+* Identity Provider (IDP) è un'applicazione che fornisce l'autenticazione dell'utente. Contiene un modulo di login per l'inserimento delle credenziali utente e controlla le credenziali rispetto all'elenco degli utenti registrati. In un ambiente SSO è consentito un solo Identity Provider.
+* Il Service Provider (SP) è un'applicazione normale che reindirizza all'IDP per l'autenticazione degli utenti. SP dovrebbe contenere lo stesso elenco di utenti dell' IDP (le password no). SP fornisce l'autorizzazione utilizzando i ruoli di sicurezza CUBA e i gruppi di accesso. Ci può essere un numero qualsiasi di Service Provider in un ambiente SSO.
+Un'applicazione può essere un Identity Provider e un Service Provider allo stesso tempo, in modo da non dover impostare un IDP dedicato.
+_CUBA SSO utilizza un protocollo personalizzato basato su HTTP e attualmente non fornisce un' integrazione con sistemi che utilizzano protocolli di autenticazione standard come SAML o OIDC._
+In ambiente SSO, quando un utente inserisce l'URL di un Service Provider, il SP reindirizza alla pagina IDP per l'inserimento del login e della password. Dopo essersi autenticato con successo, IDP reindirizza all'applicazione SP e l'utente accede in modo trasparente a SP.
