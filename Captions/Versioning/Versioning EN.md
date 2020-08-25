@@ -1,4 +1,4 @@
-# Stable Release Versioning
+# Versioning and Support
 CUBA Platform follows a standard semantic numeration for its stable versions - major.minor.maintenance, e.g. 7.2.4
 Major version "7"
 Minor version "2"
