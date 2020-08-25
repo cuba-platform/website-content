@@ -1,0 +1,2 @@
+## Overview
+全局事件扩展组件使得在分布式系统中的任意应用程序block都能接收Spring的应用程序事件。在最简单情况下，core和web block都运行在单一JVM中，通过该组件可以从core发送事件至web，以便通知UI界面或者托管bean。在集群环境中，block内部发布的事件会被系统中所有连接的其他部分收到：即所有的中间件blocks以及客户端blocks：web、portal、desktop。

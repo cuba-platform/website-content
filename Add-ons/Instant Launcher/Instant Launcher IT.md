@@ -1,0 +1,4 @@
+## Panoramica
+Questo componente permette di definire comandi di avvio a runtime che possono essere eseguiti direttamente tramite una casella di ricerca.
+Il launcher istantaneo usa [rich-search](https://github.com/cuba-platform/rich-search-addon) sotto il cofano. Aggiunge un tipo di risultato di ricerca specifico ai risultati della ricerca di `rich-search` chiamato `Launcher Commands`. Questi comandi di lancio sono configurazioni o script che possono essere definiti al momento dell'esecuzione di un'applicazione.
+Per maggiori informazioni, consultate il [README](https://github.com/mariodavid/cuba-component-instant-launcher/blob/master/README.md) su GitHub.
