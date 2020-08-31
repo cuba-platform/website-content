@@ -53,7 +53,7 @@ Andiamo oltre e creiamo l'entità Session e colleghiamola alla nostra classe Spe
 
 Adesso aggiungiamo un riferimento obbligatiorio allo Speaker. La relazione è di tipo many-to-one, quindi aggiungeremo un campo ASSOCIATION chiamato speaker, che fa riferimento alla classe Speaker.
  
-In aggiunta creiamo anche un campo description, che conterrà la descrizione della sessione. For the instance name we will select a topic field instead of the description.
+In aggiunta creiamo anche un campo description, che conterrà la descrizione della sessione. Per il nome di istanza selezioniamo l'attributo topic al posto di  description.
 
 ## Aggiunta Campo Calcolato
 
@@ -94,7 +94,7 @@ Ora dobbiamo generare gli script per creare il database.
 
 Per generare gli script che servono a creare il database, dobbiamo selezionare il menù CUBA -> Generate Database Scripts.
 
-Per applicare questi script e creare il database, basta selezionare il menù CUBA -> Create Database. Oltre alle tabelle applicative, CUBA crea anche delle tabelle di sistema dove memorizza informazioni quali gli utenti, i ruoli e le attività schedulate.
+Per applicare questi script e creare il database, basta selezionare il menù Create Database. Oltre alle tabelle applicative, CUBA crea anche delle tabelle di sistema dove memorizza informazioni quali gli utenti, i ruoli e le attività schedulate.
 
 ## Eseguire l'Applicazione in Modalità Sviluppo
 
@@ -152,8 +152,8 @@ Mettiamolo sotto l'elemento window nella finestra della Gerarchia dei componenti
 * ID
 * Abbiamo bisogno di un editor per la classe session. Impostiamo la classe Entity "session" e il corrispondente contenitore di dati. 
 * Classe della schermata: SessionEdit.
+*  La schermata verrà aperta come popup.
 * Impostiamo la modalità di modifica.
-* La schermata verrà aperta come popup.
 
 Torniamo al gestore dell'evento. Iniettiamo l'EditorScreenFacet. Passiamo l'entità session ricevuta all'interno dell'oggetto evento al facet. Infine dobbiamo mostrare l'editor.
 
