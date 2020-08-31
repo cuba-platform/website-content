@@ -1,0 +1,1012 @@
+﻿1
+00:00:00,433 --> 00:00:04,999
+Ciao! Benvenuto nel Quick Start di CUBA Platform.
+
+2
+00:00:05,000 --> 00:00:08,533
+CUBA Platform è un framework open source basato su Spring,
+
+3
+00:00:08,533 --> 00:00:10,999
+uno tra i framework web più famosi al mondo.
+
+4
+00:00:11,000 --> 00:00:15,733
+Lo scopo di CUBA è di semplificare il processo di sviluppo di applicazioni aziendali.
+
+5
+00:00:15,733 --> 00:00:18,599
+Questo video affronterà i seguenti argomenti:
+
+6
+00:00:19,066 --> 00:00:21,932
+Creazione del modello dei dati e del database
+
+7
+00:00:23,666 --> 00:00:27,232
+Sviluppo dell'interfaccia utente e sua personalizzazione
+
+8
+00:00:29,800 --> 00:00:32,400
+Implementazione della logica di business
+
+9
+00:00:35,433 --> 00:00:40,299
+Come esempio, svilupperemo una semplice applicazione, ma perfettamente funzionante,
+
+10
+00:00:40,300 --> 00:00:43,433
+per la pianificazione delle sessioni in una conferenza.
+
+11
+00:00:43,433 --> 00:00:48,166
+Grazie a questo video sarete già in grado di sviluppare la vostra prima applicazione CUBA.
+
+12
+00:00:49,200 --> 00:00:51,766
+In questo video, oltre al framework CUBA, 
+
+13
+00:00:51,766 --> 00:00:55,166
+useremo un plugin per IntelliJ Idea: CUBA Studio.
+
+14
+00:00:58,433 --> 00:01:04,099
+Creiamo un progetto CUBA vuoto usando il namespace "planner".
+
+15
+00:01:04,100 --> 00:01:08,000
+Useremo Java 11 come JDK di default
+
+16
+00:01:08,000 --> 00:01:10,266
+e l'ultima versione stabile di CUBA.
+
+17
+00:01:11,900 --> 00:01:15,966
+Useremo un database in-memory: HSQLDB.
+
+18
+00:01:15,966 --> 00:01:18,899
+Questo dovrebbe essere sufficiente per questo quick start.
+
+19
+00:01:18,900 --> 00:01:22,366
+È possibile selezionare un altro database dall'elenco a discesa.
+
+20
+00:01:22,366 --> 00:01:25,632
+Lasciamo invariati i parametri di connessione al database.
+
+21
+00:01:26,066 --> 00:01:28,832
+Il nome del progetto sarà Session Planner.
+
+22
+00:01:30,333 --> 00:01:37,366
+Dopo il primo avvio, CUBA Studio offre la possibilità di sottoscrivere un abbonamento di prova a CUBA Studio Premium.
+
+23
+00:01:37,366 --> 00:01:42,599
+È gratuito per 28 giorni e ci offre alcuni utili designer opzionali.
+
+24
+00:01:42,600 --> 00:01:43,733
+Richiediamolo.
+
+25
+00:01:45,900 --> 00:01:51,633
+Sul lato sinistro dello schermo si può vedere l'albero di navigazione del progetto CUBA.
+
+26
+00:01:51,633 --> 00:01:53,899
+Al centro c'è una pagina di benvenuto
+
+27
+00:01:53,900 --> 00:01:59,633
+che consente di accedere rapidamente ad alcune funzioni di CUBA, alla documentazione, al marketplace,
+
+28
+00:01:59,633 --> 00:02:02,966
+nonché alle versioni e alle informazioni relative all'abbonamento.
+
+29
+00:02:02,966 --> 00:02:07,166
+Sul lato destro dello schermo si può vedere la finestra Gradle Tool.
+
+30
+00:02:07,166 --> 00:02:12,232
+Il framework CUBA utilizza Gradle per compilare ed eseguire l'applicazione.
+
+31
+00:02:12,466 --> 00:02:16,599
+La finestra di compilazione standard di IntelliJ è in basso.
+
+32
+00:02:16,600 --> 00:02:20,500
+Possiamo chiudere alcune finestre per avere un po' di spazio sullo schermo.
+
+33
+00:02:20,500 --> 00:02:26,900
+Il menu principale di CUBA fornisce un accesso rapido alle caratteristiche specifiche di CUBA nell'IDE.
+
+34
+00:02:28,966 --> 00:02:33,966
+Adesso andremo a creare le classi JPA insieme alle regole di business come 
+
+35
+00:02:33,966 --> 00:02:37,732
+i campi obbligatori, i campi univoci e le relazioni.
+
+36
+00:02:38,500 --> 00:02:45,700
+Il modello di dominio prevede solo due classi (chiamate anche Entità): Speaker e Session.
+
+37
+00:02:45,700 --> 00:02:50,700
+Per semplificare il processo di sviluppo abbiamo aggiunto a CUBA Studio un visual designer
+
+38
+00:02:50,700 --> 00:02:54,500
+che facilita la creazione di entità JPA.
+
+39
+00:02:54,500 --> 00:02:59,300
+Cliccare con il tasto destro del mouse su " Data Model" e selezionare "New -> Entity".
+
+40
+00:02:59,300 --> 00:03:02,166
+Come prima cosa, dobbiamo creare l'entità Speaker.
+
+41
+00:03:03,000 --> 00:03:04,966
+Questa avrà tre campi:
+
+42
+00:03:04,966 --> 00:03:07,066
+first name (obbligatorio),
+
+43
+00:03:09,466 --> 00:03:12,532
+last name (opzionale)
+
+44
+00:03:12,633 --> 00:03:16,833
+ed email (obbligatorio e univoco).
+
+45
+00:03:16,833 --> 00:03:20,766
+ Aggiungiamo anche la validazione per il campo email.
+
+46
+00:03:20,766 --> 00:03:25,932
+CUBA permette di specificare come verrà visualizzata l'entità nell'interfaccia utente,
+
+47
+00:03:25,933 --> 00:03:28,799
+sotto forma di stringa: l' "Instance Name".
+
+48
+00:03:28,800 --> 00:03:33,366
+Per lo Speaker, selezioniamo sia il campo first name, sia last name.
+
+49
+00:03:33,366 --> 00:03:36,166
+Diamo un'occhiata più da vicino all'entity designer.
+
+50
+00:03:36,166 --> 00:03:39,732
+Accanto alla scheda del designer possiamo vedere il testo generato - 
+
+51
+00:03:39,733 --> 00:03:42,099
+la classe java con le annotazioni JPA.
+
+52
+00:03:42,100 --> 00:03:45,233
+Sono integrati, quindi è possibile modificare il testo e vedere tutti
+
+53
+00:03:45,233 --> 00:03:48,399
+ i cambiamenti nel designer e viceversa.
+
+54
+00:03:48,400 --> 00:03:51,366
+Inoltre, è possibile vedere l'anteprima DDL
+
+55
+00:03:51,366 --> 00:03:53,599
+e, se necessario, creare indici.
+
+56
+00:03:53,600 --> 00:03:56,766
+Per esempio, ci aspettiamo molte ricerche per cognome.
+
+57
+00:03:56,766 --> 00:04:01,566
+Per rendere questa ricerca più efficiente possiamo creare un indice per il campo cognome.
+
+58
+00:04:08,500 --> 00:04:11,000
+Andiamo oltre e creiamo l'entità Session
+
+59
+00:04:11,000 --> 00:04:13,766
+e colleghiamola alla nostra classe Speaker.
+
+60
+00:04:13,766 --> 00:04:18,566
+Per prima cosa, definiamo l'attributo Topic - una stringa obbligatoria.
+
+61
+00:04:18,566 --> 00:04:23,199
+Dopo di che, aggiungeremo la data di inizio della sessione e l'attributo time.
+
+62
+00:04:23,200 --> 00:04:26,400
+Aggiungiamo la durata della sessione con la validazione.
+
+63
+00:04:30,300 --> 00:04:33,733
+La data e l'ora di fine sessione saranno un valore calcolato
+
+64
+00:04:33,733 --> 00:04:36,099
+che configureremo in seguito.
+
+65
+00:04:36,100 --> 00:04:39,566
+Adesso aggiungiamo un riferimento obbligatiorio allo Speaker.
+
+66
+00:04:39,566 --> 00:04:42,099
+La relazione è di tipo many-to-one,
+
+67
+00:04:42,100 --> 00:04:45,600
+quindi aggiungeremo un campo ASSOCIATION chiamato speaker,
+
+68
+00:04:45,600 --> 00:04:48,633
+che fa riferimento alla classe Speaker.
+
+69
+00:04:48,633 --> 00:04:51,666
+In aggiunta creiamo anche un campo description,
+
+70
+00:04:51,666 --> 00:04:54,832
+ che conterrà la descrizione della sessione.
+
+71
+00:04:54,833 --> 00:04:59,366
+Per il nome di istanza selezioniamo l'attributo topic al posto di  description.
+
+72
+00:05:02,600 --> 00:05:08,500
+Adesso dobbiamo creare un attributo calcolato automaticamente per la data e l'ora di fine della sessione.
+
+73
+00:05:12,666 --> 00:05:15,332
+Per prima cosa aggiungiamo il metodo getter
+
+74
+00:05:15,333 --> 00:05:18,533
+e lo chiamiamo getEndDate.
+
+75
+00:05:18,533 --> 00:05:22,033
+Annotiamo il metodo con l'annotazione @MetaProperty.
+
+76
+00:05:22,033 --> 00:05:26,399
+Per l'attributo calcolato, dobbiamo specificare i campi da caricare.
+
+77
+00:05:26,400 --> 00:05:29,800
+Nel nostro caso, questi sono startDate e duration.
+
+78
+00:05:29,800 --> 00:05:29,833
+Infine basta aggiungere la logica di calcolo.
+
+79
+00:05:29,833 --> 00:05:32,699
+Infine basta aggiungere la logica di calcolo.
+
+80
+00:05:36,233 --> 00:05:38,633
+Si noti che Studio evidenzia il metodo
+
+81
+00:05:38,633 --> 00:05:42,599
+perché dobbiamo specificare un'etichetta di testo per l'attributo.
+
+82
+00:05:42,600 --> 00:05:44,800
+Aggiungiamolo al pacchetto dei messaggi.
+
+83
+00:05:47,133 --> 00:05:50,133
+Ora torniamo al designer e diamo un'occhiata.
+
+84
+00:05:50,133 --> 00:05:52,466
+Vediamo che il campo endDate è stato aggiunto
+
+85
+00:05:52,466 --> 00:05:57,432
+ed è in sola lettura e gli attributi correlati sono specificati.
+
+86
+00:05:57,433 --> 00:05:59,666
+Il nostro modello di dominio è stato creato.
+
+87
+00:06:01,733 --> 00:06:05,699
+Ora possiamo creare una semplice UI per eseguire operazioni CRUD
+
+88
+00:06:05,700 --> 00:06:07,433
+sulle tabelle del database.
+
+89
+00:06:11,166 --> 00:06:13,799
+CUBA Studio rende disponibile un wizard
+
+90
+00:06:13,800 --> 00:06:16,766
+per la creazione di interfacce utente di base:
+
+91
+00:06:16,766 --> 00:06:22,199
+Browser - per mostrare la lista di entità in griglia
+
+92
+00:06:22,200 --> 00:06:30,133
+Editor - per modificare una singola istanza di entità con un form generato automaticamente
+
+93
+00:06:30,133 --> 00:06:33,833
+Quindi procediamo a creare le schermate che gestiranno i relatori.
+
+94
+00:06:33,833 --> 00:06:35,933
+Dato che questa entità è molto semplice,
+
+95
+00:06:35,933 --> 00:06:40,799
+possiamo accettare i parametri di default che ci propone il wizard di creazione.
+
+96
+00:06:40,800 --> 00:06:45,533
+Come possiamo vedere da questi primi esempi, ogni schermata consiste di due parti:
+
+97
+00:06:45,533 --> 00:06:50,866
+un file XML che definisce l'aspetto dell'interfaccia utente e visualizza l'anteprima,
+
+98
+00:06:51,133 --> 00:06:53,266
+e il controller, scritto in Java,
+
+99
+00:06:53,266 --> 00:06:57,766
+che contiene la logica interna della schermata e il codice che gestisce gli eventi.
+
+100
+00:06:57,766 --> 00:07:00,599
+Diamo un'occhiata alla struttura del layout dello schermo:
+
+101
+00:07:00,600 --> 00:07:02,433
+ci sono due blocchi principali.
+
+102
+00:07:02,433 --> 00:07:06,599
+l primo definisce il modo in cui lavoriamo con i dati
+
+103
+00:07:06,600 --> 00:07:08,900
+e il secondo blocco definisce il layout
+
+104
+00:07:08,900 --> 00:07:11,666
+che specifica la posizione dei componenti sullo schermo.
+
+105
+00:07:11,666 --> 00:07:16,199
+Adesso creiamo una schermata di browse e una di edit per le sessioni.
+
+106
+00:07:18,933 --> 00:07:22,999
+Prima di continuare dobbiamo soffermarci su alcuni concetti di CUBA.
+
+107
+00:07:23,000 --> 00:07:29,100
+In CUBA, una Entity View (Vista di Entità) definisce quali campi saranno letti dal database.
+
+108
+00:07:29,100 --> 00:07:34,500
+È possibile definire le viste in un file separato per utilizzarle nei diversi moduli
+
+109
+00:07:34,500 --> 00:07:40,266
+della propria applicazione, oppure creare viste in linea durante la creazione delle schermate.
+
+110
+00:07:40,266 --> 00:07:42,699
+Ora creiamo una vista in linea. 
+
+111
+00:07:42,700 --> 00:07:44,833
+Basta selezionare i dati necessari.
+
+112
+00:07:48,000 --> 00:07:51,766
+In questo modo i campi corrispondenti vengono aggiunti in automatico alle schermate.
+
+113
+00:07:54,633 --> 00:07:59,866
+Inoltre, impostiamo il valore di durata predefinito per la nuova sessione a un'ora.
+
+114
+00:07:59,866 --> 00:08:02,866
+Per fare questo, andiamo nella schermata dell'editor
+
+115
+00:08:02,866 --> 00:08:07,899
+e sottoscriviamo l'evento InitEntity, e impostiamo questo valore nel codice.
+
+116
+00:08:12,133 --> 00:08:15,766
+Ora dobbiamo generare gli script per creare il database.
+
+117
+00:08:16,600 --> 00:08:20,233
+Per generare gli script che servono a creare il database,
+
+118
+00:08:20,233 --> 00:08:24,833
+dobbiamo selezionare il menù CUBA -> Generate Database Scripts.
+
+119
+00:08:24,833 --> 00:08:27,633
+Per applicare questi script e creare il database,
+
+120
+00:08:27,633 --> 00:08:30,766
+basta selezionare il menù Create Database.
+
+121
+00:08:30,766 --> 00:08:32,699
+Oltre alle tabelle applicative,
+
+122
+00:08:32,700 --> 00:08:34,333
+CUBA crea anche delle tabelle di sistema 
+
+123
+00:08:34,333 --> 00:08:40,866
+dove memorizza informazioni quali gli utenti, i ruoli e le attività schedulate.
+
+124
+00:08:40,866 --> 00:08:45,499
+Ora possiamo lanciare l'applicazione direttamente dall'IDE.
+
+125
+00:08:47,933 --> 00:08:52,466
+Premiamo il pulsante "Run" nell'IDE per lanciare l'applicazione.
+
+126
+00:08:55,333 --> 00:08:59,766
+Potete vedere il log dell'applicazione nella finestra "Run" dell'IDE.
+
+127
+00:08:59,766 --> 00:09:05,466
+Dopo aver atteso qualche secondo la compilazione, possiamo accedere all'applicazione nel browser.
+
+128
+00:09:05,466 --> 00:09:08,866
+Clicchiamo sull'URL visualizzato e accediamo all'applicazione
+
+129
+00:09:08,866 --> 00:09:10,799
+usando il nome utente "admin".
+
+130
+00:09:10,800 --> 00:09:13,500
+La password di default è "admin".
+
+131
+00:09:13,500 --> 00:09:16,133
+Aggiungiamo dei dati di test all'applicazione: 
+
+132
+00:09:16,133 --> 00:09:18,366
+per primi un paio di relatori.
+
+133
+00:09:19,300 --> 00:09:23,066
+Come potete vedere, la validazione del campo email funziona come ci aspettavamo.
+
+134
+00:09:27,633 --> 00:09:30,566
+Adesso aggiungiamo un paio di sessioni per oggi e domani.
+
+135
+00:09:35,533 --> 00:09:39,099
+Vedete che il campo endDate è stato calcolato in automatico.
+
+136
+00:09:55,666 --> 00:10:00,566
+La generazione automatica delle schermate è ottima per le operazioni di base,
+
+137
+00:10:00,566 --> 00:10:04,999
+ma nelle applicazioni reali le interfacce utente sono più complesse.
+
+138
+00:10:05,000 --> 00:10:10,866
+Proviamo ad aggiungere un'interfaccia per visualizzare le sessioni in un calendario, in aggiunta alla griglia.
+
+139
+00:10:10,866 --> 00:10:15,166
+Ora aggiungeremo un controllo a schede nella schermata di browse,
+
+140
+00:10:15,166 --> 00:10:19,099
+ci metteremo un controllo calendario, e implementeremo la logica
+
+141
+00:10:19,100 --> 00:10:23,566
+per modificare e rischedulare le sessioni usando questo controllo.
+
+142
+00:10:23,566 --> 00:10:29,232
+Racchiudiamo la tabella delle sessioni in un tab sheet nella schermata di browse delle sessioni.
+
+143
+00:10:29,233 --> 00:10:31,366
+Aggiungiamo una nuova scheda
+
+144
+00:10:31,366 --> 00:10:34,132
+e inseriamo un controllo calendario.
+
+145
+00:10:34,133 --> 00:10:40,099
+Espandiamo l'elemento TabSheet a tutto lo schermo. 
+
+146
+00:10:40,100 --> 00:10:42,133
+Studio chiede un id.
+
+147
+00:10:42,133 --> 00:10:47,666
+In CUBA, abbiamo bisogno di ID per fare riferimento a un elemento dello schermo nel codice.
+
+148
+00:10:47,666 --> 00:10:51,866
+Inoltre, impostiamo gli id e le didascalie per ogni tab.
+
+149
+00:11:04,533 --> 00:11:08,733
+Modifichiamo il calendario - assegniamo un contenitore di dati ed espandiamolo.
+
+150
+00:11:09,500 --> 00:11:12,633
+Infine, espandiamo la tabella delle sessioni.
+
+151
+00:11:12,633 --> 00:11:17,966
+In CUBA, i componenti di interfaccia sono collegati alle entità e alle loro proprietà.
+
+152
+00:11:17,966 --> 00:11:22,799
+Collegheremo il calendario alla collezione di dati caricata nella schermata.
+
+153
+00:11:22,800 --> 00:11:26,100
+Usiamo il campo di ricerca per trovare le proprietà da collegare:
+
+154
+00:11:26,100 --> 00:11:30,200
+startDateProperty al campo startDate di una Session
+
+155
+00:11:30,200 --> 00:11:33,566
+endDateProperty al campo endDate di una Session
+
+156
+00:11:33,566 --> 00:11:37,232
+captionProperty al campo topic di una Session
+
+157
+00:11:37,233 --> 00:11:42,033
+e infine descriptionProperty al campo description di una Session
+
+158
+00:11:42,033 --> 00:11:46,099
+Facciamo in modo che il calendario visualizzi solo le ore lavorative.
+
+159
+00:11:46,700 --> 00:11:54,466
+Oltre al designer visuale, possiamo modificare direttamente il codice XML della schermata nell'editor testuale. 
+
+160
+00:11:54,466 --> 00:11:56,766
+Aggiungiamo dei pulsanti di navigazione.
+
+161
+00:11:56,766 --> 00:12:01,166
+Ora possiamo riaprire la schermata nel browser per controllare le modifiche -
+
+162
+00:12:01,166 --> 00:12:05,332
+CUBA supporta l' "hot reload" delle schermate dopo ciascuna modifica.
+
+163
+00:12:05,333 --> 00:12:09,866
+Adesso possiamo vedere le sessioni visualizzate all'interno del calendario.
+
+164
+00:12:09,866 --> 00:12:14,666
+Adesso facciamo in modo di aprire la schermata di modifica per una sessione
+
+165
+00:12:14,666 --> 00:12:16,866
+quando facciamo click su un evento nel calendario.
+
+166
+00:12:16,866 --> 00:12:21,366
+Quando un utente interagisce con l'interfaccia, vengono generati degli eventi.
+
+167
+00:12:21,366 --> 00:12:24,632
+Possiamo rispondere a questi eventi gestendoli da codice.
+
+168
+00:12:24,633 --> 00:12:27,633
+Ora gestiamo il click su un evento del calendario.
+
+169
+00:12:28,100 --> 00:12:32,666
+Dobbiamo richiamare la schermata dell'editor per modificare le proprietà della sessione.
+
+170
+00:12:32,666 --> 00:12:35,099
+Utilizziamo l'EditorScreenFacet.
+
+171
+00:12:35,100 --> 00:12:39,900
+Si tratta di un componente che permette di pre-configurare una schermata di modifica.
+
+172
+00:12:39,900 --> 00:12:44,466
+Mettiamolo sotto l'elemento window nella finestra della Gerarchia dei componenti.
+
+173
+00:12:44,466 --> 00:12:46,466
+ E impostiamo le proprietà:
+
+174
+00:12:46,466 --> 00:12:48,266
+ID
+
+175
+00:12:48,266 --> 00:12:51,366
+Abbiamo bisogno di un editor per la classe session.
+
+176
+00:12:51,366 --> 00:12:56,732
+Impostiamo la classe Entity "session" e il corrispondente contenitore di dati. 
+
+177
+00:12:56,733 --> 00:12:59,533
+Classe della schermata: SessionEdit.
+
+178
+00:12:59,533 --> 00:13:02,066
+La schermata verrà aperta come popup.
+
+179
+00:13:02,066 --> 00:13:05,466
+Impostiamo la modalità di modifica.
+
+180
+00:13:05,466 --> 00:13:07,732
+Torniamo al gestore dell'evento.
+
+181
+00:13:07,733 --> 00:13:10,999
+ Iniettiamo l'EditorScreenFacet.
+
+182
+00:13:11,000 --> 00:13:15,833
+Passiamo l'entità session ricevuta all'interno dell'oggetto evento al facet.
+
+183
+00:13:15,833 --> 00:13:18,399
+Infine dobbiamo mostrare l'editor.
+
+184
+00:13:18,400 --> 00:13:23,066
+Ora proviamo a riaprire la schermata nel browser e aprire l'editor.
+
+185
+00:13:23,066 --> 00:13:26,999
+Come potete vedere, dobbiamo ritoccare l'aspetto della finestra di modifica,
+
+186
+00:13:27,000 --> 00:13:30,000
+aggiustando la larghezza e l'altezza.
+
+187
+00:13:30,000 --> 00:13:35,466
+Il modo più semplice per farlo è impostare "auto" sia per la larghezza che per l'altezza.
+
+188
+00:13:39,433 --> 00:13:43,699
+Proviamo a riaprire la schermata per controllare le modifiche appena effettuate.
+
+189
+00:13:44,866 --> 00:13:50,599
+Ok, adesso è arrivato il momento di aggiungere la logica di business alla nostra applicazione.
+
+190
+00:13:50,600 --> 00:13:54,966
+In questa sezione useremo CUBA Studio per creare un servizio
+
+191
+00:13:54,966 --> 00:13:56,432
+che implementerà la logica di business,
+
+192
+00:13:56,433 --> 00:13:59,166
+e useremo questo servizio in una schermata.
+
+193
+00:13:59,166 --> 00:14:03,499
+Il servizio fornirà una funzionalità per rischedulare una sessione
+
+194
+00:14:03,500 --> 00:14:08,533
+in modoche un relatore non possa avere più di una sessione nella stessa giornata.
+
+195
+00:14:08,533 --> 00:14:12,166
+Facciamo tasto destro sul nodo Service nel progetto CUBA
+
+196
+00:14:12,166 --> 00:14:14,866
+ e creiamo un'interfaccia SessionService
+
+197
+00:14:14,866 --> 00:14:17,932
+e una classe di implementazione SessionServiceBean.
+
+198
+00:14:17,933 --> 00:14:20,299
+Creiamo inoltre un metodo nell'interfaccia
+
+199
+00:14:20,300 --> 00:14:23,333
+e implementiamolo nella classe SessionServiceBean.
+
+200
+00:14:23,333 --> 00:14:25,966
+Il metodo accetterà in ingresso una sessione
+
+201
+00:14:25,966 --> 00:14:28,366
+e una nuova data e ora per la stessa.
+
+202
+00:14:28,366 --> 00:14:32,066
+Il metodo restituirà l'istanza Session aggiornata.
+
+203
+00:14:32,366 --> 00:14:37,366
+Per prima cosa, calcoliamo l'ora di inizio e di fine nella giornata in cui è prevista la sessione.
+
+204
+00:14:43,733 --> 00:14:46,866
+Utilizzeremo le API CUBA per l'accesso ai dati - la classe DataManager. 
+
+205
+00:14:46,866 --> 00:14:52,832
+Con DataManager creiamo una query JPQL per verificare se ci sono sessioni programmate
+
+206
+00:14:52,833 --> 00:14:56,233
+per il relatore in un intervallo di tempo definito,
+
+207
+00:14:56,233 --> 00:14:58,866
+e aggiungiamo i valori dei parametri. 
+
+208
+00:15:08,700 --> 00:15:11,800
+Poi controlliamo il risultato della query
+
+209
+00:15:11,800 --> 00:15:13,733
+e, a seconda del risultato,
+
+210
+00:15:13,733 --> 00:15:16,966
+aggiorniamo la sessione con una nuova data di inizio
+
+211
+00:15:16,966 --> 00:15:20,599
+o semplicemente restituiamo l'istanza originale della sessione.
+
+212
+00:15:21,133 --> 00:15:22,699
+Il servizio è pronto,
+
+213
+00:15:22,700 --> 00:15:26,033
+adesso richiamiamolo dalla schermata di browse delle sessioni.
+
+214
+00:15:26,033 --> 00:15:30,999
+Sarà invocato quando l'utente farà drag-and-drop di un evento all'interno del calendario.
+
+215
+00:15:31,000 --> 00:15:34,533
+Nel metodo che ha sottoscritto l'evento di drag-and-drop,
+
+216
+00:15:34,533 --> 00:15:40,933
+ aggiungiamo del codice per estrarre l'entità Session dall'evento del calendario e passiamolo al servizio
+
+217
+00:15:40,933 --> 00:15:42,033
+per rischedulare la sessione. 
+
+218
+00:15:42,100 --> 00:15:46,633
+Quindi aggiorniamo l'entità nel data container della schermata di browse.
+
+219
+00:15:48,466 --> 00:15:51,032
+Per poter utilizzare il nuovo servizio, 
+
+220
+00:15:51,033 --> 00:15:52,933
+dobbiamo riavviare l'applicazione.
+
+221
+00:15:56,200 --> 00:16:00,733
+Dopo averla riavviata possiamo aprire di nuovo il calendario delle sessioni
+
+222
+00:16:00,733 --> 00:16:05,333
+e voilà! Il drag-and-drop degli eventi nel calendario è funzionante! 
+
+223
+00:16:05,333 --> 00:16:07,099
+Vediamo se funziona davvero.
+
+224
+00:16:07,100 --> 00:16:09,266
+Aggiungiamo un paio di nuove sessioni 
+
+225
+00:16:19,566 --> 00:16:23,532
+e proviamo a rischedulare una di queste in una giornata già occupata.
+
+226
+00:16:28,666 --> 00:16:34,299
+In questa sezione andremo a personalizzare le etichette standard dell'applicazione.
+
+227
+00:16:35,633 --> 00:16:41,466
+In CUBA, possiamo modificare i file di risorsa contenenti il testo visualizzato nell'applicazione.
+
+228
+00:16:41,466 --> 00:16:45,066
+Modifichiamo quindi i testi per il nostro dominio di business - 
+
+229
+00:16:45,066 --> 00:16:47,166
+la pianificazione delle conferenze.
+
+230
+00:16:47,933 --> 00:16:50,899
+Grazie alla funzionalità "Hot Deploy" di CUBA,
+
+231
+00:16:50,900 --> 00:16:57,366
+tutto quello che dobbiamo fare è loggarci nuovamente nell'applicazione, e le nostre modifiche saranno già applicate.
+
+232
+00:16:57,966 --> 00:17:00,599
+Il framework dispone anche di un marketplace
+
+233
+00:17:00,600 --> 00:17:02,833
+che contiene molti componenti pronti all'uso,
+
+234
+00:17:02,833 --> 00:17:05,766
+che possono essere aggiunti alle nostre applicazioni,
+
+235
+00:17:05,766 --> 00:17:08,499
+fornendo funzionalità quali grafici o mappe.
+
+236
+00:17:08,500 --> 00:17:12,100
+Possiamo installare questi componenti, senza lasciare CUBA Studio,
+
+237
+00:17:12,100 --> 00:17:14,166
+utilizzando il menù "Marketplace".
+
+238
+00:17:14,166 --> 00:17:15,899
+Aggiungiamo l'add-on Helium.
+
+239
+00:17:15,900 --> 00:17:20,066
+È un nuovo tema visuale che si può usare al posto dei temi standard.
+
+240
+00:17:20,066 --> 00:17:22,999
+Basta fare clic su installa e applicare le modifiche.
+
+241
+00:17:23,000 --> 00:17:28,300
+Ora dobbiamo fermare l'applicazione e applicare gli script di init del componente aggiuntivo.
+
+242
+00:17:29,666 --> 00:17:31,099
+Eseguiamo l'applicazione
+
+243
+00:17:33,800 --> 00:17:35,733
+ e andiamo alla schermata delle impostazioni.
+
+244
+00:17:36,733 --> 00:17:39,699
+Troveremo il tema appena aggiunto nell'elenco a discesa.
+
+245
+00:17:39,700 --> 00:17:41,733
+Selezioniamolo e applichiamolo.
+
+246
+00:17:42,433 --> 00:17:46,666
+Usciamo e rientriamo nell'applicazione - il tema è già applicato.
+
+247
+00:17:46,666 --> 00:17:51,899
+ Possiamo anche aprire la schermata delle impostazioni del tema e modificare le impostazioni con l'anteprima in tempo reale.
+
+248
+00:17:57,266 --> 00:18:00,832
+Il framework CUBA fornisce una vasta gamma di API
+
+249
+00:18:00,833 --> 00:18:04,499
+per aiutarci a creare applicazioni aziendali molto velocemente.
+
+250
+00:18:04,500 --> 00:18:09,833
+Questo quickstart ha mostrato solo le funzionalità di base del framework e di CUBA Studio.
+
+251
+00:18:09,833 --> 00:18:11,966
+Potrete trovare molti altri esempi
+
+252
+00:18:11,966 --> 00:18:15,866
+ e tutorials sul nostro sito web: cuba-platform.it
+
+253
+00:18:16,666 --> 00:18:18,166
+Grazie per l'attenzione!
+

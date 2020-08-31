@@ -483,7 +483,7 @@ public void onSessionsCalendarCalendarEventClick(Calendar.CalendarEventClickEven
 
 ![](/images/learn/v14/qs-screen39.png)
 
-Set the following settings:
+Установим следующие настройки:
 
 - ID - ```sessionEditDialog```;
 - контейнер данных - ```sessionsDc```;
@@ -696,7 +696,7 @@ menu-config.planner_Session.browse=Sessions
 
 ![](/images/learn/v14/qs-screen51.png)
 
-Давайте добавим компонент [Helium](https://www.cuba-platform.com/marketplace/helium/). Это новая визуальная тема, которую можно использовать вместо стандартных тем. Нажимаем **Install** и применяем изменения. 
+Давайте добавим компонент [Helium](https://www.cuba-platform.ru/marketplace/helium/). Это новая визуальная тема, которую можно использовать вместо стандартных тем. Нажимаем **Install** и применяем изменения. 
 
 Теперь нужно остановить приложение и выполнить скрипты компонента. 
 
@@ -723,6 +723,6 @@ menu-config.planner_Session.browse=Sessions
   </div></a>
 </div>
 
-Платформа CUBA предоставляет большое количество функциональности, чтобы помочь вам сделать бизнес-приложения быстро и качественно. В этой статье мы рассмотрели только базовые вещи. На нашем сайте <a target="_self" href="https://www.cuba-platform.ru">cuba-platform.ru</a> вы найдете больше <a target="_self" href="/learn/live-demo/">примеров</a> и [учебников (англ.)](https://www.cuba-platform.com/guides/), которые помогут вам глубже освоить возможности CUBA, а также <a target="_self" href="/discuss/">форум</a>, на котором можно задавать вопросы касательно разработки на платформе CUBA.
+Платформа CUBA предоставляет большое количество функциональности, чтобы помочь вам сделать бизнес-приложения быстро и качественно. В этой статье мы рассмотрели только базовые вещи. На нашем сайте <a target="_self" href="https://www.cuba-platform.ru">cuba-platform.ru</a> вы найдете больше <a target="_self" href="/learn/live-demo/">примеров</a> и  <a target="_blank" href="https://www.cuba-platform.com/guides/">учебников (англ.)</a>, которые помогут вам глубже освоить возможности CUBA, а также <a target="_self" href="/discuss/">форум</a>, на котором можно задавать вопросы касательно разработки на платформе CUBA.
 
 Спасибо за интерес к CUBA!
