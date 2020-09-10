@@ -1,0 +1,1606 @@
+﻿1
+00:00:00,000 --> 00:00:00,133
+
+
+2
+00:00:00,133 --> 00:00:01,166
+ 
+Hi, everyone!
+
+3
+00:00:01,166 --> 00:00:05,299
+Today I’ll guide you through the key features of the Bproc add-on
+
+4
+00:00:05,300 --> 00:00:10,800
+and show how to model and run business processes in CUBA applications.
+
+5
+00:00:10,800 --> 00:00:15,266
+Modeling business processes is essential for many business applications.
+
+6
+00:00:15,266 --> 00:00:18,399
+The add-on allows you to describe business process steps
+
+7
+00:00:18,400 --> 00:00:21,966
+right in the project using the integrated modeler.
+
+8
+00:00:21,966 --> 00:00:25,266
+Being a part of the application, it enables seamless integration
+
+9
+00:00:25,266 --> 00:00:30,599
+with the runtime application parts and visual process customizing.
+
+10
+00:00:30,600 --> 00:00:35,400
+The add-on is based on the embedded light-weight Flowable runtime engine.
+
+11
+00:00:35,400 --> 00:00:41,800
+Modeling of business processes is carried out in the integrated BPMN 2.0 visual designer
+
+12
+00:00:41,800 --> 00:00:44,866
+based on the bpmn.io framework.
+
+13
+00:00:44,866 --> 00:00:51,566
+Integrated DMN 1.1 decision table designer is used for complex decision logic.
+
+14
+00:00:51,566 --> 00:00:56,366
+Users may interact with running process instances using process forms.
+
+15
+00:00:56,366 --> 00:01:01,132
+For simple cases, you can declare input dialogs right in the modeler.
+
+16
+00:01:01,133 --> 00:01:08,266
+Also, you can use screens based on CUBA Generic UI to create process forms of any complexity.
+
+17
+00:01:08,266 --> 00:01:15,399
+Administrative screens for managing running processes provide a ready solution to view all running process instances,
+
+18
+00:01:15,400 --> 00:01:20,833
+reassign user tasks, analyze processes execution history, etc.
+
+19
+00:01:20,833 --> 00:01:25,266
+You can also use API for working with business processes from the code.
+
+20
+00:01:25,266 --> 00:01:26,066
+
+
+21
+00:01:26,066 --> 00:01:31,732
+And now  I’ll show how to use the Bproc add-on in your CUBA application.
+
+22
+00:01:31,733 --> 00:01:35,399
+You must already be familiar with our petclinic demo project
+
+23
+00:01:35,400 --> 00:01:38,433
+that can be found on the CUBA platform website.
+
+24
+00:01:38,433 --> 00:01:42,733
+It demonstrates an IT system of an imaginary pokemon’s clinic
+
+25
+00:01:42,733 --> 00:01:47,666
+with pre-filled data for clients, pets, vets, and visits.
+
+26
+00:01:47,666 --> 00:01:51,032
+Let’s think of creating a business process for this app.
+
+27
+00:01:51,033 --> 00:01:54,233
+First, let's take a look at its original data model.
+
+28
+00:01:54,233 --> 00:01:59,499
+Owner is an entity that represents the personal data of pet owners.
+
+29
+00:01:59,500 --> 00:02:05,700
+Pet contains name and birth date and is associated with the Owner and PetType classes.
+
+30
+00:02:05,700 --> 00:02:10,466
+Visit details are contained in the Visit class and are related to one pet.
+
+31
+00:02:10,466 --> 00:02:13,999
+Vet is an entity containing veterinarian names,
+
+32
+00:02:14,000 --> 00:02:18,533
+extends Person and is associated with the Specialty class.
+
+33
+00:02:18,533 --> 00:02:21,499
+We will add only two attributes to the Visit entity.
+
+34
+00:02:21,500 --> 00:02:26,033
+Status - that will contain the current status of the visit.
+
+35
+00:02:26,033 --> 00:02:30,833
+And recommendations - the vet’s note for an owner after the visit.
+
+36
+00:02:30,833 --> 00:02:35,066
+So, let’s look at the things we are going to implement in our demo project.
+
+37
+00:02:35,066 --> 00:02:40,632
+We’ll create a business process that starts every time an administrator creates a new visit.
+
+38
+00:02:40,633 --> 00:02:44,333
+Then the visit is confirmed or canceled by the administrator.
+
+39
+00:02:44,333 --> 00:02:47,833
+A chief vet should choose a vet to accomplish the visit
+
+40
+00:02:47,833 --> 00:02:50,633
+or cancel it if a pet owner did not come.
+
+41
+00:02:50,633 --> 00:02:54,966
+After creating a  business process we should go to the CUBA Studio
+
+42
+00:02:54,966 --> 00:02:57,932
+and implement process forms and service tasks.
+
+43
+00:02:57,933 --> 00:03:02,133
+Then we’ll finish modeling the business process and deploy the model.
+
+44
+00:03:02,133 --> 00:03:04,999
+In the end, to ensure everything is done properly,
+
+45
+00:03:05,000 --> 00:03:07,066
+we test the demo project.
+
+46
+00:03:07,066 --> 00:03:08,999
+And now we are ready to start.
+
+47
+00:03:09,000 --> 00:03:13,366
+Go to the petclinic github repository and clone it.
+
+48
+00:03:13,366 --> 00:03:13,966
+
+
+49
+00:03:13,966 --> 00:03:16,432
+Open the project in CUBA Studio.
+
+50
+00:03:16,433 --> 00:03:21,533
+
+
+51
+00:03:21,533 --> 00:03:25,199
+First, we need to add the Bproc add-on to the project.
+
+52
+00:03:25,200 --> 00:03:28,233
+Go to the Marketplace and install the add-on.
+
+53
+00:03:28,233 --> 00:03:29,966
+If you don’t have a subscription,
+
+54
+00:03:29,966 --> 00:03:36,399
+you can get a trial version of the Bproc add-on on the add-on’s page at the CUBA Platform website.
+
+55
+00:03:36,400 --> 00:03:36,866
+
+
+56
+00:03:36,866 --> 00:03:41,499
+ 
+Before we start modeling a business process we need to extend our data model.
+
+57
+00:03:41,500 --> 00:03:43,233
+
+
+58
+00:03:43,233 --> 00:03:44,966
+Go to the Visit entity
+
+59
+00:03:44,966 --> 00:03:46,832
+
+
+60
+00:03:46,833 --> 00:03:48,433
+and switch to the designer.
+
+61
+00:03:48,433 --> 00:03:48,866
+
+
+62
+00:03:48,866 --> 00:03:56,932
+Add two attributes with String type: status and recommendations with unlimited length.
+
+63
+00:03:56,933 --> 00:03:58,799
+
+
+64
+00:03:58,800 --> 00:04:02,400
+These are all the necessary changes in the data model.
+
+65
+00:04:02,400 --> 00:04:06,933
+We are almost ready, but let’s update our browse and edit screens a bit.
+
+66
+00:04:06,933 --> 00:04:11,466
+Go to the Visit Browser descriptor and switch to the designer.
+
+67
+00:04:11,466 --> 00:04:17,766
+Select the visitsTable and add one more column with the status attribute to the table.
+
+68
+00:04:17,766 --> 00:04:22,499
+
+
+69
+00:04:22,500 --> 00:04:26,166
+Then go to the Visit Editor and add the status field.
+
+70
+00:04:26,166 --> 00:04:30,099
+We don’t need to edit this property when creating or editing visits,
+
+71
+00:04:30,100 --> 00:04:32,400
+so make it non-editable.
+
+72
+00:04:32,400 --> 00:04:35,533
+The same with the recommendations field.
+
+73
+00:04:35,533 --> 00:04:38,033
+That’s it. Let’s create the database.
+
+74
+00:04:38,033 --> 00:04:42,699
+Go to CUBA -> Generate database scripts.
+
+75
+00:04:42,700 --> 00:04:48,200
+Click “Create database” and confirm that existing scripts will be overwritten.
+
+76
+00:04:48,200 --> 00:04:51,633
+
+
+77
+00:04:51,633 --> 00:04:56,799
+So, we’ve made all the preparations and are ready to start modeling a business process.
+
+78
+00:04:56,800 --> 00:04:59,266
+
+
+79
+00:04:59,266 --> 00:05:00,499
+Run the application
+
+80
+00:05:00,500 --> 00:05:02,900
+
+
+81
+00:05:02,900 --> 00:05:04,200
+and click the link.
+
+82
+00:05:04,200 --> 00:05:08,033
+Log in as admin with the password: admin.
+
+83
+00:05:08,033 --> 00:05:15,299
+We assume that the default administrator user is the petclinic administrator registering and confirming visits.
+
+84
+00:05:15,300 --> 00:05:17,900
+I have added three more users in advance.
+
+85
+00:05:17,900 --> 00:05:20,466
+It is a user with the Chief role.
+
+86
+00:05:20,466 --> 00:05:23,066
+And two users with the Vet role.
+
+87
+00:05:23,066 --> 00:05:26,099
+You can see the BProc section in the main menu.
+
+88
+00:05:26,100 --> 00:05:28,666
+Expand it and select Modeler.
+
+89
+00:05:28,666 --> 00:05:31,099
+Here we are going to model our process.
+
+90
+00:05:31,100 --> 00:05:35,033
+In the beginning, there is only the StartEvent element on the canvas.
+
+91
+00:05:35,033 --> 00:05:38,133
+On the right, you can see the process properties panel.
+
+92
+00:05:38,133 --> 00:05:40,599
+Let’s set the id of the process.
+
+93
+00:05:40,600 --> 00:05:42,800
+We’ll need it to be used in the code.
+
+94
+00:05:42,800 --> 00:05:46,666
+We remember that the process will involve three participants.
+
+95
+00:05:46,666 --> 00:05:48,999
+Let’s move the pool element on the canvas
+
+96
+00:05:49,000 --> 00:05:52,533
+
+
+97
+00:05:52,533 --> 00:05:55,533
+and split the pool with three lanes.
+
+98
+00:05:55,533 --> 00:06:01,299
+It allows us not to set assignees for every user task but only for lanes.
+
+99
+00:06:01,300 --> 00:06:05,400
+Select the first lane and give it a name - Administrator.
+
+100
+00:06:05,400 --> 00:06:09,733
+The second lane is Chief Vet and the third one is Vet.
+
+101
+00:06:09,733 --> 00:06:13,333
+We’ll configure the Assignee sections for the lanes later.
+
+102
+00:06:13,333 --> 00:06:16,866
+Our process will start every time a new visit is created.
+
+103
+00:06:16,866 --> 00:06:19,766
+So a user won’t start the process.
+
+104
+00:06:19,766 --> 00:06:25,199
+Select the StartEvent on the canvas and leave the No form property.
+
+105
+00:06:25,200 --> 00:06:29,433
+Add two process variables: visit with the entity type
+
+106
+00:06:29,433 --> 00:06:33,633
+
+
+107
+00:06:33,633 --> 00:06:35,899
+and administrator with the user type.
+
+108
+00:06:35,900 --> 00:06:37,933
+
+
+109
+00:06:37,933 --> 00:06:40,933
+We will use these variables further in the process.
+
+110
+00:06:40,933 --> 00:06:43,933
+We’ll make the process start automatically in the code
+
+111
+00:06:43,933 --> 00:06:46,833
+and write a new visit to the visit variable
+
+112
+00:06:46,833 --> 00:06:50,633
+and a user created the visit to the administrator variable.
+
+113
+00:06:50,633 --> 00:06:53,766
+We assume that an administrator will get a task
+
+114
+00:06:53,766 --> 00:06:55,999
+to confirm a day before a visit.
+
+115
+00:06:56,000 --> 00:06:58,033
+So let’s add the timer element.
+
+116
+00:06:58,033 --> 00:07:01,799
+A timer intermediate event acts as a stopwatch.
+
+117
+00:07:01,800 --> 00:07:06,833
+When an execution arrives at a catching event activity, a timer is started.
+
+118
+00:07:06,833 --> 00:07:11,299
+The sequence flow going out of the timer intermediate event is followed,
+
+119
+00:07:11,300 --> 00:07:12,833
+when the timer fires.
+
+120
+00:07:12,833 --> 00:07:17,166
+In the context menu select the Append Intermediate element
+
+121
+00:07:17,166 --> 00:07:21,532
+and change the type to the Timer Intermediate Catch Event.
+
+122
+00:07:21,533 --> 00:07:28,999
+Set the Timer type to Date and put the process variable confirmVisitDate in the expression.
+
+123
+00:07:29,000 --> 00:07:32,600
+We’ll set this variable in the code when the process starts.
+
+124
+00:07:32,600 --> 00:07:37,366
+A day before the visit the administrator who created the visit should get the task
+
+125
+00:07:37,366 --> 00:07:39,566
+and confirm it or cancel.
+
+126
+00:07:39,566 --> 00:07:41,932
+Let’s use the Task element.
+
+127
+00:07:41,933 --> 00:07:47,499
+Give it “Confirm the Visit” name and set it as User Task.
+
+128
+00:07:47,500 --> 00:07:50,833
+Set form type: input dialog.
+
+129
+00:07:50,833 --> 00:07:56,266
+The dialog will display two fields and we’ll put process variables there.
+
+130
+00:07:56,266 --> 00:08:03,732
+The first one - existing variable visit, make it non-editable.
+
+131
+00:08:03,733 --> 00:08:05,933
+And the new one - owner’s comment.
+
+132
+00:08:05,933 --> 00:08:08,233
+
+
+133
+00:08:08,233 --> 00:08:13,066
+Set its type - multiline string - and make it editable.
+
+134
+00:08:13,066 --> 00:08:18,532
+At this step, the administrator has two options: to confirm or cancel the visit.
+
+135
+00:08:18,533 --> 00:08:21,699
+An easy way to support this is to use outcomes.
+
+136
+00:08:21,700 --> 00:08:28,833
+For each outcome, a button will be displayed on the form and the result will be stored in a special process variable.
+
+137
+00:08:28,833 --> 00:08:34,266
+Let’s create a new outcome using the corresponding button of the Outcomes section.
+
+138
+00:08:34,266 --> 00:08:39,466
+In the outcome editor specify an id - confirm with the same caption
+
+139
+00:08:39,466 --> 00:08:43,166
+and select an icon CHECK in the icons list.
+
+140
+00:08:43,166 --> 00:08:47,799
+And the second outcome - cancel, with an icon - BAN.
+
+141
+00:08:47,800 --> 00:08:52,866
+Then, add the Gateway element. It is used to model a decision in the process.
+
+142
+00:08:52,866 --> 00:08:56,399
+Two sequence flows should leave the exclusive gateway:
+
+143
+00:08:56,400 --> 00:09:00,466
+one for a User Task and another one for a Service Task.
+
+144
+00:09:00,466 --> 00:09:04,432
+Set the “Select a Vet” name for the first task.
+
+145
+00:09:04,433 --> 00:09:07,566
+Change the element type to the User Task.
+
+146
+00:09:07,566 --> 00:09:10,099
+Select a flow,
+
+147
+00:09:10,100 --> 00:09:13,500
+set the confirm outcome for it
+
+148
+00:09:13,500 --> 00:09:15,866
+and give it a name - Confirm.
+
+149
+00:09:15,866 --> 00:09:21,766
+After confirming the visit by an administrator a chief vet will get the UserTask.
+
+150
+00:09:21,766 --> 00:09:24,132
+Set a name for the second task.
+
+151
+00:09:24,133 --> 00:09:27,766
+The task will set the “Canceled” status for the visit.
+
+152
+00:09:27,766 --> 00:09:30,666
+Change the element type to the Service Task.
+
+153
+00:09:30,666 --> 00:09:35,866
+We’ll be using a Spring bean for the task that changes a visit’s status.
+
+154
+00:09:35,866 --> 00:09:38,732
+But we set it after creating it in the code.
+
+155
+00:09:38,733 --> 00:09:41,933
+Select a flow and give it a name - Canceled.
+
+156
+00:09:41,933 --> 00:09:44,299
+Set the cancel outcome for it.
+
+157
+00:09:44,300 --> 00:09:50,100
+After the service task is performed the business process for the current visit finishes.
+
+158
+00:09:50,100 --> 00:09:52,500
+So add the end event.
+
+159
+00:09:52,500 --> 00:09:55,766
+Now we can set the assignee for the first lane.
+
+160
+00:09:55,766 --> 00:10:00,699
+Select the lane and choose: process variable - > administrator.
+
+161
+00:10:00,700 --> 00:10:05,000
+That is the process variable we get after a new visit is created.
+
+162
+00:10:05,000 --> 00:10:09,733
+For the user task set the form type: input dialog.
+
+163
+00:10:09,733 --> 00:10:13,433
+Add the variable that the chief vet will see in the dialog:
+
+164
+00:10:13,433 --> 00:10:19,199
+an existing variable - visit,
+
+165
+00:10:19,200 --> 00:10:22,933
+and ownerComment,
+
+166
+00:10:22,933 --> 00:10:26,166
+and the new one - vet with user type.
+
+167
+00:10:26,166 --> 00:10:30,499
+Make it editable and required.
+
+168
+00:10:30,500 --> 00:10:34,933
+Select UI component - LookupField for this field.
+
+169
+00:10:34,933 --> 00:10:40,999
+And enter the query that selects all the users from the database with the role Vet.
+
+170
+00:10:41,000 --> 00:10:45,700
+Let’s set an assignee type for the second lane with the User Task.
+
+171
+00:10:45,700 --> 00:10:50,466
+Select the lane and choose the assignee type - User Provider.
+
+172
+00:10:50,466 --> 00:10:55,099
+Later we’ll create a class to choose a chief vet programmatically.
+
+173
+00:10:55,100 --> 00:10:58,533
+At the next step - the selected vet will get a task.
+
+174
+00:10:58,533 --> 00:11:02,299
+Add a User Task and give it a name - Visit.
+
+175
+00:11:02,300 --> 00:11:06,400
+Let’s use the Cuba screen for the form that appears for a vet.
+
+176
+00:11:06,400 --> 00:11:09,566
+We’ll be able to select the screen after creating it.
+
+177
+00:11:09,566 --> 00:11:15,866
+We will set fields and process variables that appear in the screen in code as well as outcomes.
+
+178
+00:11:15,866 --> 00:11:21,866
+They appear in the list after selecting the created CUBA screen in user task properties.
+
+179
+00:11:21,866 --> 00:11:24,466
+At this step, a vet has two options:
+
+180
+00:11:24,466 --> 00:11:29,266
+to complete the visit in case it happened or reject it if the patient did not come.
+
+181
+00:11:29,266 --> 00:11:32,032
+Again, add the Gateway element.
+
+182
+00:11:32,033 --> 00:11:37,966
+The first flow leaves the gateway - Service Task that sets the “Patient did not come” status.
+
+183
+00:11:37,966 --> 00:11:45,666
+
+
+184
+00:11:45,666 --> 00:11:47,366
+Give the flow a name.
+
+185
+00:11:47,366 --> 00:11:50,332
+
+
+186
+00:11:50,333 --> 00:11:55,566
+We will be able to choose an outcome when the CUBA screen for the previous User Task is set.
+
+187
+00:11:55,566 --> 00:12:01,166
+Let’s use the same Spring bean as for the setting canceled status Service Task.
+
+188
+00:12:01,166 --> 00:12:04,899
+And, also, we can set it after creating it in the code.
+
+189
+00:12:04,900 --> 00:12:08,533
+The second flow leads to the Service task that completes the visit.
+
+190
+00:12:08,533 --> 00:12:19,366
+
+
+191
+00:12:19,366 --> 00:12:23,332
+Let’s use Java Delegate class for this Service task.
+
+192
+00:12:23,333 --> 00:12:27,899
+This class will be saving the vet’s recommendations, setting the visit status
+
+193
+00:12:27,900 --> 00:12:30,500
+and sending an email to the owner.
+
+194
+00:12:30,500 --> 00:12:35,600
+Set a name for the flow - Completed.
+
+195
+00:12:35,600 --> 00:12:38,000
+Add two endEvents.
+
+196
+00:12:38,000 --> 00:12:41,533
+
+
+197
+00:12:41,533 --> 00:12:44,533
+And it will be useful to add one more timer.
+
+198
+00:12:44,533 --> 00:12:47,299
+For the case when the visit is outdated for one day
+
+199
+00:12:47,300 --> 00:12:52,466
+its status will be set automatically to Patient did not come.
+
+200
+00:12:52,466 --> 00:12:59,132
+We should add a Boundary event and set its type to the Timer Boundary Event.
+
+201
+00:12:59,133 --> 00:13:05,966
+Put the process variable overdueVisitDate in the expression.
+
+202
+00:13:05,966 --> 00:13:10,032
+Give the name for the flow.
+
+203
+00:13:10,033 --> 00:13:16,799
+The only thing left is to assign the third lane to the process variable - vet.
+
+204
+00:13:16,800 --> 00:13:20,733
+Okay, we’ve created our business process and we’re ready to do some coding.
+
+205
+00:13:20,733 --> 00:13:22,899
+Save the model as a draft.
+
+206
+00:13:22,900 --> 00:13:28,166
+We’ll do final settings after all the necessary code is added.
+
+207
+00:13:28,166 --> 00:13:33,066
+Let’s begin with coding the start of the process.
+
+208
+00:13:33,066 --> 00:13:37,932
+Go to the CUBA Studio and open the Visit editor screen controller.
+
+209
+00:13:37,933 --> 00:13:41,499
+We’ll need two constants: the business process id
+
+210
+00:13:41,500 --> 00:13:45,066
+
+
+211
+00:13:45,066 --> 00:13:47,732
+and the status for a new visit.
+
+212
+00:13:47,733 --> 00:13:50,633
+
+
+213
+00:13:50,633 --> 00:13:53,433
+Subscribe to the InitEntity event.
+
+214
+00:13:53,433 --> 00:13:55,366
+
+
+215
+00:13:55,366 --> 00:13:58,132
+In the body, we’ll set the status for the new visit
+
+216
+00:13:58,133 --> 00:14:01,766
+
+
+217
+00:14:01,766 --> 00:14:06,666
+and set true for the boolean value that indicates a new entity.
+
+218
+00:14:06,666 --> 00:14:10,066
+
+
+219
+00:14:10,066 --> 00:14:13,899
+Then subscribe to the AfterCommitChanges event.
+
+220
+00:14:13,900 --> 00:14:18,333
+
+
+221
+00:14:18,333 --> 00:14:22,933
+Receive the edited visit and if it is new, start the process.
+
+222
+00:14:22,933 --> 00:14:24,899
+
+
+223
+00:14:24,900 --> 00:14:29,633
+Put the process variables as pairs of string names and values:
+
+224
+00:14:29,633 --> 00:14:33,299
+
+
+225
+00:14:33,300 --> 00:14:34,500
+a new visit,
+
+226
+00:14:34,500 --> 00:14:38,766
+
+
+227
+00:14:38,766 --> 00:14:41,032
+a user who created the visit
+
+228
+00:14:41,033 --> 00:14:57,866
+
+
+229
+00:14:57,866 --> 00:15:03,099
+and two dates: creating our business model we said that the date for the first timer
+
+230
+00:15:03,100 --> 00:15:06,533
+will be a date that is a day before a visit.
+
+231
+00:15:06,533 --> 00:15:10,299
+But to be able to watch the demonstration of the process in work
+
+232
+00:15:10,300 --> 00:15:14,033
+let’s set it to the current date plus 5 seconds.
+
+233
+00:15:14,033 --> 00:15:20,133
+So the task will appear in the administrator’s tasks 5 seconds after a new visit is created;
+
+234
+00:15:20,133 --> 00:15:27,133
+
+
+235
+00:15:27,133 --> 00:15:30,266
+and the date if the visit is overdue.
+
+236
+00:15:30,266 --> 00:15:33,932
+Set it as a visit date plus 1 day.
+
+237
+00:15:33,933 --> 00:15:40,866
+
+
+238
+00:15:40,866 --> 00:15:45,266
+To start the process we use the BprocRuntimeService.
+
+239
+00:15:45,266 --> 00:15:53,032
+
+
+240
+00:15:53,033 --> 00:15:55,633
+Specify the process definition key,
+
+241
+00:15:55,633 --> 00:15:59,566
+
+
+242
+00:15:59,566 --> 00:16:04,266
+an instance name that is used as an optional process instance business key
+
+243
+00:16:04,266 --> 00:16:11,466
+
+
+244
+00:16:11,466 --> 00:16:13,732
+and process variables.
+
+245
+00:16:13,733 --> 00:16:19,599
+That’s it. Every time a new visit is created, our business process will start.
+
+246
+00:16:19,600 --> 00:16:24,833
+The next step is to create a Spring bean that implements the UserProvider interface.
+
+247
+00:16:24,833 --> 00:16:28,466
+We’ll be using this bean in the second lane in our model
+
+248
+00:16:28,466 --> 00:16:31,432
+to assign a task automatically to a chief vet.
+
+249
+00:16:31,433 --> 00:16:37,666
+An interface has the get method that returns a user who should become a task assignee.
+
+250
+00:16:37,666 --> 00:16:42,132
+Let’s create a new bean with the ChiefVetUserProvider name.
+
+251
+00:16:42,133 --> 00:16:45,299
+
+
+252
+00:16:45,300 --> 00:16:48,666
+Make it implement the UserProvider interface.
+
+253
+00:16:48,666 --> 00:16:49,599
+
+
+254
+00:16:49,600 --> 00:16:53,033
+Add a constant containing the user role name.
+
+255
+00:16:53,033 --> 00:16:55,799
+
+
+256
+00:16:55,800 --> 00:16:58,100
+We need to override the get() method.
+
+257
+00:16:58,100 --> 00:17:01,833
+
+
+258
+00:17:01,833 --> 00:17:07,033
+In the body of the method, we get the list of all users with the role Chief.
+
+259
+00:17:07,033 --> 00:17:09,199
+
+
+260
+00:17:09,200 --> 00:17:11,633
+Use the DataManager to load data
+
+261
+00:17:11,633 --> 00:17:28,633
+
+
+262
+00:17:28,633 --> 00:17:32,299
+and our constant with the name of the role as a parameter.
+
+263
+00:17:32,300 --> 00:17:37,900
+In case the list of users is empty we’ll return an exception with the corresponding message.
+
+264
+00:17:37,900 --> 00:17:43,266
+
+
+265
+00:17:43,266 --> 00:17:46,532
+Otherwise, we’ll return the first user in the list.
+
+266
+00:17:46,533 --> 00:17:48,033
+
+
+267
+00:17:48,033 --> 00:17:50,699
+Ok, our User Provider is done.
+
+268
+00:17:51,600 --> 00:17:54,966
+We remember that we planned to use a CUBA screen 
+
+269
+00:17:54,966 --> 00:18:00,066
+as a form for the UserTask appearing when a vet gets a “Visit” task. 
+
+270
+00:18:00,066 --> 00:18:02,566
+Go to Screens and create a new blank screen. 
+
+271
+00:18:11,433 --> 00:18:15,566
+Ensure that it’s not assigned to any web-menu item. 
+
+272
+00:18:15,566 --> 00:18:18,966
+Give it a caption - Visit. 
+
+273
+00:18:18,966 --> 00:18:22,366
+Switch to the designer and let’s model the screen. 
+
+274
+00:18:22,366 --> 00:18:28,632
+Add the Form element and put the pickerField and two textAreas under the Form. 
+
+275
+00:18:33,066 --> 00:18:37,299
+Set the id and caption for the pickerField - Visit. 
+
+276
+00:18:42,066 --> 00:18:44,399
+MetaClass - Visit. 
+
+277
+00:18:44,400 --> 00:18:46,500
+Make it non-editable. 
+
+278
+00:18:46,500 --> 00:18:49,800
+In the first text area we’ll display the owner’s comment. 
+
+279
+00:18:59,433 --> 00:19:01,833
+Make it non-editable. 
+
+280
+00:19:01,833 --> 00:19:06,199
+The second text area will be used by a vet for entering recommendations. 
+
+281
+00:19:20,433 --> 00:19:21,933
+Let’s leave it editable. 
+
+282
+00:19:23,266 --> 00:19:26,832
+Then add an hbox and put two buttons under it.
+
+283
+00:19:37,600 --> 00:19:40,766
+Let’s set id’s and captions for the buttons. 
+
+284
+00:19:40,766 --> 00:19:42,866
+One is used for a visit completion 
+
+285
+00:19:47,666 --> 00:19:51,532
+and the second for the case when a pet owner did not arrive. 
+
+286
+00:20:04,100 --> 00:20:06,833
+Now, switch to the controller. 
+
+287
+00:20:06,833 --> 00:20:09,833
+First, add two constants with the visit status. 
+
+288
+00:20:22,933 --> 00:20:27,266
+Then, we need to annotate our screen with the @ProcessForm annotation  
+
+289
+00:20:27,266 --> 00:20:29,132
+to use it as a process form. 
+
+290
+00:20:29,133 --> 00:20:34,099
+Then the screen will appear in the process forms lookup in the modeler. 
+
+291
+00:20:34,100 --> 00:20:39,666
+Let’s declare two outcomes that will be used for the sequence flow elements in the modeler. 
+
+292
+00:20:39,666 --> 00:20:43,999
+Use the outcomes attribute of the @ProcessForm annotation. 
+
+293
+00:20:48,200 --> 00:20:51,400
+Inject the textAreas and pickerField. 
+
+294
+00:21:04,866 --> 00:21:11,799
+Add the @ProcessVariable annotation to declare that the injected UI component is a process variable. 
+
+295
+00:21:11,800 --> 00:21:16,733
+The values of Visit and Owner’s comment have already been set in the process, 
+
+296
+00:21:16,733 --> 00:21:21,066
+so they will be set to the corresponding fields when the form is displayed. 
+
+297
+00:21:21,066 --> 00:21:24,332
+The recommendation variable is not yet set, 
+
+298
+00:21:24,333 --> 00:21:26,966
+but the @ProcessVariable will be taken into account 
+
+299
+00:21:26,966 --> 00:21:30,632
+when we complete the task in the button click listener. 
+
+300
+00:21:30,633 --> 00:21:35,866
+Inject the ProcessFormContext that contains information about the user task 
+
+301
+00:21:35,866 --> 00:21:39,599
+and useful methods for the user task completion. 
+
+302
+00:21:39,600 --> 00:21:42,300
+And now we need to handle ClickEvents. 
+
+303
+00:21:42,300 --> 00:21:46,466
+Subscribe to visitCompletedBtn event. 
+
+304
+00:21:52,900 --> 00:21:57,533
+Create a TaskCompletion instance. 
+
+305
+00:21:57,533 --> 00:22:00,466
+Set the task outcome. 
+
+306
+00:22:00,466 --> 00:22:04,632
+Indicate that values of class fields annotated with the @ProcessVariables 
+
+307
+00:22:04,633 --> 00:22:08,466
+should be collected and saved as process variables. 
+
+308
+00:22:08,466 --> 00:22:10,166
+And complete the task. 
+
+309
+00:22:17,366 --> 00:22:26,399
+Subscribe to PatientDidNotComeBtn event. 
+
+310
+00:22:26,400 --> 00:22:28,933
+Set the corresponding outcome. 
+
+311
+00:22:28,933 --> 00:22:32,499
+Let’s use the alternative way to define process variables 
+
+312
+00:22:32,500 --> 00:22:39,266
+and instead of using the saveInjectedProcessVariables() method define the variables directly. 
+
+313
+00:22:45,633 --> 00:22:47,999
+Out custom CUBA screen is ready.
+
+314
+00:22:50,100 --> 00:22:52,633
+And finally, let’s add service tasks. 
+
+315
+00:22:54,533 --> 00:22:57,133
+We want the process to be finished automatically, 
+
+316
+00:22:57,133 --> 00:23:01,166
+when an administrator cancels a visit or a visit happened. 
+
+317
+00:23:01,166 --> 00:23:06,032
+The only thing before completion is to set the corresponding status for the visit. 
+
+318
+00:23:06,033 --> 00:23:13,899
+Let’s create a very simple bean 
+
+319
+00:23:13,900 --> 00:23:17,266
+with the setStatus() method that gets a visit 
+
+320
+00:23:17,266 --> 00:23:19,732
+and a string of status as parameters.
+
+321
+00:23:26,400 --> 00:23:29,100
+In the body of the method set the status
+
+322
+00:23:29,100 --> 00:23:32,200
+and inject the DataManager to commit the changes. 
+
+323
+00:23:47,033 --> 00:23:53,099
+That’s it. And the second service task finishes the process after the visit is completed. 
+
+324
+00:23:53,100 --> 00:23:56,900
+Let’s look at how to use JavaDelegate for this purpose. 
+
+325
+00:23:56,900 --> 00:23:59,700
+You should create a  new Class in the core module. 
+
+326
+00:24:10,833 --> 00:24:13,933
+Make it implementing the JavaDelegate interface 
+
+327
+00:24:13,933 --> 00:24:17,499
+which requires us to implement the execute method. 
+
+328
+00:24:17,500 --> 00:24:21,333
+It is invoked every time the process reaches the service task. 
+
+329
+00:24:21,333 --> 00:24:25,166
+Declare the Expression field that is defined in the process model. 
+
+330
+00:24:28,533 --> 00:24:31,766
+And add a constant with the status name “Completed”. 
+
+331
+00:24:40,800 --> 00:24:43,300
+Get process variables from the execution: 
+
+332
+00:24:44,633 --> 00:24:45,366
+visit 
+
+333
+00:24:49,200 --> 00:24:50,800
+and recommendations. 
+
+334
+00:24:58,433 --> 00:25:00,433
+And we should reload the visit, 
+
+335
+00:25:00,433 --> 00:25:04,066
+it must contain information about an owner and an owner’s email. 
+
+336
+00:25:06,666 --> 00:25:08,299
+Let’s create a new view. 
+
+337
+00:25:24,366 --> 00:25:27,032
+Set a status and recommendations for the visit 
+
+338
+00:25:34,333 --> 00:25:36,199
+and commit the data. 
+
+339
+00:25:36,200 --> 00:25:39,666
+To send an email to the owner let’s get the email address. 
+
+340
+00:25:46,633 --> 00:25:50,033
+And get the string representation of the email template. 
+
+341
+00:25:56,133 --> 00:25:59,099
+Then call the sendEmail method. 
+
+342
+00:25:59,100 --> 00:26:01,866
+We don’t have a task to send a real email, 
+
+343
+00:26:01,866 --> 00:26:07,666
+so in the body of the sendEmail() method just write an info message to the log file. 
+
+344
+00:26:36,433 --> 00:26:40,533
+For now we have implemented everything we planned in the code.
+ 
+
+345
+00:26:40,533 --> 00:26:46,466
+Now it’s time to finish our business process model and look at it in work. 
+
+346
+00:26:46,466 --> 00:26:47,832
+Start the application, 
+
+347
+00:26:54,766 --> 00:26:57,532
+log in as administrator 
+
+348
+00:26:57,533 --> 00:27:02,133
+and go to the Modeler screen. 
+
+349
+00:27:02,133 --> 00:27:08,833
+Open the business process model from the draft. 
+
+350
+00:27:08,833 --> 00:27:14,166
+Set the Spring bean for the service task “Set status “Canceled” 
+
+351
+00:27:14,166 --> 00:27:20,166
+and pass to it the process variable visit and the “canceled” status as method parameters. 
+
+352
+00:27:20,166 --> 00:27:25,032
+Do the same for the service task “Set status “Patient did not come”, 
+
+353
+00:27:25,033 --> 00:27:31,733
+but pass the corresponding status to it. 
+
+354
+00:27:31,733 --> 00:27:37,066
+Now we can set a User Provider for the second lane.
+
+355
+00:27:37,066 --> 00:27:42,132
+Check the “Visit” user task and select the created CUBA screen for it. 
+
+356
+00:27:42,133 --> 00:27:46,033
+We can see that the outcomes appeared in the task properties. 
+
+357
+00:27:46,033 --> 00:27:59,666
+Let’s set the outcomes for the corresponding flows. 
+
+358
+00:27:59,666 --> 00:28:08,366
+And set our Java Delegate class. 
+
+359
+00:28:08,366 --> 00:28:13,466
+Now we are ready to deploy the model. 
+
+360
+00:28:13,466 --> 00:28:19,066
+After that you can find the process definition in the Process Definition screen. 
+
+361
+00:28:19,066 --> 00:28:24,232
+You can open it in the modeler and update or view details in the Editor screen. 
+
+362
+00:28:24,233 --> 00:28:26,699
+Let’s test our business process. 
+
+363
+00:28:26,700 --> 00:28:31,133
+Go to the Visits browser 
+
+364
+00:28:31,133 --> 00:28:40,999
+and create three new visits. 
+
+365
+00:28:41,000 --> 00:28:42,800
+Now you can see predefined visits with no status 
+
+366
+00:28:42,800 --> 00:28:48,333
+and three visits we’ve just created with the New status. 
+
+367
+00:28:48,333 --> 00:28:50,766
+Go to the My Tasks screen. 
+
+368
+00:28:50,766 --> 00:28:54,632
+We set the first timer to the current date plus 5 seconds, 
+
+369
+00:28:54,633 --> 00:28:58,899
+so the administrator already got the visits to confirm or cancel. 
+
+370
+00:28:58,900 --> 00:29:03,100
+Let’s cancel the first one. 
+
+371
+00:29:03,100 --> 00:29:05,500
+Switch to the visits browser. 
+
+372
+00:29:05,500 --> 00:29:08,800
+The canceled visit got the corresponding status.
+
+373
+00:29:08,800 --> 00:29:12,300
+Now, confirm the rest of the tasks. 
+
+374
+00:29:12,300 --> 00:29:21,500
+Enter some information in the Owner`s comment field. 
+
+375
+00:29:21,500 --> 00:29:24,100
+The chief vet has received the tasks. 
+
+376
+00:29:24,100 --> 00:29:31,166
+Switch to the chief account with the password equal to the login. 
+
+377
+00:29:31,166 --> 00:29:32,132
+The chief vet has to assign visits to vets. 
+
+378
+00:29:32,133 --> 00:29:45,266
+Switch to the vet account with the password equal to the login. 
+
+379
+00:29:45,266 --> 00:29:49,232
+The vet has two visits. 
+
+380
+00:29:49,233 --> 00:29:50,633
+Open the first one. 
+
+381
+00:29:50,633 --> 00:29:53,766
+Here you can see the CUBA screen we created earlier. 
+
+382
+00:29:53,766 --> 00:29:57,199
+The owner’s comment field is now non-editable. 
+
+383
+00:29:57,200 --> 00:30:01,033
+Enter some recommendations and click “Visit completed”. 
+
+384
+00:30:01,033 --> 00:30:06,266
+At this moment the execute method of our Java Delegate class performs. 
+
+385
+00:30:06,266 --> 00:30:10,232
+Let’s look at logs and ensure it works correctly. 
+
+386
+00:30:10,233 --> 00:30:13,999
+And at last check the case when a patient did not come. 
+
+387
+00:30:14,000 --> 00:30:19,633
+Open the last visit and click the “Patient did not come” button. 
+
+388
+00:30:19,633 --> 00:30:23,933
+Go to the visits browser screen and look at the status of our visits. 
+
+389
+00:30:23,933 --> 00:30:25,799
+All entries are correct. 
+
+390
+00:30:25,800 --> 00:30:29,000
+Ensure, that all process instances are finished, 
+
+391
+00:30:29,000 --> 00:30:31,833
+switch to the process instances screen 
+
+392
+00:30:31,833 --> 00:30:33,899
+and 
+
+393
+00:30:33,900 --> 00:30:38,733
+search for the active ones. The list is empty which means our business process and code work well!
+ 
+ 
+ 
+
+394
+00:30:38,733 --> 00:30:41,166
+Allright, we’ve done everything we planned.
+
+395
+00:30:41,166 --> 00:30:44,266
+Join our community and feel free to ask questions.
+
+396
+00:30:44,266 --> 00:30:46,332
+Check out other add-ons at CUBA marketplace.
+
+397
+00:30:46,333 --> 00:30:50,266
+Consult the documentation on our website.
+
+398
+00:30:50,266 --> 00:30:54,799
+Star us on GitHub, subscribe to our Twitter and YouTube channels!
+
+399
+00:30:54,800 --> 00:30:57,133
+All links are clickable under the video.
+
+400
+00:30:57,133 --> 00:31:00,199
+Thank you for watching!
+

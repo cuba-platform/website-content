@@ -1,0 +1,1624 @@
+﻿1
+00:00:00,266 --> 00:00:04,466
+Hi everyone, in this video I’ll show you how to enrich your CUBA application
+
+2
+00:00:04,466 --> 00:00:07,332
+with visual representation for spatial data
+
+3
+00:00:07,333 --> 00:00:09,299
+using the Maps add-on.
+
+4
+00:00:09,300 --> 00:00:11,833
+Working with spatial data and displaying maps
+
+5
+00:00:11,833 --> 00:00:14,633
+are essential for many business applications.
+
+6
+00:00:14,633 --> 00:00:18,733
+But quite often Java developers face the challenge of adding maps
+
+7
+00:00:18,733 --> 00:00:20,533
+to their web applications.
+
+8
+00:00:20,533 --> 00:00:23,666
+In most cases, it requires a developer to be familiar with
+
+9
+00:00:23,666 --> 00:00:27,432
+front-end technologies (at least, JavaScript).
+
+10
+00:00:27,433 --> 00:00:31,699
+Even so, the implementation still may turn out to be complicated,
+
+11
+00:00:31,700 --> 00:00:35,933
+full of boilerplate code and highly time-consuming.
+
+12
+00:00:35,933 --> 00:00:39,433
+The Maps add-on offers you an easy way to solve a wide range of tasks
+
+13
+00:00:39,433 --> 00:00:41,133
+related to spatial data.
+
+14
+00:00:41,133 --> 00:00:44,933
+It integrates spatial types from JTS Topology Suite
+
+15
+00:00:44,933 --> 00:00:49,299
+the most popular Java library for working with spatial data.
+
+16
+00:00:49,300 --> 00:00:52,333
+It allows you to work with any map vendor
+
+17
+00:00:52,333 --> 00:00:54,999
+compatible with the Web Map Service protocol
+
+18
+00:00:55,000 --> 00:00:58,100
+or providing tiles in the XYZ format.
+
+19
+00:00:58,100 --> 00:01:02,633
+The add-on comes with a UI component with rich and clear API
+
+20
+00:01:02,633 --> 00:01:05,499
+for building well-structured maps of any content.
+
+21
+00:01:05,500 --> 00:01:09,733
+It provides interactive tools for drawing and editing geo-objects
+
+22
+00:01:09,733 --> 00:01:13,866
+and features for geoanalysis: heatmaps and clustering.
+
+23
+00:01:13,866 --> 00:01:17,699
+The component supports traditional multi-layer structure
+
+24
+00:01:17,700 --> 00:01:20,766
+commonly used in professional GIS systems.
+
+25
+00:01:20,766 --> 00:01:23,766
+Layers can be of raster and vector types.
+
+26
+00:01:23,766 --> 00:01:27,766
+In this picture you can see the example of combining multiple layers
+
+27
+00:01:27,766 --> 00:01:29,799
+to build a complete map.
+
+28
+00:01:29,800 --> 00:01:33,133
+The bottom raster layer serves as a map’s background.
+
+29
+00:01:33,133 --> 00:01:38,966
+It can be a TIle layer displaying tiles provided by the so-called XYZ tile services
+
+30
+00:01:38,966 --> 00:01:43,466
+(for example, OpenStreetMap), or it can be a WMS layer
+
+31
+00:01:43,466 --> 00:01:46,799
+displaying images provided by WebMapServices.
+
+32
+00:01:46,800 --> 00:01:49,333
+The next layers are Vector layers.
+
+33
+00:01:49,333 --> 00:01:54,099
+ They consist of geo-objects which are entities with geometry attributes.
+
+34
+00:01:54,100 --> 00:01:58,666
+In our case the layer has Districts represented by geo-polygons
+
+35
+00:01:58,666 --> 00:02:02,832
+and Customers with locations defined by geo-points.
+
+36
+00:02:02,833 --> 00:02:08,199
+Now I’ll show you how to build a simple CUBA application with maps in 15 minutes.
+
+37
+00:02:10,666 --> 00:02:10,732
+Now I’ll show you how to build a simple CUBA application with maps in 15 minutes.
+
+38
+00:02:10,733 --> 00:02:14,833
+Probably, some of you have already seen our petclinic demo project
+
+39
+00:02:14,833 --> 00:02:17,733
+that can be found on the CUBA platform website.
+
+40
+00:02:17,733 --> 00:02:21,899
+ It demonstrates an IT system of an imaginary pokemon’s clinic
+
+41
+00:02:21,900 --> 00:02:27,433
+with pre-filled data for clients, pets, vets and visits.
+
+42
+00:02:27,433 --> 00:02:31,033
+Let’s use this app as a starter and extend it with the maps.
+
+43
+00:02:31,033 --> 00:02:34,799
+First, take a look at its original data model.
+
+44
+00:02:34,800 --> 00:02:39,100
+Owner is an entity that represents the personal data of pet owners.
+
+45
+00:02:39,100 --> 00:02:42,033
+Pet contains name and birth date
+
+46
+00:02:42,033 --> 00:02:45,933
+and is associated with the Owner and PetType classes.
+
+47
+00:02:45,933 --> 00:02:49,099
+Visit details are contained in the Visit class
+
+48
+00:02:49,100 --> 00:02:51,466
+and are related to one pet.
+
+49
+00:02:51,466 --> 00:02:54,899
+Vet is an entity containing veterinarian names
+
+50
+00:02:54,900 --> 00:02:59,133
+extends Person and is associated with the Specialty class.
+
+51
+00:03:00,433 --> 00:03:03,733
+We will extend the data model in the following way:
+
+52
+00:03:03,733 --> 00:03:03,799
+
+
+53
+00:03:03,800 --> 00:03:07,800
+First, let’s add a new entity - Clinic.
+
+54
+00:03:07,800 --> 00:03:10,833
+This entity represents a branch clinic office
+
+55
+00:03:10,833 --> 00:03:14,866
+and has only two attributes: name and location.
+
+56
+00:03:14,866 --> 00:03:18,299
+The location attribute is of JTS point type
+
+57
+00:03:18,300 --> 00:03:22,066
+and represents the physical location of a clinic.
+
+58
+00:03:22,066 --> 00:03:24,132
+Another new entity is District
+
+59
+00:03:24,133 --> 00:03:29,099
+which represents an area of a city defined by polygon geometry.
+
+60
+00:03:29,100 --> 00:03:33,600
+Next, let’s also add the location attribute to the Owner entity
+
+61
+00:03:33,600 --> 00:03:36,600
+as well as a reference to a district.
+
+62
+00:03:36,600 --> 00:03:40,866
+Finally, we will add a reference to a Clinic in the Visit entity.
+
+63
+00:03:40,866 --> 00:03:42,966
+When a new visit is being created,
+
+64
+00:03:42,966 --> 00:03:47,166
+the actual branch clinic office will be chosen based on the proximity
+
+65
+00:03:47,166 --> 00:03:49,666
+to the pet’s owner location.
+
+66
+00:03:49,666 --> 00:03:54,766
+What we’re going to do is add maps to the editor screens for Clinics, Owners and Districts
+
+67
+00:03:54,766 --> 00:03:58,699
+to enable interactive editing of the corresponding geometry.
+
+68
+00:03:58,700 --> 00:04:01,033
+Also we will implement an algorithm
+
+69
+00:04:01,033 --> 00:04:05,066
+that finds the nearest clinic for a client when they create a visit.
+
+70
+00:04:05,066 --> 00:04:09,232
+In the Owner browse screen we will add a map to display the owners
+
+71
+00:04:09,233 --> 00:04:11,799
+with clustering mechanism enabled.
+
+72
+00:04:11,800 --> 00:04:15,900
+Finally, we will create a heat map to visualize the overall information
+
+73
+00:04:15,900 --> 00:04:19,900
+about the frequency of visits in different areas of the city.
+
+74
+00:04:19,900 --> 00:04:23,333
+Now we are ready to start developing our demo application.
+
+75
+00:04:23,333 --> 00:04:27,699
+Let’s start by cloning the petclinic github repository.
+
+76
+00:04:29,966 --> 00:04:32,832
+Open it in Cuba Studio.
+
+77
+00:04:37,200 --> 00:04:40,800
+We need to add the Maps add-on to our project.
+
+78
+00:04:40,800 --> 00:04:44,466
+Open the Add-ons tab and go to Marketplace.
+
+79
+00:04:44,466 --> 00:04:47,832
+Find the Maps add-on there and install it.
+
+80
+00:04:47,833 --> 00:04:52,266
+If you don’t have a subscription, you can get a trial version of the Maps add-on
+
+81
+00:04:52,266 --> 00:04:55,432
+on the add-on’s page at the CUBA Platform website.
+
+82
+00:04:57,766 --> 00:05:03,199
+Before we start adding maps to our application screens, we need to prepare the data model.
+
+83
+00:05:05,500 --> 00:05:08,066
+Let’s create the Clinic entity.
+
+84
+00:05:10,300 --> 00:05:14,300
+Add 2 properties to it: name (of String type)
+
+85
+00:05:17,333 --> 00:05:20,833
+and location (of GeoPoint type)
+
+86
+00:05:21,900 --> 00:05:22,000
+
+
+87
+00:05:22,000 --> 00:05:26,600
+Navigate to the `Text` tab to see the class source code.
+
+88
+00:05:26,600 --> 00:05:31,533
+We need to add a couple of additional annotations to the location attribute.
+
+89
+00:05:31,533 --> 00:05:35,366
+The first one is the @Geometry annotation.
+
+90
+00:05:35,366 --> 00:05:39,966
+It marks the attribute to be used when displaying the object on a map.
+
+91
+00:05:39,966 --> 00:05:45,566
+Another annotation is @Convert from the javax.persistence package.
+
+92
+00:05:45,566 --> 00:05:48,766
+In this annotation we will set the JPA converter
+
+93
+00:05:48,766 --> 00:05:52,532
+which is needed to perform type conversion between the database
+
+94
+00:05:52,533 --> 00:05:55,799
+and Java representation of the attribute.
+
+95
+00:05:55,800 --> 00:06:00,733
+We will use the CubaPointWKTConverter which comes out-of-the-box.
+
+96
+00:06:00,733 --> 00:06:06,399
+It transforms a point to a Well-known text format string and vice versa.
+
+97
+00:06:06,400 --> 00:06:11,033
+Let’s add the location property to the Owner entity in the same manner.
+
+98
+00:06:23,166 --> 00:06:26,332
+Now let’s create the District entity.
+
+99
+00:06:31,033 --> 00:06:35,033
+Add 2 properties to it: name (of String type)
+
+100
+00:06:37,600 --> 00:06:37,666
+Let’s add the location property to the Owner entity in the same manner.
+
+101
+00:06:37,666 --> 00:06:40,866
+and polygon (of GeoPolygon type).
+
+102
+00:06:40,866 --> 00:06:45,799
+Navigate to the `Text` tab to see the class source code.
+
+103
+00:06:45,800 --> 00:06:50,566
+Again, we need to add annotations to the property that represents the geometry,
+
+104
+00:06:50,566 --> 00:06:56,766
+in this case - polygon: @Geometry annotation and @Convert annotation.
+
+105
+00:06:56,766 --> 00:07:01,699
+We will use CubaPolygonWKTConverter as a converter.
+
+106
+00:07:01,700 --> 00:07:05,300
+Let’s add a reference to the Clinic in the Visit entity.
+
+107
+00:07:12,600 --> 00:07:17,200
+Next, we need to create a view for the Visit entity that includes this attribute.
+
+108
+00:07:17,933 --> 00:07:21,933
+Right click on the Visit entity and create a view.
+
+109
+00:07:21,933 --> 00:07:25,866
+Name it visit_with_pet_and_clinic.
+
+110
+00:07:25,866 --> 00:07:30,132
+Set visit_with_pet as a base view.
+
+111
+00:07:30,133 --> 00:07:34,399
+Add the clinic attribute and its location to the view.
+
+112
+00:07:34,400 --> 00:07:38,766
+And finally, let’s add a reference to District in the Owner entity.
+
+113
+00:07:54,066 --> 00:07:57,666
+And create a view that contains this reference.
+
+114
+00:07:57,666 --> 00:08:01,166
+Name it owner_with_district.
+
+115
+00:08:01,166 --> 00:08:04,366
+Add the district attribute and its polygon to the view.
+
+116
+00:08:04,366 --> 00:08:07,632
+We have made all necessary changes in the data model
+
+117
+00:08:07,633 --> 00:08:09,799
+so it’s time to create the database.
+
+118
+00:08:09,800 --> 00:08:13,566
+Go to CUBA -> Generate database scripts.
+
+119
+00:08:13,566 --> 00:08:18,566
+Click Continue to confirm that existing scripts will be overwritten.
+
+120
+00:08:18,566 --> 00:08:20,932
+Create the database.
+
+121
+00:08:20,933 --> 00:08:20,966
+
+
+122
+00:08:23,466 --> 00:08:27,832
+Now we are ready to create screens for the Clinic and District entities.
+
+123
+00:08:27,833 --> 00:08:33,166
+Right click on the Clinic and create browser and editor screens.
+
+124
+00:08:33,166 --> 00:08:35,666
+Repeat the same steps with the District entity.
+
+125
+00:08:44,766 --> 00:08:47,266
+After we have created screens,
+
+126
+00:08:47,266 --> 00:08:49,566
+we can run the server to see if the things work properly.
+
+127
+00:08:58,166 --> 00:09:01,999
+We can see that the newly created screens are listed in the menu.
+
+128
+00:09:02,000 --> 00:09:04,966
+Now we can go on to adding maps to the screens.
+
+129
+00:09:10,300 --> 00:09:13,866
+Let’s add a map to the Clinic editor screen
+
+130
+00:09:13,866 --> 00:09:17,632
+so that a user can specify the location of a clinic right on the map.
+
+131
+00:09:17,633 --> 00:09:22,099
+Open an xml-descriptor of the Clinic editor screen.
+
+132
+00:09:22,100 --> 00:09:25,766
+Delete the locationField as we don’t need it.
+
+133
+00:09:25,766 --> 00:09:29,499
+Add the geoMap UI component under the form.
+
+134
+00:09:29,500 --> 00:09:33,966
+Press Alt and Enter to add the add-on’s namespace.
+
+135
+00:09:33,966 --> 00:09:36,599
+Specify the main parameters such as:
+
+136
+00:09:36,600 --> 00:09:42,633
+ width, height, zoom and coordinates of the map’s center.
+
+137
+00:09:42,633 --> 00:09:49,099
+The center is specified by comma-separated double values of longitude and latitude.
+
+138
+00:09:49,100 --> 00:09:52,633
+We will be using Madrid as a city for our demo application,
+
+139
+00:09:52,633 --> 00:09:57,199
+so we will specify the coordinates roughly corresponding to Madrid’s center.
+
+140
+00:09:57,200 --> 00:10:00,300
+After that you need to declare the layers.
+
+141
+00:10:00,300 --> 00:10:02,666
+Our map will only have 2 layers:
+
+142
+00:10:02,666 --> 00:10:04,632
+a tile layer as a background
+
+143
+00:10:06,800 --> 00:10:10,200
+and a vector layer containing the current clinic.
+
+144
+00:10:10,200 --> 00:10:14,300
+We will be using the OpenStreetMap tile service for our demo,
+
+145
+00:10:14,300 --> 00:10:19,000
+ but you can use any other tile service by specifying a url-pattern
+
+146
+00:10:19,000 --> 00:10:24,066
+and an attribution string, which some of the services require to add to a map.
+
+147
+00:10:24,066 --> 00:10:27,066
+You can find the detailed information about Tile services
+
+148
+00:10:27,066 --> 00:10:31,999
+and WebMapServices usage in the add-on’s documentation.
+
+149
+00:10:32,000 --> 00:10:36,400
+Pass the clinicDc data container to the clinicLayer
+
+150
+00:10:36,400 --> 00:10:41,833
+and make the layer editable to enable interactive editing of the clinic’s location.
+
+151
+00:10:41,833 --> 00:10:45,833
+Make sure to set clinicLayer as selectedLayer of the map.
+
+152
+00:10:46,766 --> 00:10:49,032
+Go back to the application.
+
+153
+00:10:49,033 --> 00:10:50,266
+Create a new Clinic.
+
+154
+00:10:50,833 --> 00:10:53,533
+We can see that the map appeared in the screen.
+
+155
+00:10:53,533 --> 00:10:55,866
+Since the clinic’s location is not specified yet,
+
+156
+00:10:55,866 --> 00:10:58,699
+the map is opened in the drawing mode 
+
+157
+00:10:59,066 --> 00:11:02,432
+we can see it from the special crosshair cursor.
+
+158
+00:11:02,433 --> 00:11:04,933
+Click on the map to draw a point.
+
+159
+00:11:04,933 --> 00:11:07,199
+After the point is drawn you can drag it,
+
+160
+00:11:07,200 --> 00:11:12,333
+or remove it by choosing the `Clear geometry` option in the context menu.
+
+161
+00:11:14,400 --> 00:11:18,400
+Similarly, let’s add a map to the District editor screen.
+
+162
+00:11:18,400 --> 00:11:21,000
+Delete the polygonField.
+
+163
+00:11:21,000 --> 00:11:25,200
+Add the geoMap UI component under the form.
+
+164
+00:11:25,200 --> 00:11:29,633
+Press alt and enter to add the add-on’s namespace.
+
+165
+00:11:29,633 --> 00:11:33,899
+Most of the parameters will be the same as in the Clinic editor screen.
+
+166
+00:11:38,866 --> 00:11:42,866
+Add a vector layer with districtLayer id.
+
+167
+00:11:42,866 --> 00:11:46,866
+Pass the districtDc data container to the layer.
+
+168
+00:11:46,866 --> 00:11:49,332
+Make the layer editable.
+
+169
+00:11:49,333 --> 00:11:52,499
+Set it as selectedLayer of the map.
+
+170
+00:11:52,500 --> 00:11:55,466
+Let’s go back to the application to see the results.
+
+171
+00:11:55,466 --> 00:11:57,566
+Create a new district.
+
+172
+00:11:57,566 --> 00:12:00,266
+We can see a map added to the screen.
+
+173
+00:12:00,266 --> 00:12:03,066
+Click on the map to start drawing a polygon
+
+174
+00:12:03,066 --> 00:12:06,399
+and keep on drawing until you get the desired geometry.
+
+175
+00:12:06,400 --> 00:12:09,500
+Click on the last added point to finish drawing.
+
+176
+00:12:10,200 --> 00:12:14,300
+You can edit the polygon by dragging its points.
+
+177
+00:12:14,300 --> 00:12:18,400
+ It is also possible to add a hole inside a polygon.
+
+178
+00:12:18,400 --> 00:12:23,000
+Choose the ‘Add hole’ option in the context menu.
+
+179
+00:12:23,000 --> 00:12:26,966
+Then, click on a polygon to start drawing a hole.
+
+180
+00:12:26,966 --> 00:12:30,299
+Click on the last added point to finish.
+
+181
+00:12:30,300 --> 00:12:31,966
+If you want to clear the polygon,
+
+182
+00:12:31,966 --> 00:12:35,799
+choose `Clear geometry` in the context menu.
+
+183
+00:12:35,800 --> 00:12:40,433
+All changes in the geometry will be automatically saved after commit.
+
+184
+00:12:40,433 --> 00:12:43,599
+Create 2 districts as we will need them later.
+
+185
+00:12:49,766 --> 00:12:54,899
+You can see that the table displays the text representation of polygons.
+
+186
+00:12:54,900 --> 00:12:58,766
+This column was added automatically as the screen was created.
+
+187
+00:12:58,766 --> 00:13:01,766
+Since this representation doesn’t say much,
+
+188
+00:13:01,766 --> 00:13:04,432
+ we can delete this column from the table.
+
+189
+00:13:04,433 --> 00:13:07,666
+Go to the District browse screen and delete the column.
+
+190
+00:13:11,100 --> 00:13:14,433
+Now, let’s add a map to the Owner editor screen.
+
+191
+00:13:14,433 --> 00:13:16,766
+Switch to the Designer tab.
+
+192
+00:13:16,766 --> 00:13:18,766
+There are many fields listed here,
+
+193
+00:13:18,766 --> 00:13:21,566
+so it will be better to add a map on the right.
+
+194
+00:13:21,566 --> 00:13:25,532
+To accomplish this, we need to add an hbox to the screen
+
+195
+00:13:25,533 --> 00:13:29,333
+and put fieldGroup and geoMap there.
+
+196
+00:13:29,333 --> 00:13:31,733
+Add an hbox under the layout. 
+
+197
+00:13:31,733 --> 00:13:35,133
+Add fieldGroup to the hbox.
+
+198
+00:13:35,133 --> 00:13:39,933
+Remember that earlier we added a reference to a district in the Owner entity.
+
+199
+00:13:39,933 --> 00:13:44,066
+Now we need to add the corresponding property to the fieldGroup.
+
+200
+00:13:44,066 --> 00:13:48,266
+But first, change the view of the ownerDc data container
+
+201
+00:13:48,266 --> 00:13:53,499
+to owner-with-district in order to load the related district along with the owner.
+
+202
+00:13:53,500 --> 00:13:55,066
+Then, click on the column,
+
+203
+00:13:55,066 --> 00:13:58,232
+then PROPERTIES -> Add field.
+
+204
+00:13:58,233 --> 00:14:00,566
+Add district property.
+
+205
+00:14:00,566 --> 00:14:03,532
+We will also need a data container for the district
+
+206
+00:14:03,533 --> 00:14:05,633
+in order to use it in the vector layer. 
+
+207
+00:14:05,633 --> 00:14:10,033
+Switch to the PALETTE tab, click on the Data components,
+
+208
+00:14:10,033 --> 00:14:15,766
+choose Instance container and put it under the ownerDc container.
+
+209
+00:14:15,766 --> 00:14:20,666
+Switch to the PROPERTIES tab and choose the district property.
+
+210
+00:14:20,666 --> 00:14:26,466
+Generate the id by clicking the button next to the corresponding field.
+
+211
+00:14:26,466 --> 00:14:29,499
+Go back to the XML.
+
+212
+00:14:29,500 --> 00:14:33,066
+Add a geoMap component to the hbox.
+
+213
+00:14:33,066 --> 00:14:39,032
+Set the main parameters: width, height, zoom, center.
+
+214
+00:14:39,033 --> 00:14:41,266
+Next, describe the layers.
+
+215
+00:14:41,266 --> 00:14:43,732
+The first one will be a tile layer.
+
+216
+00:14:46,933 --> 00:14:47,033
+
+
+217
+00:14:47,033 --> 00:14:50,566
+The next one is districtLayer - a vector layer
+
+218
+00:14:50,566 --> 00:14:54,899
+that displays the related district specified in the corresponding field.
+
+219
+00:14:54,900 --> 00:14:59,033
+The layer will be refreshed as the value in the field is changed.
+
+220
+00:14:59,033 --> 00:15:03,533
+The ownerLayer contains the editable owner instance,
+
+221
+00:15:03,533 --> 00:15:07,099
+so pass the ownerDc datacontainer to the layer.
+
+222
+00:15:07,100 --> 00:15:12,866
+Make the layer editable and set it as selectedLayer of the map.
+
+223
+00:15:15,333 --> 00:15:17,199
+Go back to the application.
+
+224
+00:15:17,200 --> 00:15:19,433
+Create a new Owner.
+
+225
+00:15:19,433 --> 00:15:22,833
+Click on the map to specify the owner’s location.
+
+226
+00:15:22,833 --> 00:15:25,799
+Choose a district in the picker field.
+
+227
+00:15:25,800 --> 00:15:30,533
+Notice that the corresponding layer has been refreshed as we updated the value.
+
+228
+00:15:30,533 --> 00:15:34,333
+Try choosing another district or clear the value.
+
+229
+00:15:34,333 --> 00:15:38,299
+Up to now, we’ve been building maps only in XML descriptors. 
+
+230
+00:15:38,300 --> 00:15:43,266
+But you can also work with the geoMap UI component and layers programmatically 
+
+231
+00:15:43,266 --> 00:15:46,099
+in screen controllers. For example, 
+
+232
+00:15:46,100 --> 00:15:50,366
+in a screen controller we can customize styles for a point and a polygon.
+
+233
+00:15:50,366 --> 00:15:53,032
+ We can also add validation to check 
+
+234
+00:15:53,033 --> 00:15:55,899
+whether the owner’s location belongs to the district.
+
+235
+00:15:55,900 --> 00:15:57,500
+Let’s start with the styles.
+
+236
+00:15:57,500 --> 00:16:00,300
+Go to the OwnerEdit controller.
+
+237
+00:16:00,300 --> 00:16:02,166
+to customize geometry styles
+
+238
+00:16:02,166 --> 00:16:06,199
+you need to set a style provider function to a vector layer.
+
+239
+00:16:06,200 --> 00:16:08,700
+This function calculates the style
+
+240
+00:16:08,700 --> 00:16:11,800
+for a given geo object belonging to a layer.
+
+241
+00:16:11,800 --> 00:16:14,566
+Cuba 7 introduced a very handy mechanism
+
+242
+00:16:14,566 --> 00:16:18,132
+that allows you to specify such functions declaratively,
+
+243
+00:16:18,133 --> 00:16:20,999
+with no need to call a particular setter method.
+
+244
+00:16:21,000 --> 00:16:25,066
+For example, to define the style provider for the ownerLayer,
+
+245
+00:16:25,066 --> 00:16:31,032
+declare setOwnerLayerStyleProvider method that returns GeometryStyle
+
+246
+00:16:31,033 --> 00:16:33,566
+and takes an Owner as an argument.
+
+247
+00:16:33,566 --> 00:16:35,666
+The name of the method is not important,
+
+248
+00:16:35,666 --> 00:16:38,866
+but it should explain what the method is needed for.
+
+249
+00:16:38,866 --> 00:16:41,732
+Add @Install annotation to the method. 
+
+250
+00:16:41,733 --> 00:16:48,466
+In the “to” parameter specify the id of the geoMap UI component - in this case,map, 
+
+251
+00:16:48,466 --> 00:16:54,199
+then dot, and then the ID of the layer, which is ownerLayer, in our case.
+
+252
+00:16:54,200 --> 00:16:58,100
+In the subject parameter set - styleProvider.
+
+253
+00:16:58,100 --> 00:17:00,566
+In the method’s body describe a style.
+
+254
+00:17:00,566 --> 00:17:05,132
+In our case, just return a PointStyle with a custom icon.
+
+255
+00:17:05,133 --> 00:17:07,666
+Let’s do the same with the districtLayer.
+
+256
+00:17:12,500 --> 00:17:16,500
+Now we need our method to return a PolygonStyle. 
+
+257
+00:17:20,533 --> 00:17:27,299
+And finally let’s add validation to check if the owner’s location is inside the district.
+
+258
+00:17:27,300 --> 00:17:33,000
+Subscribe to the preCommit event.
+
+259
+00:17:33,000 --> 00:17:35,733
+Implement the validation in the method body.
+
+260
+00:17:35,733 --> 00:17:39,966
+First, check that the location and district are not null.
+
+261
+00:17:43,800 --> 00:17:48,866
+to check whether a point is within a polygon, use the within() method.
+
+262
+00:17:53,966 --> 00:17:55,999
+And if the condition fails, 
+
+263
+00:17:56,000 --> 00:18:00,833
+prevent commit and build a notification with a corresponding message.
+
+264
+00:18:07,000 --> 00:18:11,000
+Go back to the application and open the Owner editor.
+
+265
+00:18:13,333 --> 00:18:16,533
+You can see that the style settings were applied to the layers.
+
+266
+00:18:16,533 --> 00:18:19,633
+And if we set the location to be outside the district,
+
+267
+00:18:19,633 --> 00:18:21,999
+we will witness an error message.
+
+268
+00:18:23,166 --> 00:18:26,632
+Before we continue, we need to fill our application with data.
+
+269
+00:18:29,133 --> 00:18:31,633
+Follow the link in the description below.
+
+270
+00:18:31,633 --> 00:18:35,266
+These are 2 groovy scripts with predefined generated data
+
+271
+00:18:35,266 --> 00:18:37,666
+that can be imported into your application.
+
+272
+00:18:37,666 --> 00:18:40,599
+So, download them.
+
+273
+00:18:40,600 --> 00:18:44,633
+Go back to the application and open the JMX Console screen.
+
+274
+00:18:44,633 --> 00:18:49,666
+Find the Scripting Manager bean by typing its name in the search field.
+
+275
+00:18:49,666 --> 00:18:53,466
+In the RootPath property you can see the path to the directory 
+
+276
+00:18:53,466 --> 00:18:56,832
+in the application server where you should put the groovy scripts.
+
+277
+00:18:56,833 --> 00:18:59,133
+ Copy them to this directory.
+
+278
+00:19:04,533 --> 00:19:08,533
+Run the “import1.groovy” script.
+
+279
+00:19:08,533 --> 00:19:11,833
+As the message says, the import finished successfully.
+
+280
+00:19:11,833 --> 00:19:15,699
+Do the same with the “import2.groovy” script. 
+
+281
+00:19:15,700 --> 00:19:18,966
+Now that our application has a sufficient amount of data,
+
+282
+00:19:18,966 --> 00:19:20,866
+we are able to proceed further.
+
+283
+00:19:20,866 --> 00:19:22,899
+Let’s move to the next task.
+
+284
+00:19:22,900 --> 00:19:25,500
+When creating a Visit, we want to automatically
+
+285
+00:19:25,500 --> 00:19:28,533
+set the nearest Clinic to the pet’s owner.
+
+286
+00:19:28,533 --> 00:19:32,633
+To implement this, we will use the power of JTS framework,
+
+287
+00:19:32,633 --> 00:19:37,899
+which provides a wide variety of functions and algorithms for vector geometry. 
+
+288
+00:19:37,900 --> 00:19:40,566
+Go to the Visit editor screen.
+
+289
+00:19:40,566 --> 00:19:47,432
+Change the view of the visitDc data container to visit-with-pet-and-clinic.
+
+290
+00:19:47,433 --> 00:19:54,999
+Also, change the view of the petsDc data container to pet-with-owner-and-type.
+
+291
+00:19:55,000 --> 00:19:57,766
+Add a clinic field to the field group.
+
+292
+00:19:58,900 --> 00:20:03,366
+Next, create a data container that will be loading the list of clinics.
+
+293
+00:20:06,666 --> 00:20:08,932
+Go to the screen controller.
+
+294
+00:20:08,933 --> 00:20:13,833
+Subscribe to the event of changing the selected Pet for the Visit. 
+
+295
+00:20:13,833 --> 00:20:18,366
+Inject the clinics data container and the clinic field.
+
+296
+00:20:25,466 --> 00:20:30,832
+In the method body we will first check that the pet's Owner location is specified.
+
+297
+00:20:30,833 --> 00:20:34,733
+If yes, then we will iterate through all available clinics
+
+298
+00:20:34,733 --> 00:20:37,733
+to find the nearest one for the pet's owner.
+
+299
+00:20:37,733 --> 00:20:41,866
+Otherwise, the Clinic will have to be chosen manually by a user.
+
+300
+00:20:41,866 --> 00:20:48,299
+We will use the static method distance from DistanceOp class provided by JTS.
+
+301
+00:20:48,300 --> 00:20:51,700
+This method calculates the distance between 2 points.
+
+302
+00:20:55,333 --> 00:20:59,333
+Go back to the application and create a new Visit.
+
+303
+00:20:59,333 --> 00:21:04,133
+When we choose a Pet for the Visit, we can see that the Clinic is determined automatically
+
+304
+00:21:04,133 --> 00:21:07,333
+based on the algorithm that we’ve just implemented.
+
+305
+00:21:08,900 --> 00:21:14,066
+The Maps add-on provides useful tools for geoanalysis such as clustering and heatmaps.
+
+306
+00:21:14,066 --> 00:21:16,799
+Let’s use these features in our demo application.
+
+307
+00:21:16,800 --> 00:21:20,166
+We will start with the clustering.
+
+308
+00:21:20,433 --> 00:21:22,866
+When opening the Owner browse screen,
+
+309
+00:21:22,866 --> 00:21:26,166
+it would be handy to see not just a table of Owners
+
+310
+00:21:26,166 --> 00:21:29,399
+but also the locations of the Owners on a map.
+
+311
+00:21:29,400 --> 00:21:33,666
+We can also add an option to show the Owners belonging to a particular District. 
+
+312
+00:21:33,666 --> 00:21:38,699
+Go back to the Studio and open the Owner browse screen 
+
+313
+00:21:38,700 --> 00:21:40,433
+and switch to the Designer tab.
+
+314
+00:21:40,433 --> 00:21:44,766
+We will reorganize the layout of the screen to place the map on the right.
+
+315
+00:21:44,766 --> 00:21:48,932
+Add an hbox with 2 vboxes on the layout.
+
+316
+00:21:54,100 --> 00:21:58,900
+Correct the size parameters of the hbox and vbox-es.
+
+317
+00:22:05,133 --> 00:22:09,966
+Move filter and ownersTable to the first vbox.
+
+318
+00:22:15,633 --> 00:22:19,033
+ Add a lookupField to the second vbox.
+
+319
+00:22:19,033 --> 00:22:25,266
+Specify an id: districtField and a caption: “District”.
+
+320
+00:22:30,733 --> 00:22:32,966
+We need to specify an optionsContainer
+
+321
+00:22:32,966 --> 00:22:35,866
+that contains all available values for the field.
+
+322
+00:22:35,866 --> 00:22:40,432
+To do this, first add a new collection container to the screen.
+
+323
+00:22:40,433 --> 00:22:43,133
+Choose class: District.
+
+324
+00:22:43,133 --> 00:22:46,633
+Then set this container to the districtField.
+
+325
+00:22:52,866 --> 00:22:57,899
+Go to the xml descriptor and add a map under the districtField.
+
+326
+00:23:01,000 --> 00:23:03,533
+Set the width to 100%
+
+327
+00:23:14,100 --> 00:23:18,666
+and set the expand parameter in the vbox to map.
+
+328
+00:23:18,666 --> 00:23:22,399
+Add a tile layer and a vector layer of Owners.
+
+329
+00:23:27,366 --> 00:23:30,866
+Go back to the application to see the results.
+
+330
+00:23:30,866 --> 00:23:33,899
+So, that’s how it looks when the clustering is disabled.
+
+331
+00:23:33,900 --> 00:23:35,833
+There are too many points on the map,
+
+332
+00:23:35,833 --> 00:23:39,866
+which not only looks untidy but also leads to bad performance.
+
+333
+00:23:39,866 --> 00:23:44,632
+To enable clustering, add a cluster tag inside the vector tag.
+
+334
+00:23:44,633 --> 00:23:48,899
+In the cluster tag you can also specify some additional options,
+
+335
+00:23:48,900 --> 00:23:52,066
+but in our case we just keep them default.
+
+336
+00:23:52,066 --> 00:23:55,966
+The next thing that we are going to implement is filtering by district.
+
+337
+00:23:55,966 --> 00:23:59,266
+Subscribe to the changes in the districtField.
+
+338
+00:24:03,566 --> 00:24:06,332
+Inject the owners data loader.
+
+339
+00:24:06,333 --> 00:24:10,266
+Create a load context to apply an additional condition:
+
+340
+00:24:10,266 --> 00:24:14,432
+to load only those owners who belong to the specified district.
+
+341
+00:24:16,733 --> 00:24:20,733
+Use dataManager to load entities from the database.
+
+342
+00:24:24,566 --> 00:24:28,566
+We also want to see the borders of the selected district on a map.
+
+343
+00:24:28,566 --> 00:24:32,999
+We can achieve this by adding the district’s polygon to the map’s canvas.
+
+344
+00:24:33,000 --> 00:24:37,066
+Canvas is a utility layer of the geoMap UI component
+
+345
+00:24:37,066 --> 00:24:42,399
+that provides the straightforward API for adding and drawing geometries on a map.
+
+346
+00:24:42,400 --> 00:24:46,533
+It can be really useful when you need to display vector geometry on a map
+
+347
+00:24:46,533 --> 00:24:50,533
+but you don’t want to work with entities that vector layers are working with.
+
+348
+00:24:50,533 --> 00:24:57,433
+You can obtain the Canvas by calling the getCanvas method of the GeoMap UI component.
+
+349
+00:24:57,433 --> 00:25:01,866
+Create a variable that will store the currently displayed polygon.
+
+350
+00:25:01,866 --> 00:25:05,032
+Use this variable to remove the polygon from the canvas
+
+351
+00:25:05,033 --> 00:25:07,566
+when the selected district is changed.
+
+352
+00:25:16,566 --> 00:25:20,566
+And finally let’s make it possible to choose the owner on the map
+
+353
+00:25:20,566 --> 00:25:25,232
+and make the table automatically select the row with the chosen owner.
+
+354
+00:25:25,233 --> 00:25:30,699
+Create a method that takes the GeoObjectSelectedEvent as an argument
+
+355
+00:25:30,700 --> 00:25:33,833
+and subscribe to the owners layer’s events. 
+
+356
+00:25:33,833 --> 00:25:38,266
+In the method body perform selection of the needed item in the table.
+
+357
+00:25:40,600 --> 00:25:43,900
+Go back to the application to see the results.
+
+358
+00:25:44,933 --> 00:25:48,499
+Now we can see that the owners are grouped into clusters.
+
+359
+00:25:48,500 --> 00:25:52,300
+Select the District to see the owners belonging to the district.
+
+360
+00:25:52,300 --> 00:25:56,133
+Click on an owner and you'll notice that it is selected in the table as well.
+
+361
+00:25:57,066 --> 00:26:01,732
+Now we can go on to the final task - creating a heatmap of Visits.
+
+362
+00:26:01,733 --> 00:26:05,699
+Actually, this map will contain locations of the pet’s owners,
+
+363
+00:26:05,700 --> 00:26:10,666
+but the intensity of each point will vary depending on how many visits the owner had.
+
+364
+00:26:10,666 --> 00:26:16,066
+So this map is supposed to give the information on which areas of the city are best suit it
+
+365
+00:26:16,066 --> 00:26:19,099
+for opening a new branch clinic office.
+
+366
+00:26:19,100 --> 00:26:22,666
+Go back to the Studio and create a new blank screen
+
+367
+00:26:22,666 --> 00:26:26,932
+in the visit directory and name it: Visits Heatmap.
+
+368
+00:26:29,466 --> 00:26:35,899
+Switch to the xml descriptor and add the geoMap visual component to the screen.
+
+369
+00:26:37,966 --> 00:26:43,132
+Set width and height to 100% to make the map full-screen.
+
+370
+00:26:46,900 --> 00:26:52,433
+For the time being, we will add only one layer with OpenStreetMap tiles.
+
+371
+00:26:52,433 --> 00:26:54,433
+Switch to the designer.
+
+372
+00:26:54,433 --> 00:26:56,333
+We will need 2 data containers:
+
+373
+00:26:59,733 --> 00:27:01,899
+for clinics
+
+374
+00:27:01,900 --> 00:27:02,933
+and visits.
+
+375
+00:27:02,933 --> 00:27:05,766
+The visits should be loaded along with the pet’s owner,
+
+376
+00:27:05,766 --> 00:27:08,132
+so we need to declare a new view. 
+
+377
+00:27:08,133 --> 00:27:12,266
+Let’s name it: visits-with-pet-and-owner.
+
+378
+00:27:18,166 --> 00:27:23,066
+Return to the xml descriptor and add a new vector layer with clinics.
+
+379
+00:27:23,066 --> 00:27:26,566
+Let’s customize the appearance of the clinic points.
+
+380
+00:27:26,566 --> 00:27:30,166
+Switch to the screen controller and add the method
+
+381
+00:27:30,166 --> 00:27:34,632
+similar to the one we created earlier in the OwnerEditor screen.
+
+382
+00:27:42,600 --> 00:27:47,500
+Specify the HOSPITAL icon for the point and make it red.
+
+383
+00:27:47,500 --> 00:27:49,666
+Now we are ready to add a heatmap.
+
+384
+00:27:49,666 --> 00:27:53,332
+Subscribe to the BeforeShow event of the screen.
+
+385
+00:27:53,333 --> 00:27:59,999
+Load the data into the data containers by calling the getScreenData().loadAll method.
+
+386
+00:28:00,000 --> 00:28:03,500
+First we need to build the java map of pairs:
+
+387
+00:28:03,500 --> 00:28:07,133
+point and its intensity value of Double type.
+
+388
+00:28:07,133 --> 00:28:09,833
+Inject the visits data container
+
+389
+00:28:09,833 --> 00:28:14,166
+and build the intensityMap taking advantage of java streams.
+
+390
+00:28:30,566 --> 00:28:33,732
+Inject the geoMap UI component
+
+391
+00:28:33,733 --> 00:28:39,166
+and add the intensityMap to it by calling the addHeatMap method.
+
+392
+00:28:39,166 --> 00:28:42,166
+You can also set additional options for the heatmap
+
+393
+00:28:42,166 --> 00:28:45,532
+by instantiating the HeatMapOptions class,
+
+394
+00:28:45,533 --> 00:28:49,166
+specifying the needed parameters and passing this object
+
+395
+00:28:49,166 --> 00:28:52,066
+to the method along with the intensityMap.
+
+396
+00:29:00,766 --> 00:29:05,299
+Restart the application to apply the newly created screen.
+
+397
+00:29:07,666 --> 00:29:11,666
+Go to the Visits Heatmap screen to see the heatmap. 
+
+398
+00:29:11,666 --> 00:29:14,232
+If we were thinking about opening a new clinic
+
+399
+00:29:14,233 --> 00:29:17,533
+we would find this visual information really useful.
+
+400
+00:29:19,833 --> 00:29:22,233
+Allright, we’ve done everything we planned.
+
+401
+00:29:22,233 --> 00:29:25,366
+Join our community and feel free to ask questions.
+
+402
+00:29:25,366 --> 00:29:28,466
+Check out other add-ons at CUBA marketplace.
+
+403
+00:29:28,466 --> 00:29:31,566
+Consult the documentation on our website.
+
+404
+00:29:31,566 --> 00:29:36,232
+Star us on GitHub and subscribe to our Twitter and YouTube channel!
+
+405
+00:29:36,233 --> 00:29:38,966
+All links are clickable under the video.
+
+406
+00:29:38,966 --> 00:29:39,999
+Thank you for watching!
+

@@ -1,0 +1,1320 @@
+﻿1
+00:00:00,000 --> 00:00:04,766
+Hello, today I’ll show you how to add dashboards to CUBA applications.
+
+2
+00:00:04,766 --> 00:00:07,632
+A dashboard is a good way to visualize information,
+
+3
+00:00:07,633 --> 00:00:08,799
+ but quite often JAVA developers face the challenge
+
+4
+00:00:08,800 --> 00:00:10,800
+ but quite often JAVA developers face the challenge
+
+5
+00:00:10,800 --> 00:00:13,266
+of adding dashboards to their applications:
+
+6
+00:00:13,266 --> 00:00:17,099
+ the implementation may be complicated and resource-intensive,
+
+7
+00:00:17,100 --> 00:00:20,700
+the team may not have a front-end developer and so on.
+
+8
+00:00:20,700 --> 00:00:24,200
+We are glad to offer an easy way to represent visual information 
+
+9
+00:00:24,200 --> 00:00:27,166
+using an open source Dashboards add-on.
+
+10
+00:00:27,166 --> 00:00:31,032
+You can find it on the Мarketplace 
+
+11
+00:00:31,033 --> 00:00:33,399
+or on GitHub.
+
+12
+00:00:33,400 --> 00:00:39,366
+Every dashboard contains widgets which are individual visual elements based on a frame.
+
+13
+00:00:39,366 --> 00:00:43,932
+Placing widgets on a dashboard is provided by a wide range of layouts.
+
+14
+00:00:43,933 --> 00:00:47,433
+For example, responsive layouts allow viewing dashboards
+
+15
+00:00:47,433 --> 00:00:50,933
+on desktop, tablet or smartphone displays.
+
+16
+00:00:50,933 --> 00:00:55,933
+Also you can set dashboard refreshing and interaction between widgets.
+
+17
+00:00:55,933 --> 00:01:00,933
+And now I’ll show you how to create and configure a dashboard in 15 minutes.
+
+18
+00:01:00,933 --> 00:01:04,033
+You must have seen our pet clinic demo project
+
+19
+00:01:04,033 --> 00:01:06,799
+that can be found on the CUBA platform site.
+
+20
+00:01:06,800 --> 00:01:11,133
+It demonstrates an IT system of an imaginary pokemon’s clinic
+
+21
+00:01:11,133 --> 00:01:15,366
+with pre-filled data for clients, pets, vets and visits.
+
+22
+00:01:15,366 --> 00:01:20,566
+Let’s use this app as a starter and add a couple of widgets and dashboards to it.
+
+23
+00:01:20,566 --> 00:01:23,299
+First, take a look at its domain model.
+
+24
+00:01:23,300 --> 00:01:28,266
+Owner is an entity that represents the personal data of pet owners.
+
+25
+00:01:28,266 --> 00:01:34,566
+Pet contains name and birth date, and is associated with the Owner and PetType classes.
+
+26
+00:01:34,566 --> 00:01:39,666
+Visit details are contained in the Visit class and are related to one pet.
+
+27
+00:01:39,666 --> 00:01:44,666
+Vet is an entity containing veterinarian names, extends Person
+
+28
+00:01:44,666 --> 00:01:47,432
+and is associated with Specialty class.
+
+29
+00:01:47,433 --> 00:01:49,033
+So, we are ready to start.
+
+30
+00:01:49,033 --> 00:01:52,733
+Let’s go to the pet-clinic’s github repository.
+
+31
+00:01:55,333 --> 00:02:00,999
+Clone it and open the project in CUBA studio.
+
+32
+00:02:01,000 --> 00:02:05,000
+Now we need to add the dashboard component to the project.
+
+33
+00:02:05,000 --> 00:02:09,600
+Let’s open Add-ons window and go to the Marketplace.
+
+34
+00:02:09,600 --> 00:02:12,900
+Find the Dashboard add-on there.
+
+35
+00:02:12,900 --> 00:02:14,733
+Click Install
+
+36
+00:02:14,733 --> 00:02:16,466
+and apply the changes.
+
+37
+00:02:19,766 --> 00:02:26,266
+You can see that the add-on dependencies have been added to the build.gradle file
+
+38
+00:02:26,266 --> 00:02:32,799
+and to the web.xml in the core and web modules.
+
+39
+00:02:35,333 --> 00:02:38,333
+And now, let’s run the application.
+
+40
+00:02:38,333 --> 00:02:40,766
+ Apply init database scripts...
+
+41
+00:02:40,766 --> 00:02:44,399
+… and follow the link to open the app
+
+42
+00:02:44,400 --> 00:02:46,900
+and log in as an administrator.
+
+43
+00:02:46,900 --> 00:02:48,666
+And what can we see?
+
+44
+00:02:48,666 --> 00:02:52,966
+Оur main menu now has a new “Dashboard” top-level item.
+
+45
+00:02:52,966 --> 00:02:58,532
+Let’s create a dashboard with Main Dashboard name.
+
+46
+00:02:58,533 --> 00:03:01,499
+At this moment we can only set a layout for it
+
+47
+00:03:01,500 --> 00:03:05,266
+and we don’t have any widgets available for this dashboard yet.
+
+48
+00:03:05,266 --> 00:03:07,032
+Let’s add some of them.
+
+49
+00:03:07,033 --> 00:03:11,866
+For the warm-up, let’s add a very simple widget.
+
+50
+00:03:11,866 --> 00:03:14,599
+Our widget will be showing an image of a pikachu
+
+51
+00:03:14,600 --> 00:03:17,733
+ that we’ll download from Wikipedia.
+
+52
+00:03:17,733 --> 00:03:22,066
+To create a new widget we need to create a new screen fragment first.
+
+53
+00:03:22,066 --> 00:03:25,232
+ Let’s put it into the widgets package and call it,
+
+54
+00:03:25,233 --> 00:03:29,733
+ hmmmm…. , pokemon-art-widget.
+
+55
+00:03:31,766 --> 00:03:38,066
+Then, add the “images” directory under modules/web/
+
+56
+00:03:38,066 --> 00:03:42,266
+and put the downloaded picture there.
+
+57
+00:03:42,266 --> 00:03:46,099
+Let’s update deploy task in build.gradle as well,
+
+58
+00:03:46,100 --> 00:03:50,000
+to get this image deployed.
+
+59
+00:03:52,933 --> 00:03:52,966
+to get this image deployed.
+
+60
+00:03:52,966 --> 00:03:57,066
+Ok, the next step is to put this image into our screen fragment
+
+61
+00:03:57,066 --> 00:04:05,299
+using the relativePath image loading option.
+
+62
+00:04:05,300 --> 00:04:07,966
+And now, we are ready to do the magic!
+
+63
+00:04:07,966 --> 00:04:11,832
+We need to annotate our screen fragment with @DashboardWidget 
+
+64
+00:04:11,833 --> 00:04:16,266
+and pass to it a widget name that the dashboard editor will use.
+
+65
+00:04:16,266 --> 00:04:18,932
+Great! Our first widget is ready.
+
+66
+00:04:18,933 --> 00:04:24,099
+Let’s start the application and play with it!
+
+67
+00:04:24,100 --> 00:04:28,500
+We open our dashboard in the dashboard editor and voila,
+
+68
+00:04:28,500 --> 00:04:31,266
+we can see our brand-new widget here!
+
+69
+00:04:31,266 --> 00:04:33,966
+Let’s design our Test dashboard:
+
+70
+00:04:33,966 --> 00:04:38,332
+Add responsive layout to the dashboard as the root element. 
+
+71
+00:04:38,333 --> 00:04:41,233
+ Confirm the default responsive settings.
+
+72
+00:04:41,233 --> 00:04:44,233
+Add our Pokemon Art widget to it
+
+73
+00:04:44,233 --> 00:04:48,866
+Give it a caption and an id corresponding to pokemon art
+
+74
+00:04:48,866 --> 00:04:52,499
+Turn on the Caption visibility
+
+75
+00:04:52,500 --> 00:04:57,233
+Open the style settings and set its size to AUTO/AUTO
+
+76
+00:04:57,233 --> 00:05:00,733
+Save the changes and check how our dashboard looks.
+
+77
+00:05:00,733 --> 00:05:05,299
+Now it seems to be a good time to talk a bit more about widget editing capabilities
+
+78
+00:05:05,300 --> 00:05:08,533
+we have out-of-the-box in the dashboard editor.
+
+79
+00:05:08,533 --> 00:05:10,899
+Here we can set the Widget caption
+
+80
+00:05:10,900 --> 00:05:15,200
+which especially matters if “Show widget Caption” is checked
+
+81
+00:05:15,200 --> 00:05:19,133
+And “Widget Id” which could be useful when you look at JSON records
+
+82
+00:05:19,133 --> 00:05:25,299
+that describe the dashboard structure either in the database or export/import JSON file.
+
+83
+00:05:25,300 --> 00:05:28,166
+Widget parameters is a list of additional values
+
+84
+00:05:28,166 --> 00:05:31,799
+that can be passed to the widget to have it configured by a user.
+
+85
+00:05:31,800 --> 00:05:35,233
+We’ll talk about them later on.
+
+86
+00:05:35,233 --> 00:05:39,566
+Widget template editor allows us to save the configured widget
+
+87
+00:05:39,566 --> 00:05:45,666
+a widget with pre-configured parameters set as a template for later use at other dashboards.
+
+88
+00:05:45,666 --> 00:05:51,832
+The responsive settings dialog is used to configure the widget weight in the layout.
+
+89
+00:05:51,833 --> 00:05:55,033
+The last configuration dialog is Style.
+
+90
+00:05:55,033 --> 00:06:01,899
+Here we can define the css style for the widget container and modify its width and height.
+
+91
+00:06:01,900 --> 00:06:05,866
+Ok, now we know how to make a simple static widget.
+
+92
+00:06:05,866 --> 00:06:09,299
+But what if we need to have our widget updated regularly?
+
+93
+00:06:09,300 --> 00:06:14,000
+For example, what if we’d like to see a random joke from the Internet on the dashboard
+
+94
+00:06:14,000 --> 00:06:17,500
+and we want to get it updated every 15 seconds.
+
+95
+00:06:17,500 --> 00:06:21,000
+Ok, let’s do it and take a look at a couple of other tools
+
+96
+00:06:21,000 --> 00:06:24,700
+that the dashboard add-on gives us.
+
+97
+00:06:24,700 --> 00:06:28,133
+Create a widget as we did before
+
+98
+00:06:28,133 --> 00:06:32,099
+and name it random-joke-widget.
+
+99
+00:06:32,100 --> 00:06:36,233
+Add the textArea for the joke to the xml descriptor
+
+100
+00:06:36,233 --> 00:06:39,199
+and set proper attributes for it.
+
+101
+00:06:45,900 --> 00:06:51,033
+Mark the widget with @DashboardWidget annotation
+
+102
+00:06:53,666 --> 00:06:58,066
+Inject textArea into the controller class
+
+103
+00:07:00,400 --> 00:07:05,300
+Make the widget controller implement the RefreshableWidget interface.
+
+104
+00:07:05,300 --> 00:07:08,500
+This is a marker interface that is used to tell the add-on
+
+105
+00:07:08,500 --> 00:07:13,100
+that it has to call the refresh method of this widget from time to time.
+
+106
+00:07:13,100 --> 00:07:16,200
+Ok, let’s override this method.
+
+107
+00:07:19,133 --> 00:07:25,199
+So far empty we'll call the displaying new joke method to get a new joke.
+
+108
+00:07:29,266 --> 00:07:32,032
+But how can we set the very first joke?
+
+109
+00:07:32,033 --> 00:07:34,399
+ How can our widget be initialized?
+
+110
+00:07:34,400 --> 00:07:41,566
+Unlike regular screens, annotation @LoadDataBeforeShow doesn’t work for dashboard widgets.
+
+111
+00:07:41,566 --> 00:07:47,599
+As well as handling the ScreenBeforeShowEvent for itself and for a parent screen.
+
+112
+00:07:47,600 --> 00:07:53,800
+We need to subscribe to InitEvent or AfterInitEvent to have our widget initialized.
+
+113
+00:07:53,800 --> 00:07:57,300
+Let’s use AfterInitEvent in our case.
+
+114
+00:07:57,300 --> 00:08:02,066
+Subscribe to this event and initialise the textArea in it.
+
+115
+00:08:02,066 --> 00:08:05,299
+Now we need to get a joke itself.
+
+116
+00:08:07,033 --> 00:08:12,033
+We’ll be using icanhazdadjoke.com to get our jokes.
+
+117
+00:08:12,033 --> 00:08:15,566
+The documentation can be found here 
+
+118
+00:08:15,566 --> 00:08:22,966
+We’ll be using RestTemplate class from the org.springframework.web.client package to do this task.
+
+119
+00:09:24,666 --> 00:09:28,432
+Okay. Our Random joke widget seems to be ready.
+
+120
+00:09:28,433 --> 00:09:31,266
+Let’s test it.
+
+121
+00:09:33,066 --> 00:09:36,299
+Add it to our test dashboard 
+
+122
+00:09:38,600 --> 00:09:42,600
+Set width and height to it
+
+123
+00:09:42,600 --> 00:09:43,900
+It works!
+
+124
+00:09:43,900 --> 00:09:46,200
+But how can we set the refresh rate?
+
+125
+00:09:46,200 --> 00:09:49,300
+There is an input field named Refresh period, let’s set it to 15 seconds.
+
+126
+00:09:49,300 --> 00:09:51,533
+let’s set it to 15 seconds.
+
+127
+00:09:51,533 --> 00:09:55,899
+This refresh method is not called in the dashboard design mode.
+
+128
+00:09:55,900 --> 00:10:01,633
+To see these refreshes, let’s save the changes and go to the dashboard View mode.
+
+129
+00:10:18,266 --> 00:10:22,266
+Here, we can see that jokes are updated every 15 minutes.
+
+130
+00:10:22,266 --> 00:10:25,232
+Ok, that’s enough for simple widgets.
+
+131
+00:10:25,233 --> 00:10:28,733
+Let’s create the one that will work with data from our database.
+
+132
+00:10:28,733 --> 00:10:33,233
+The widget will show a calendar with highlighted visits in the selected month.
+
+133
+00:10:34,033 --> 00:10:36,266
+Let’s add a new screen fragment
+
+134
+00:10:38,733 --> 00:10:41,399
+and name it visits-calendar-widget.
+
+135
+00:10:42,900 --> 00:10:46,733
+Mark it with @DashboardWidget annotation.
+
+136
+00:10:48,600 --> 00:10:50,300
+We need to work with data,
+
+137
+00:10:50,300 --> 00:10:52,200
+so let’s add a collectionContainer
+
+138
+00:10:52,200 --> 00:10:55,333
+ and set its ID to “visitsDс”
+
+139
+00:10:55,333 --> 00:10:57,433
+set class to Visit
+
+140
+00:10:57,433 --> 00:10:59,533
+view to “visit-with-pet”
+
+141
+00:10:59,533 --> 00:11:03,366
+and add a data loader
+
+142
+00:11:03,366 --> 00:11:06,966
+Then, add a vbox and Label,
+
+143
+00:11:06,966 --> 00:11:10,099
+datePicker to select the month to display,
+
+144
+00:11:10,100 --> 00:11:14,666
+and a calendar to our screen fragment XML descriptor.
+
+145
+00:11:30,500 --> 00:11:33,766
+Now it’s time to update the controller class:
+
+146
+00:11:33,766 --> 00:11:36,466
+let’s navigate to the VisitsCalendarWidget
+
+147
+00:11:36,466 --> 00:11:38,166
+and inject our dataLoader, 
+
+148
+00:11:41,033 --> 00:11:42,133
+DataContainer 
+
+149
+00:11:43,133 --> 00:11:44,533
+and Calendar.
+
+150
+00:11:44,533 --> 00:11:48,166
+As you remember, widgets don’t load data by themselves,
+
+151
+00:11:48,166 --> 00:11:52,832
+and the @LoadDataBeforeShow annotation doesn’t work with them.
+
+152
+00:11:52,833 --> 00:11:56,533
+So we need to subscribe to onAfterInit event 
+
+153
+00:11:56,533 --> 00:11:58,133
+and load data there.
+
+154
+00:11:58,133 --> 00:12:00,899
+Let’s do that by calling the load() method.
+
+155
+00:12:00,900 --> 00:12:08,533
+After that, let’s also add these Visits to the calendar control in Java code as well.
+
+156
+00:12:13,533 --> 00:12:16,499
+We also need to handle ValueChange event
+
+157
+00:12:16,500 --> 00:12:20,700
+ where we will set startDate and endDate for the calendar.
+
+158
+00:12:29,400 --> 00:12:32,066
+Now, let’s run the application.
+
+159
+00:12:34,900 --> 00:12:37,966
+Add “Visits Calendar” to our test dashboard 
+
+160
+00:12:40,866 --> 00:12:42,832
+and adjust its size.
+
+161
+00:12:47,300 --> 00:12:50,033
+We can ensure that our widget works correctly.
+
+162
+00:12:54,300 --> 00:12:58,133
+As we have seen earlier, the add-on provides a parameters editor
+
+163
+00:12:58,133 --> 00:13:02,066
+that allows creating parameters and passing them to your widget.
+
+164
+00:13:02,066 --> 00:13:05,766
+Let’s look at how we can access these parameters in our widget.
+
+165
+00:13:05,766 --> 00:13:10,466
+Let's assume we want to be able to add a picture of our pokemon on a dashboard.
+
+166
+00:13:10,466 --> 00:13:13,866
+In this demo we’ll be taking these pictures from resources, 
+
+167
+00:13:13,866 --> 00:13:18,966
+however, in real application these pictures should be stored in the Pet entity
+
+168
+00:13:18,966 --> 00:13:21,932
+as a FileDescriptor type property.
+
+169
+00:13:21,933 --> 00:13:26,266
+Let’s add a custom parameter first to our Pokemon Art widget
+
+170
+00:13:26,266 --> 00:13:28,899
+Set Value type Entity
+
+171
+00:13:28,900 --> 00:13:32,633
+Select petclinic_Pet entity class
+
+172
+00:13:32,633 --> 00:13:34,699
+Set Alias to the pet
+
+173
+00:13:34,700 --> 00:13:38,433
+ we will use this alias to get the parameter in the controller.
+
+174
+00:13:38,433 --> 00:13:41,433
+Give a name to this parameter, it could be any.
+
+175
+00:13:41,433 --> 00:13:44,633
+Select an entity instance and a view.
+
+176
+00:13:44,633 --> 00:13:47,499
+Ok, now our widget can get the parameter.
+
+177
+00:13:47,500 --> 00:13:49,266
+Let’s see how we can use it.
+
+178
+00:13:50,533 --> 00:13:55,266
+Put the images into the folder in which we’ve put the image of Pikachu.
+
+179
+00:14:00,966 --> 00:14:04,599
+Now, we need to create a class field of Pet type
+
+180
+00:14:04,600 --> 00:14:09,100
+with exactly the same name as we earlier set our Alias to.
+
+181
+00:14:09,100 --> 00:14:13,933
+And annotate it with @WindowParam and @WidgetParam.
+
+182
+00:14:13,933 --> 00:14:19,599
+Also, let’s inject a widget itself to be able to set a new caption for it as well.
+
+183
+00:14:22,833 --> 00:14:27,866
+References to a Widget (which is technically a container of our screen fragment),
+
+184
+00:14:27,866 --> 00:14:31,366
+Dashboard and DashboardFrame instances 
+
+185
+00:14:31,366 --> 00:14:35,232
+are passed as window params to our screen fragment controller.
+
+186
+00:14:35,233 --> 00:14:37,666
+ And they could be accessed in the same way.
+
+187
+00:14:37,666 --> 00:14:42,632
+Also, we’ll need our image control to be injected into the controller as usual.
+
+188
+00:14:45,433 --> 00:14:50,499
+The only thing left is to rewrite our onInit event handler a bit.
+
+189
+00:14:50,500 --> 00:14:54,166
+Once again, this realisation is a bit straightforward 
+
+190
+00:14:54,166 --> 00:14:56,899
+and won’t work if a Pet object has a name
+
+191
+00:14:56,900 --> 00:14:59,200
+that does not meet a resource name 
+
+192
+00:14:59,200 --> 00:15:03,900
+or can be used to load unauthorized resources from the top level folders.
+
+193
+00:15:03,900 --> 00:15:08,066
+But it’s just ok to demonstrate how to pass parameters into widgets.
+
+194
+00:15:14,133 --> 00:15:15,733
+Let’s see how it works.
+
+195
+00:15:26,833 --> 00:15:31,166
+We can see that the picture has changed to the pokemon set in the parameter.
+
+196
+00:15:32,600 --> 00:15:39,066
+You might notice that the widget parameters configuration interface is not quite user-friendly.
+
+197
+00:15:39,066 --> 00:15:45,066
+In the end, how does a common user get to know which Entity or Entity List or enum 
+
+198
+00:15:45,066 --> 00:15:46,699
+should be used as a parameter
+
+199
+00:15:46,700 --> 00:15:49,133
+and what are the allowed values for it?
+
+200
+00:15:49,133 --> 00:15:54,866
+Let’s fix this and the issues with security and parameters validation we have discussed earlier.
+
+201
+00:15:54,866 --> 00:15:58,099
+This can be done with a custom Widget editor.
+
+202
+00:15:58,100 --> 00:16:01,166
+It would give better control over the passed parameters,
+
+203
+00:16:01,166 --> 00:16:02,832
+allow us to validate them
+
+204
+00:16:02,833 --> 00:16:05,499
+and give the end user a much more convenient 
+
+205
+00:16:05,500 --> 00:16:08,700
+and friendly UI for configuring a widget.
+
+206
+00:16:10,166 --> 00:16:13,432
+Let’s first create a blank screen fragment
+
+207
+00:16:16,666 --> 00:16:19,532
+and call it pokemon-art-widget-editor.
+
+208
+00:16:19,533 --> 00:16:23,199
+Ensure that it’s not assigned to any web-menu item.
+
+209
+00:16:24,733 --> 00:16:28,666
+Then we need to add a new lookupField to the layout.
+
+210
+00:16:28,666 --> 00:16:33,199
+This component will be used to select a picture to be shown in the widget.
+
+211
+00:16:33,200 --> 00:16:36,633
+Disable the ability to select the null value,
+
+212
+00:16:36,633 --> 00:16:39,999
+so a user will have to choose some picture to be shown.
+
+213
+00:16:40,000 --> 00:16:44,833
+Also, if you have not done it before add a message pack to the package.
+
+214
+00:16:57,800 --> 00:17:01,666
+Then, go to the screen controller and inject LookupField,
+
+215
+00:17:04,833 --> 00:17:07,499
+petName and petArtResource,
+
+216
+00:17:07,500 --> 00:17:12,166
+then add  @WindowParam and @WidgetParam annotations.
+
+217
+00:17:19,866 --> 00:17:21,899
+Let’s add some constants.
+
+218
+00:17:35,066 --> 00:17:37,466
+Subscribe to the Init event.
+
+219
+00:18:10,933 --> 00:18:13,566
+Handle ValueChangeEvent.
+
+220
+00:18:24,200 --> 00:18:27,533
+And implement listArtFiles method.
+
+221
+00:19:13,366 --> 00:19:16,366
+Now, switch to the PokemonArtWidget,
+
+222
+00:19:16,366 --> 00:19:20,699
+open its controller class and specify the widget editor.
+
+223
+00:19:20,700 --> 00:19:26,333
+Replace an injected entity parameter called pet with two new String parameters
+
+224
+00:19:26,333 --> 00:19:29,299
+petName and petArtResource.
+
+225
+00:19:29,300 --> 00:19:33,666
+Annotate these parameters with @WindowParam and @WidgetParam
+
+226
+00:19:33,666 --> 00:19:38,466
+and get the caption and the resource from these two fields if they are not null.
+
+227
+00:19:43,400 --> 00:19:46,733
+And we just need to rewrite onInit method 
+
+228
+00:19:49,733 --> 00:19:52,299
+and add setPet method.
+
+229
+00:20:06,600 --> 00:20:09,300
+Let’s look at the modified widget editor.
+
+230
+00:20:09,300 --> 00:20:12,366
+Configuring widgets became more convenient.
+
+231
+00:20:16,933 --> 00:20:20,566
+Adding a dashboard to the screen is pretty straightforward.
+
+232
+00:20:20,566 --> 00:20:25,832
+One of the most common places to present dashboards is the application’s main screen.
+
+233
+00:20:25,833 --> 00:20:29,366
+Let’s see how it could be done for our pet-clinic application.
+
+234
+00:20:29,366 --> 00:20:34,899
+Open the main screen window descriptor - ext-mainwindow.xml.
+
+235
+00:20:34,900 --> 00:20:39,000
+First of all, we need to add a dashboard xml namespace.
+
+236
+00:20:45,866 --> 00:20:49,166
+Then find the <main:workarea/> tag
+
+237
+00:20:49,166 --> 00:20:53,299
+that represents the screen area where the application opens the screens
+
+238
+00:20:53,300 --> 00:20:57,733
+this is the place where we are going to put the dashboard we have created earlier.
+
+239
+00:20:57,733 --> 00:21:02,133
+But first we need to change the workarea’s layout a bit:
+
+240
+00:21:02,133 --> 00:21:06,733
+add a vBox to tell the screen how to arrange the picture we already have
+
+241
+00:21:06,733 --> 00:21:09,066
+and the dashboard we are adding.
+
+242
+00:21:09,066 --> 00:21:12,632
+Then, we can add the <dashboard:dashboard> tag,
+
+243
+00:21:12,633 --> 00:21:14,099
+give it an ID
+
+244
+00:21:14,100 --> 00:21:18,533
+and set the code attribute to the code of the dashboard we have created before.
+
+245
+00:21:18,533 --> 00:21:21,799
+In our case it will be “main-dashboard”.
+
+246
+00:21:21,800 --> 00:21:27,700
+Timer delay parameter plays the same role as the refresh period in the dashboard editor
+
+247
+00:21:27,700 --> 00:21:31,133
+and overrides the last one if both of them exist.
+
+248
+00:21:31,133 --> 00:21:33,766
+Now, when the configuration is done
+
+249
+00:21:33,766 --> 00:21:37,766
+it’s time to run the application and look at the new main screen.
+
+250
+00:21:44,933 --> 00:21:47,499
+Everything works as expected.
+
+251
+00:21:47,500 --> 00:21:50,966
+We can see our main dashboard on the main screen.
+
+252
+00:21:50,966 --> 00:21:54,566
+The next thing to do is to discuss dashboard parameters.
+
+253
+00:21:54,566 --> 00:21:57,499
+These parameters could be passed to the dashboard 
+
+254
+00:21:57,500 --> 00:22:00,500
+either by using <dashboard:parameter> tag
+
+255
+00:22:00,500 --> 00:22:03,333
+in the <dashboard::dashboard> component
+
+256
+00:22:03,333 --> 00:22:05,766
+or by setting them in the dashboard editor.
+
+257
+00:22:06,800 --> 00:22:11,433
+Let’ create a parameter for the Main Dashboard in the dashboard editor
+
+258
+00:22:11,433 --> 00:22:14,166
+and set its alias to the font-size
+
+259
+00:22:14,166 --> 00:22:15,766
+it could be any name
+
+260
+00:22:15,766 --> 00:22:20,499
+Let’s set the parameter type to STRING and value to huge.
+
+261
+00:22:20,500 --> 00:22:24,466
+This parameter will be passed to ALL widgets of the dashboard,
+
+262
+00:22:24,466 --> 00:22:30,266
+so we can inject it to our widgets using @WindowParam and @WidgetParam annotations
+
+263
+00:22:30,266 --> 00:22:32,266
+and use it as we need to.
+
+264
+00:22:32,266 --> 00:22:34,966
+The parameter is injected as we have seen before
+
+265
+00:22:34,966 --> 00:22:38,366
+and used in the onAfterInit method.
+
+266
+00:22:39,700 --> 00:22:41,566
+Let’s look at the results.
+
+267
+00:22:41,566 --> 00:22:43,766
+The widget font size changed.
+
+268
+00:22:44,400 --> 00:22:47,800
+DashboardViewAssistant is a helper component 
+
+269
+00:22:47,800 --> 00:22:50,166
+that can be used to manage your dashboards.
+
+270
+00:22:50,166 --> 00:22:53,299
+It’s a Spring bean with “prototype” scope
+
+271
+00:22:53,300 --> 00:22:57,433
+that gets a managed dashboard instance to its init method.
+
+272
+00:22:57,433 --> 00:23:03,066
+A dashboard assistant is a good place to keep the business logic for dashboards and widgets.
+
+273
+00:23:03,066 --> 00:23:08,432
+Since users can choose which assistant bean should be linked to the dashboard in the UI,
+
+274
+00:23:08,433 --> 00:23:10,699
+the assistant bean is a good choice
+
+275
+00:23:10,700 --> 00:23:15,100
+if you need to allow users to turn some business logic ON and OFF
+
+276
+00:23:15,100 --> 00:23:19,800
+or let users choose from one of the predefined business logic providers.
+
+277
+00:23:19,800 --> 00:23:22,700
+Let’s create such an assistant bean.
+
+278
+00:23:22,700 --> 00:23:25,266
+First, we create a package named assistant 
+
+279
+00:23:29,033 --> 00:23:32,099
+and a class called VisitScheduleAssistant.
+
+280
+00:23:33,266 --> 00:23:36,832
+Mark it as a Spring component with “prototype” scope
+
+281
+00:23:39,300 --> 00:23:44,033
+and say that it implements DashboardViewAssistant interface.
+
+282
+00:23:44,033 --> 00:23:47,066
+Now, we need to override the init method.
+
+283
+00:23:47,066 --> 00:23:51,599
+ It’s quite simple, we just save the dashboard object for the later use.
+
+284
+00:23:52,700 --> 00:23:56,966
+Ok, now our dashboard view assistant is ready, but does nothing.
+
+285
+00:23:56,966 --> 00:23:59,966
+So it’s time to add some business logic to it.
+
+286
+00:23:59,966 --> 00:24:03,466
+Here, we will use a standard mechanism of Spring events
+
+287
+00:24:03,466 --> 00:24:06,466
+and subscribe to the DashboardUpdatedEvent
+
+288
+00:24:06,466 --> 00:24:08,866
+an event that the add-on sends each time
+
+289
+00:24:08,866 --> 00:24:11,432
+the dashboard needs to be updated.
+
+290
+00:24:13,466 --> 00:24:17,532
+First we need to check the ID of the visits calendar widget.
+
+291
+00:24:17,533 --> 00:24:19,899
+It’s “visits-calendar”.
+
+292
+00:24:19,900 --> 00:24:22,633
+So, let’s get this widget from the dashboard 
+
+293
+00:24:22,633 --> 00:24:25,399
+and call a reloadSchedule method for it.
+
+294
+00:24:27,433 --> 00:24:30,966
+Implement this method in VisitsCalendarWidget.
+
+295
+00:24:30,966 --> 00:24:34,866
+Do the refactoring and extract the data loading logic
+
+296
+00:24:34,866 --> 00:24:37,266
+from the onAfterInit method.
+
+297
+00:24:37,266 --> 00:24:41,899
+And then, improve it a bit by loading visits only for the selected month.
+
+298
+00:24:41,900 --> 00:24:45,900
+To do that, add a condition to the data loader declaration
+
+299
+00:24:45,900 --> 00:24:51,233
+in the XML file with two parameters: start date and end date.
+
+300
+00:24:56,333 --> 00:24:59,466
+Set these parameters to the start and end dates
+
+301
+00:24:59,466 --> 00:25:02,932
+that the calendar is set to before calling the load() method.
+
+302
+00:25:05,700 --> 00:25:08,500
+And reload the schedule for the selected month
+
+303
+00:25:08,500 --> 00:25:12,433
+in the MonthPickerValueChange event handler.
+
+304
+00:25:12,433 --> 00:25:14,633
+Our dashboard assistant is created, 
+
+305
+00:25:14,633 --> 00:25:17,533
+let’s run the application and check how it works.
+
+306
+00:25:21,833 --> 00:25:24,499
+Open the Main dashboard in the editor
+
+307
+00:25:24,500 --> 00:25:27,300
+and set the refresh rate to 30 seconds
+
+308
+00:25:27,300 --> 00:25:31,100
+and the assistant bean to the component we have just created.
+
+309
+00:25:31,100 --> 00:25:32,766
+Save the changes.
+
+310
+00:25:32,766 --> 00:25:35,699
+Take a look at the calendar in the main window.
+
+311
+00:25:35,700 --> 00:25:39,700
+Then create a new visit for the month that is picked on the calendar.
+
+312
+00:25:44,133 --> 00:25:48,466
+After a while, we can see that this new visit appeared on the calendar.
+
+313
+00:25:48,466 --> 00:25:53,832
+And the last thing I want to show you is how to export and import JSON files.
+
+314
+00:25:54,700 --> 00:25:58,700
+Let’s create a new dashboard and add the pokemon widget to it.
+
+315
+00:26:06,933 --> 00:26:09,899
+You can see two buttons at the bottom of the screen.
+
+316
+00:26:09,900 --> 00:26:13,566
+Let’s export our Test Dashboard to the json file.
+
+317
+00:26:13,566 --> 00:26:15,732
+ Now you can use it in another project
+
+318
+00:26:15,733 --> 00:26:20,933
+or in this one just by creating a new dashboard and clicking Import json.
+
+319
+00:26:20,933 --> 00:26:25,433
+But now I’ll show you one more way of adding a dashboard to the main screen. 
+
+320
+00:26:25,433 --> 00:26:28,633
+Put the Json file in the project package
+
+321
+00:26:28,633 --> 00:26:32,499
+and set the path in the dashboard section instead of code.
+
+322
+00:26:35,666 --> 00:26:36,866
+ That’s it.
+
+323
+00:26:36,866 --> 00:26:38,832
+Let’s check that it works.
+
+324
+00:26:42,000 --> 00:26:44,633
+As you can see we’ve done everything we planned.
+
+325
+00:26:44,633 --> 00:26:48,066
+Join our community and feel free to ask questions.
+
+326
+00:26:48,066 --> 00:26:52,566
+Consult the documentation on our website and on the add-on home page.
+
+327
+00:26:52,566 --> 00:26:56,499
+Download and use other add-ons at the CUBA marketplace.
+
+328
+00:26:56,500 --> 00:27:01,033
+Star us on GitHub and subscribe to our Twitter and YouTube channels!
+
+329
+00:27:01,033 --> 00:27:03,599
+All links are clickable under the video.
+
+330
+00:27:03,600 --> 00:27:05,166
+Thank you for watching!
+
