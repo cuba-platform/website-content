@@ -1,0 +1,4 @@
+## Panoramica
+L'Addon offre agli utenti una casella per i messaggi da utente a utente e da sistema a utente. Tale comunicazione interna può essere preferibile alla posta elettronica in alcuni casi, ad esempio per messaggi di sistema, messaggi relativi a determinate entità del sistema o che richiedono una verifica o una risposta. Un utente registrato vedrà una voce di menu chiamata "Messaggi" che mostrerà i messaggi in arrivo. Ci sono due opzioni per inviare un messaggio: manualmente da un utente ad un altro o programmaticamente.
+
+L'addon viene fornito con due opzioni predefinite per la schermata principale con menu orizzontali e verticali. Per maggiori informazioni, fate riferimento al [README](https://github.com/mariodavid/cuba-component-user-inbox#using-the-inbox-as-a-user) su GitHub.
