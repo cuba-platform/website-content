@@ -1,0 +1,5 @@
+## Panoramica
+L'add-on è progettato per coordinare il cluster CUBA utilizzando ZooKeeper.
+L'implementazione predefinita del service discovery di CUBA presuppone che ci sia una lista statica di server middleware disponibili. Questa lista deve essere fornita sia per il meccanismo di comunicazione inter-server basato su JGroup sia per i client che si connettono al cluster.
+L'add-on permette ai membri del cluster e ai client di comunicare attraverso un'istanza o un insieme [ZooKeeper](https://zookeeper.apache.org/). Permette una configurazione semplice e uniforme di middleware e blocchi client: hanno bisogno solo dell'indirizzo dello ZooKeeper per formare un cluster e connettersi ad esso. In altre parole, l'add-on fornisce il service discovery dinamico.
+Per maggiori informazioni, consultate il [README](https://github.com/cuba-platform/cuba-zk#cuba-zookeeper-integration-add-on) su GitHub.
