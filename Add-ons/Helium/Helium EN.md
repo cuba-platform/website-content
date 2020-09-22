@@ -17,4 +17,4 @@ Helium works in the latest versions of modern browsers that support [CSS variabl
 IE 11 is not supported out of the box since it does not support CSS variables, though it is possible to use [polyfill](https://github.com/nuxodin/ie11CustomProperties).
 
 ## Limitations
-Studio 13 supports only platform themes extension, once [this issue](https://youtrack.cuba-platform.com/issue/STUDIO-4474) is resolved (presumably in release 14) it will be possible to extend Helium without any manual actions.
+Studio 14 is required to extend Helium without any manual actions.
