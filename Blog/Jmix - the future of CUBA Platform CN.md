@@ -14,7 +14,7 @@ Jmix 是 CUBA 平台的新名称，也是一个重要的发行版。它目前处
 CUBA 平台会得到很长时间的支持，同时我们也通过兼容 API 的方式提供 CUBA 到 Jmix 的迁移路径。
 
 
-从这里 [jmix.io](https://www.jmix.io/) 获取 Jmix。在专门的[论坛分类](https://forum.cuba-platform.cn/discuss/c/jmix) 讨论 Jmix 。
+从这里 [jmix.io](https://www.jmix.io/) 获取 Jmix。在专门的[论坛分类](https://forum.cuba-platform.cn/c/jmix/) 讨论 Jmix 。
 
 <a href="http://jmix.io" class="button">获取 jmix.io</a> <a href="https://www.cuba-platform.com/discuss/c/jmix" class="button forum" style="background: #6c5ce7!important; margin-left:30px;">Leave your feedback</a>
 
@@ -356,5 +356,5 @@ Jmix 将使用 Spring Boot 构建插件来部署应用程序。这意味意在�
 
 Jmix 是 CUBA 平台发展历程中的一大步。 现在，你可以享受几乎所有的 Spring Boot Starter、使用最流行的 Java 框架和技术。 同时，你仍然拥有 Jmix（CUBA的后续者）所提供的所有方便且熟悉的API和功能，还有新 Studio 的出色开发体验。
 
-<a href="http://jmix.io" class="button">获取 jmix.io</a> <a href="https://www.cuba-platform.com/discuss/c/jmix" class="button forum" style="background: #6c5ce7!important; margin-left:30px;">欢迎讨论</a>
+<a href="http://jmix.io" class="button">获取 jmix.io</a> <a href="https://forum.cuba-platform.cn/c/jmix/" class="button forum" style="background: #6c5ce7!important; margin-left:30px;">欢迎讨论</a>
 <style>.forum:hover, .forum:focus {box-shadow: 0 5px 20px 0 #6c5ce7;}</style>
