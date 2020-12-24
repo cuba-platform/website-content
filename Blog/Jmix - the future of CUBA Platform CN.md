@@ -56,14 +56,12 @@ CUBA 始于 2008 年，此后经历了几个非常重要的阶段。最初，它
 
 ## 基础架构
 
-从广义上讲，在 CUBA 中我们重复了一些 Spring Boot 做的事情 。比如我们自己的会话存储、安全子系统、身份验证……以及部署。Also, CUBA add-ons were introduced as a response to Boot starters with their own encapsulation and autoconfiguration mechanism.
+广义上讲，在 CUBA 时代我们重复了一些 Spring Boot 做的事情 。比如我们自己的会话存储、安全子系统、身份验证……以及部署。也设计了 CUBA 扩展（addon）机制，这个机制有自己封装格式、自动配置机制。 CUBA 扩展实际上相当于 Boot Starter。
 
 当我们在 2008 年开始进行 CUBA 开发时，我们使用 “纯”  Spring 作为基础技术。在 Jmix 中，我们将使用 Spring Boot 作为我们的基础技术。
 
 使用 Spring Boot 会带来以下好下：
-
-
-1. 开发人员经验。 现在几乎每个 Java  开发者都熟悉 Spring Boot 。Spring Boot 的开发经验可以完全用在 Jmix 上，不需要学习新的框架，仅需要了解一些 Starter。  
+1. 开发人员经验。 现在几乎每个 Java 开发者都熟悉 Spring Boot 。Spring Boot 的开发经验可以完全用在 Jmix 上，不需要学习新的框架，仅需要了解一些 Starter。  
 2. 关于 Starter，基于 Spring Boot 的基础技术允许我们在我们的框架上使用所有现有的 Starter 。所以我们可以利用大量的社区资源。
 3. 还有一点 - Spring Boot 在部署方面非常棒的功能，包括开箱即用的容器化支持。
 
@@ -78,7 +76,6 @@ CUBA 始于 2008 年，此后经历了几个非常重要的阶段。最初，它
 在 CUBA 7中，我们开始将一些核心功能提取为独立的扩展。基本上，CUBA 是一个 API 集合，这种方式为模块化处理提供了足够的灵活性。
 
 从 Jmix 开始，你可以独立地使用框架功能，比如安全、审计等。现在所有的功能都是以 Spring Boot Starter 的形式提供。比如 CUBA 中的数据审计功能，在 Jmix 中是一个独立的模块。这个模块又被分为 Core 和 UI 模块。这意味着你可以使用整个模块作为数据审计引擎，也可以只使用 Core 模块，然后用自己实现的 UI 代替内置的。
-
 
 一些功能使用 Spring Boot 提供的功能代替了，比如 healthcheck 使用 Spring Boot actuator 替换 (见 “不重复造轮子”  章节)。
 
