@@ -16,7 +16,7 @@ CUBA 平台会得到很长时间的支持，同时我们也通过兼容 API 的�
 
 从这里 [jmix.io](https://www.jmix.io/) 获取 Jmix。在专门的[论坛分类](https://forum.cuba-platform.cn/c/jmix/) 讨论 Jmix 。
 
-<a href="http://jmix.io" class="button">获取 jmix.io</a> <a href="https://www.cuba-platform.com/discuss/c/jmix" class="button forum" style="background: #6c5ce7!important; margin-left:30px;">Leave your feedback</a>
+<a href="http://jmix.io" class="button">获取 jmix.io</a> <a href="https://forum.cuba-platform.cn/c/jmix/" class="button forum" style="background: #6c5ce7!important; margin-left:30px;">欢迎讨论</a>
 
  
 ## 介绍
