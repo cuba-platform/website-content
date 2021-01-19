@@ -1,15 +1,11 @@
 ## 简介
 
-
 多租户是一种软件运营方式，在这种方式下，多个或一个应用程序的多个实例在一个共享的环境中运营。实例（租户）之间逻辑隔离，在物理上是一体的。  
 
-
-You can find a [nice explanation](https://www.netsolutions.com/insights/5-reasons-why-you-should-choose-multi-tenant-architecture-for-your-saas-application/) on the Internet where the multi-tenant approach is compared to office building leasing:
-
-  [这里](https://www.netsolutions.com/insights/5-reasons-why-you-should-choose-multi-tenant-architecture-for-your-saas-application/) 对多租户有一个很好的解释，将多租户比作办公室出租：
+  [这里](https://www.netsolutions.com/insights/5-reasons-why-you-should-choose-multi-tenant-architecture-for-your-saas-application/) 对多租户有一个很好的解释，将多租户比作办公楼出租：
 
 
-*公寓是多租户架构的完美案例。这种架构下对安全(大门)、电、水和其他设施进行集中管理。这些设施归公寓所有者所有，由租户共享。*
+*公寓是多租户架构的完美案例。这种模式下对安全(大门)、电、水和其他设施进行集中管理。这些设施归公寓所有者所有，由租户共享。*
 
 这篇文章中，我们将介绍多租户架构，并探讨 CUBA 对多租户架构的一种实现。
 
@@ -18,16 +14,18 @@ You can find a [nice explanation](https://www.netsolutions.com/insights/5-reason
 
 我们从一个完全不同的主题开始-软件分发和部署。最初，软件通过物理介质（磁带、光盘、闪存驱动器）进行分发。通常，您必须将软件部署到本地网络中的服务器上。那时的网络通道没有现在这么发达。
 
-互联网发展很多，现在我们有以百兆、千兆计算的带宽。这时，通过 Internet 交付软件变得更加容易-下载 100 兆字节所需的时间比去商店购买该软件的DVD或蓝光光盘花的时间更少。
+互联网发展很快，现在我们有以百兆、千兆计算的带宽。这时，通过 Internet 交付软件变得更加容易-下载 100 兆字节所需的时间比去商店购买该软件的DVD或蓝光光盘花的时间更少。
 
 
-同时，网络和计算硬件的发展保进了一个新市场的涌现 - 虚拟化，再后来出现了 IaaS（基础设施即服务）,通过软件来管理大量服务器，然后给用户分配使用权限变地很容易。
+同时，网络和计算硬件的发展促进了一个新市场的涌现 - 虚拟化，再后来出现了 IaaS（基础设施即服务）,通过软件来管理大量服务器，然后给用户分配使用权限变地很容易。   
+
 最后，供应商采用了 SaaS -“软件即服务” 分发模型。对于用户来说，只需要购买已部署好的软件产品的访问权限，而无需维护本地服务器，因此总拥有成本较低。
 
-为每个客户端安装软件实例仍然不是一件容易的事，因此软件开发人员开始使用多租户架构来简化部署和维护。 您仍然可以在互联网上看到很多 SaaS 部署。 例如，Salesforce，在很久以前就开始采用多租户架构和 SaaS 分发。  
+为每个客户端安装软件实例仍然不是一件容易的事，因此软件开发人员开始使用多租户架构来简化部署和维护。 您仍然可以在互联网上看到很多 SaaS 部署。 例如，Salesforce，在很久以前就开始采用多租户架构和 SaaS 分发。
+
 但是实现多租户应用程序是一项艰巨的任务。您必须考虑如何隔离客户数据、协调资源消耗、公共数据共享等。 应对这些挑战的最新方案是 PaaS（platform-as-a-service）模型。
 
-容器化和 DevOps 开发是多租户应用程序的主要威胁。 如今，借助 Docker 和 Kubernetes 之类的产品，启动一个新的  “服务器” 甚至整个 “基础架构” 非常容易，包括数据库、应用程序服务、缓存服务器和反向代理。 对于开发人员而言，实施单租户应用程序然后为每个新客户端部署该应用程序的新实例要简单得多，实际上，该过程只需几秒钟，甚至是完全自动化的。有时，它可能会导致另一种现象，称为 “[cube sprawl]（https://www.infoq.com/presentations/multi-tenancy-kubernetes/）”，但这个世界上没有 “弹”。
+容器化和 DevOps 开发是多租户应用程序的主要威胁。 如今，借助 Docker 和 Kubernetes 之类的产品，启动一个新的  “服务器” 甚至整个 “基础架构” 非常容易，包括数据库、应用程序服务、缓存服务器和反向代理。 对于开发人员而言，实施单租户应用程序然后为每个新客户端部署该应用程序的新实例要简单得多，实际上，该过程只需几秒钟，甚至是完全自动化的。有时，它可能会导致另一种现象，称为 “[cube sprawl](https://www.infoq.com/presentations/multi-tenancy-kubernetes/)”，但这个世界上没有 “弹”。
 
 
 尽管如此，现在多租户应用程序仍是件重要的事情（参考 Salesforce、Work Day、Sumo Logic等），并且仍然需要开发此类产品。让我们回顾一些实现多租户的方法，然后看看 CUBA 平台可以在此领域提供什么。
@@ -195,16 +193,16 @@ SELECT create_reference_table('petclinic_vet_specialty_link');
 SELECT create_reference_table('petclinic_pet_type');
 ```
 
-为了提高性能，除了分区之外可以添加表 [colocation](https://docs.citudata.com/en/v9.3/sharding/dataŠu modeling.html#colocation) 。但是在 CUBA 中 —— 您不需要做任何修改，多租户是一个绝对透明的过程。
+为了提高性能，除了分区之外可以添加表 [colocation](https://docs.citusdata.com/en/v9.3/sharding/data_modeling.html#colocation) 。但是在 CUBA 中 —— 您不需要做任何修改，多租户是一个绝对透明的过程。
 
 就这样，用最少的努力，我们就可以实现水平扩展 PetClinic 应用程序，也可以在数据库级别使用多租户。所有的复杂性都隐藏在 CBUA 框架和 Citus 插件中。
 
 
 
 ## 总结
- 
-Creating multi-tenant applications might be a challenging job. You should consider all options before starting implementing such an approach. And technology is only one part of the equation: you need to consider license costs, cloud services tariffs, maintainability, scalability, etc. Nowadays, the PaaS model along with containerization and proper DevOps processes looks more appealing than “traditional” multi-tenant architecture, but demand on such applications is still noticeable. 
 
-If you decide to go forward with multi-tenancy, ensure that your application meets all security requirements, e.g. GDPR, HIPAA, etc. Some of them may explicitly prohibit storing data in the same database, so you’ll need to use a “separate database” approach to satisfy those requirements.
+创建多租户应用程序可能是一项艰巨的任务。在开始实施这种方法之前，应考虑所有选项，技术只是方程式的一部分：您需要考虑许可成本、云服务资费、可维护性、可扩展性等。如今，PaaS 模型以及容器化和正确的 DevOps 流程比 “传统”多租户架构更具吸引力，但对此类应用程序的需求仍然很明显。
 
-And remember that tools matter. Proper development frameworks and data management systems that support multi-tenancy architecture out of the box may greatly simplify development and prevent a lot of typical issues connected with multi-tenancy architecture.
+如果您决定继续使用多租户架构，请确保您的应用程序符合所有安全要求，例如 GDPR、HIPAA 等。其中某些可能明确禁止在同一数据库中存储数据，因此您需要使用 “独立数据库” 方法来满足这些要求。
+
+请谨记，工具很重要。开箱即用的支持多租户架构的开发框架和数据管理系统可以大大简化开发过程，并可以避免与多租户架构相关的许多典型问题。
