@@ -188,7 +188,7 @@ SELECT create_reference_table('petclinic_vet_specialty_link');
 SELECT create_reference_table('petclinic_pet_type');
 ```
 
-为了提高性能，除了分区之外可以添加表 [colocation](https://docs.citusdata.com/en/v9.3/sharding/data_modeling.html#colocation) 。但是在 CUBA 中 —— 您不需要做任何修改，多租户是一个绝对透明的过程。
+为了提高性能，除了分区之外可以添加表 [协同定位(co-location)](https://docs.citusdata.com/en/v9.3/sharding/data_modeling.html#colocation) 。但是在 CUBA 中您不需要做任何修改，多租户是一个绝对透明的过程。
 
 就这样，用最少的努力，我们就可以实现水平扩展 PetClinic 应用程序，也可以在数据库级别使用多租户。所有的复杂性都隐藏在 CBUA 框架和 Citus 插件中。
 
